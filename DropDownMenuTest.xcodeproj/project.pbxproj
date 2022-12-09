@@ -22,6 +22,10 @@
 		046B6AAB2941F7B30037D98A /* Extention+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6AAA2941F7B30037D98A /* Extention+TableView.swift */; };
 		046B6AAE294221DB0037D98A /* DropOptionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6AAC294221DB0037D98A /* DropOptionTableViewCell.swift */; };
 		046B6AAF294221DB0037D98A /* DropOptionTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046B6AAD294221DB0037D98A /* DropOptionTableViewCell.xib */; };
+		046B6AB3294318E00037D98A /* DropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6AB1294318E00037D98A /* DropView.swift */; };
+		046B6AB4294318E00037D98A /* DropView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046B6AB2294318E00037D98A /* DropView.xib */; };
+		046B6AB6294318F80037D98A /* DropViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6AB5294318F80037D98A /* DropViewPresenter.swift */; };
+		046B6AB9294327240037D98A /* NibLoadeble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6AB8294327240037D98A /* NibLoadeble.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +46,10 @@
 		046B6AAA2941F7B30037D98A /* Extention+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extention+TableView.swift"; sourceTree = "<group>"; };
 		046B6AAC294221DB0037D98A /* DropOptionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropOptionTableViewCell.swift; sourceTree = "<group>"; };
 		046B6AAD294221DB0037D98A /* DropOptionTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DropOptionTableViewCell.xib; sourceTree = "<group>"; };
+		046B6AB1294318E00037D98A /* DropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropView.swift; sourceTree = "<group>"; };
+		046B6AB2294318E00037D98A /* DropView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DropView.xib; sourceTree = "<group>"; };
+		046B6AB5294318F80037D98A /* DropViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropViewPresenter.swift; sourceTree = "<group>"; };
+		046B6AB8294327240037D98A /* NibLoadeble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadeble.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +98,7 @@
 		046B6A9C2941E4D40037D98A /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				046B6AB0294318AE0037D98A /* DropViewController */,
 				046B6A9A2941E4210037D98A /* Presenter.swift */,
 				046B6A8A2941E3CF0037D98A /* ViewController.swift */,
 				046B6A8C2941E3CF0037D98A /* Main.storyboard */,
@@ -122,8 +131,19 @@
 			isa = PBXGroup;
 			children = (
 				046B6AAA2941F7B30037D98A /* Extention+TableView.swift */,
+				046B6AB8294327240037D98A /* NibLoadeble.swift */,
 			);
 			path = extentions;
+			sourceTree = "<group>";
+		};
+		046B6AB0294318AE0037D98A /* DropViewController */ = {
+			isa = PBXGroup;
+			children = (
+				046B6AB1294318E00037D98A /* DropView.swift */,
+				046B6AB2294318E00037D98A /* DropView.xib */,
+				046B6AB5294318F80037D98A /* DropViewPresenter.swift */,
+			);
+			path = DropViewController;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -184,6 +204,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				046B6AB4294318E00037D98A /* DropView.xib in Resources */,
 				046B6A932941E3D10037D98A /* LaunchScreen.storyboard in Resources */,
 				046B6AAF294221DB0037D98A /* DropOptionTableViewCell.xib in Resources */,
 				046B6A902941E3D10037D98A /* Assets.xcassets in Resources */,
@@ -201,10 +222,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				046B6AAB2941F7B30037D98A /* Extention+TableView.swift in Sources */,
+				046B6AB9294327240037D98A /* NibLoadeble.swift in Sources */,
 				046B6AA02941E50F0037D98A /* DropDownMenuTableViewCell.swift in Sources */,
 				046B6AA82941F5F40037D98A /* MainControllerCells.swift in Sources */,
 				046B6A8B2941E3CF0037D98A /* ViewController.swift in Sources */,
 				046B6A872941E3CF0037D98A /* AppDelegate.swift in Sources */,
+				046B6AB3294318E00037D98A /* DropView.swift in Sources */,
+				046B6AB6294318F80037D98A /* DropViewPresenter.swift in Sources */,
 				046B6AA42941E7520037D98A /* TagCollectionViewCell.swift in Sources */,
 				046B6A9B2941E4210037D98A /* Presenter.swift in Sources */,
 				046B6A892941E3CF0037D98A /* SceneDelegate.swift in Sources */,
