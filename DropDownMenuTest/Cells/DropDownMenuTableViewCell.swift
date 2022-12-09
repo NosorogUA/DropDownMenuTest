@@ -7,26 +7,29 @@
 
 import UIKit
 
-
 class DropDownMenuTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var tagFieldCollectionView: UICollectionView!
-    @IBOutlet weak var dropButton: UIButton!
+    @IBOutlet private weak var tagFieldCollectionView: UICollectionView!
+    @IBOutlet private weak var dropButton: UIButton!
     
-    var variantsButtonHandler: (()-> Void)?
+    var variantsButtonHandler: (() -> Void)?
+    var endSearchHandler: (() -> Void)?
     
     var tags: [String] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
     }
     
     func cellInit(tags: [String]) {
-        
         self.tags = tags
         print("apply tags \(self.tags)")
         setupCollectionView()
+    }
+    
+    func updateDropButton(isHidden: Bool) {
+        dropButton.isHidden = isHidden
     }
     
     private func setupCollectionView() {
@@ -37,20 +40,28 @@ class DropDownMenuTableViewCell: UITableViewCell {
         let searchCell = UINib(nibName: SearchBarCollectionViewCell.identifier, bundle: nil)
         tagFieldCollectionView.register(tagCell, forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
         tagFieldCollectionView.register(searchCell, forCellWithReuseIdentifier: SearchBarCollectionViewCell.identifier)
-        }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+        if let flowLayout = tagFieldCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
+              flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+           }
     }
     
-    @IBAction func dropButtonAction(_ sender: Any) {
+    private func showDropDownMenu() {
+        // show menu and hide button
         variantsButtonHandler?()
+        updateDropButton(isHidden: true)
+    }
+    
+    private func hideDropDownMenu() {
+        endSearchHandler?()
+        updateDropButton(isHidden: false)
+    }
+    
+    @IBAction func dropButtonAction(_ sender: UIButton) {
+        showDropDownMenu()
     }
 }
 
-extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionViewDelegate {
+extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // get items from view controller
@@ -64,6 +75,12 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
         if indexPath.row == tags.count{
             print("search")
             let cell = tagFieldCollectionView.dequeueReusableCell(withReuseIdentifier: SearchBarCollectionViewCell.identifier, for: indexPath) as! SearchBarCollectionViewCell
+            cell.startSearch = { [weak self] in
+                self?.showDropDownMenu()
+            }
+            cell.endSearch = { [weak self] in
+                self?.hideDropDownMenu()
+            }
             return cell
         } else {
             print("tag")
@@ -72,6 +89,6 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
             cell.cellInit(title: tag)
             return cell
         }
-        
     }
+    
 }

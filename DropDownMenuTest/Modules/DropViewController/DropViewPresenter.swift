@@ -36,7 +36,7 @@ class DropViewPresenter: DropViewPresenterProtocol {
     }
     
     func getTags() -> [String] {
-        return ["tag1", "tag2", "tag3"]
+        return ["tagsdfsdrgdegr1", "tsdfgag2", "tag3"]
     }
     
     func configureTagListCell(cell: DropOptionTableViewCell, indexPath: IndexPath) {
