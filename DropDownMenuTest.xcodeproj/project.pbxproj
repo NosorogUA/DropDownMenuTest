@@ -26,6 +26,8 @@
 		046B6AB4294318E00037D98A /* DropView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046B6AB2294318E00037D98A /* DropView.xib */; };
 		046B6AB6294318F80037D98A /* DropViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6AB5294318F80037D98A /* DropViewPresenter.swift */; };
 		046B6AB9294327240037D98A /* NibLoadeble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6AB8294327240037D98A /* NibLoadeble.swift */; };
+		046B6ABC294330260037D98A /* SearchBarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6ABA294330260037D98A /* SearchBarCollectionViewCell.swift */; };
+		046B6ABD294330260037D98A /* SearchBarCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046B6ABB294330260037D98A /* SearchBarCollectionViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		046B6AB2294318E00037D98A /* DropView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DropView.xib; sourceTree = "<group>"; };
 		046B6AB5294318F80037D98A /* DropViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropViewPresenter.swift; sourceTree = "<group>"; };
 		046B6AB8294327240037D98A /* NibLoadeble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadeble.swift; sourceTree = "<group>"; };
+		046B6ABA294330260037D98A /* SearchBarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarCollectionViewCell.swift; sourceTree = "<group>"; };
+		046B6ABB294330260037D98A /* SearchBarCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchBarCollectionViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +119,8 @@
 				046B6AA32941E7520037D98A /* TagCollectionViewCell.xib */,
 				046B6AAC294221DB0037D98A /* DropOptionTableViewCell.swift */,
 				046B6AAD294221DB0037D98A /* DropOptionTableViewCell.xib */,
+				046B6ABA294330260037D98A /* SearchBarCollectionViewCell.swift */,
+				046B6ABB294330260037D98A /* SearchBarCollectionViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -206,6 +212,7 @@
 			files = (
 				046B6AB4294318E00037D98A /* DropView.xib in Resources */,
 				046B6A932941E3D10037D98A /* LaunchScreen.storyboard in Resources */,
+				046B6ABD294330260037D98A /* SearchBarCollectionViewCell.xib in Resources */,
 				046B6AAF294221DB0037D98A /* DropOptionTableViewCell.xib in Resources */,
 				046B6A902941E3D10037D98A /* Assets.xcassets in Resources */,
 				046B6AA52941E7520037D98A /* TagCollectionViewCell.xib in Resources */,
@@ -221,6 +228,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				046B6ABC294330260037D98A /* SearchBarCollectionViewCell.swift in Sources */,
 				046B6AAB2941F7B30037D98A /* Extention+TableView.swift in Sources */,
 				046B6AB9294327240037D98A /* NibLoadeble.swift in Sources */,
 				046B6AA02941E50F0037D98A /* DropDownMenuTableViewCell.swift in Sources */,

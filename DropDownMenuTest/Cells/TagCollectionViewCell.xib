@@ -3,7 +3,6 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,18 +10,18 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="TagCollectionViewCell" id="gTV-IL-0wX" customClass="TagCollectionViewCell" customModule="DropDownMenuTest" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="128" height="50"/>
+            <rect key="frame" x="0.0" y="0.0" width="128" height="124"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="128" height="50"/>
+                <rect key="frame" x="0.0" y="0.0" width="128" height="124"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QwL-Ve-7oM">
-                        <rect key="frame" x="6" y="6" width="116" height="38"/>
+                        <rect key="frame" x="39" y="47" width="50" height="30"/>
                         <color key="backgroundColor" systemColor="systemBrownColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="fXi-kf-yoD"/>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="80" id="q0M-mb-j1n"/>
+                            <constraint firstAttribute="height" constant="30" id="fXi-kf-yoD"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="q0M-mb-j1n"/>
                         </constraints>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                         <state key="normal" title="Button">
@@ -34,18 +33,15 @@
                     </button>
                 </subviews>
             </view>
-            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="QwL-Ve-7oM" secondAttribute="bottom" constant="6" id="5lj-7T-g5K"/>
-                <constraint firstItem="QwL-Ve-7oM" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="6" id="MSo-Eq-i0K"/>
-                <constraint firstItem="QwL-Ve-7oM" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="6" id="d1H-gH-mq2"/>
-                <constraint firstAttribute="trailing" secondItem="QwL-Ve-7oM" secondAttribute="trailing" constant="6" id="wGr-B6-K59"/>
+                <constraint firstItem="QwL-Ve-7oM" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="JXk-so-vpi"/>
+                <constraint firstItem="QwL-Ve-7oM" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="Wgt-sW-h30"/>
             </constraints>
-            <size key="customSize" width="128" height="50"/>
+            <size key="customSize" width="128" height="124"/>
             <connections>
                 <outlet property="tagButton" destination="QwL-Ve-7oM" id="pje-rc-uxs"/>
             </connections>
-            <point key="canvasLocation" x="76.33587786259541" y="19.718309859154932"/>
+            <point key="canvasLocation" x="74.809160305343511" y="97.183098591549296"/>
         </collectionViewCell>
     </objects>
     <resources>

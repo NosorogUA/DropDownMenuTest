@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     
     var presenter: Presenter!
     
-    let transperentView = UIView()
+    var transperentView: UIView!
     var dropTableView: DropView!
     var currentFrames: CGRect!
     var tags: [String] = []
@@ -31,6 +31,7 @@ class ViewController: UIViewController {
     
     private func addDropDownView(frames: CGRect) {
         // setup background
+        transperentView = UIView()
         let window = UIApplication.shared.keyWindow
         transperentView.frame = window?.frame ?? self.view.frame
         self.view.addSubview(transperentView)
@@ -42,7 +43,6 @@ class ViewController: UIViewController {
         
         //setup table view
         dropTableView = .fromNib()
-    
         dropTableView.frame = CGRect(x: frames.origin.x + 10, y: frames.origin.y + frames.height, width: frames.width*0.8, height: 0)
         self.view.addSubview(dropTableView)
         dropTableView.layer.cornerRadius = 10
@@ -62,7 +62,11 @@ class ViewController: UIViewController {
         UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
             self.transperentView.alpha = 0
             self.dropTableView.frame = CGRect(x: self.currentFrames.origin.x + 10, y: self.currentFrames.origin.y + self.currentFrames.height, width: self.currentFrames.width*0.8, height: 0)
-        }, completion: nil)
+        }, completion: { _ in
+            self.dropTableView.removeFromSuperview()
+            self.transperentView.removeFromSuperview()
+        })
+        
     }
     
     func openDropMenu(frames: CGRect) {
@@ -76,11 +80,7 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == tableViewController {
-            return 1
-        } else {
-            return 3
-        }
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -99,7 +99,4 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
     }
-    
-    
 }
-

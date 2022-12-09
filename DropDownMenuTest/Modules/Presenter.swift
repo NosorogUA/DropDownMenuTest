@@ -27,6 +27,6 @@ class Presenter: PresenterProtocol {
     }
     
     func configureDetailCell(_ cell: DropDownMenuTableViewCell) {
-        cell.cellInit(tags: currentTags)
+        cell.cellInit(tags: getTags())
     }
 }

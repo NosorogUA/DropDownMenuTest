@@ -23,7 +23,10 @@ class DropDownMenuTableViewCell: UITableViewCell {
     }
     
     func cellInit(tags: [String]) {
+        
         self.tags = tags
+        print("apply tags \(self.tags)")
+        setupCollectionView()
     }
     
     private func setupCollectionView() {
@@ -31,7 +34,9 @@ class DropDownMenuTableViewCell: UITableViewCell {
         tagFieldCollectionView.delegate = self
         //register cell
         let tagCell = UINib(nibName: TagCollectionViewCell.identifier, bundle: nil)
+        let searchCell = UINib(nibName: SearchBarCollectionViewCell.identifier, bundle: nil)
         tagFieldCollectionView.register(tagCell, forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
+        tagFieldCollectionView.register(searchCell, forCellWithReuseIdentifier: SearchBarCollectionViewCell.identifier)
         }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -49,15 +54,24 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // get items from view controller
-        return tags.count
+        print("Number of rows \(tags.count)")
+        return tags.count+1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // try to setup cell in view
-        let cell = tagFieldCollectionView.dequeueReusableCell(withReuseIdentifier: "TagCollectionViewCell", for: indexPath) as! TagCollectionViewCell
-        let tag = tags[indexPath.row]
-        cell.cellInit(title: tag)
-        return cell
+        print("=====Configurate collection view cells")
+        if indexPath.row == tags.count{
+            print("search")
+            let cell = tagFieldCollectionView.dequeueReusableCell(withReuseIdentifier: SearchBarCollectionViewCell.identifier, for: indexPath) as! SearchBarCollectionViewCell
+            return cell
+        } else {
+            print("tag")
+            let cell = tagFieldCollectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as! TagCollectionViewCell
+            let tag = tags[indexPath.row]
+            cell.cellInit(title: tag)
+            return cell
+        }
+        
     }
-    
 }
