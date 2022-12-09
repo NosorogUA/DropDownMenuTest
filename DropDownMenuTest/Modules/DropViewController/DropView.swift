@@ -16,6 +16,9 @@ class DropView: UIView, NibLoadeble {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        print("Init drop window")
+        dropDownTableView.delegate = self
+        dropDownTableView.dataSource = self
         presenter = DropViewPresenter(view: self)
         setupTableView()
     }
@@ -29,7 +32,8 @@ class DropView: UIView, NibLoadeble {
 
 extension DropView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let tags = presenter.getTags()
+        tags = presenter.getTags()
+        print("tags count: \(tags.count)")
         return tags.count
     }
     
@@ -40,5 +44,9 @@ extension DropView: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("tableView didSelectRowAt")
+        presenter.applyTag(tag: tags[indexPath.row])
+        
+    }
 }

@@ -9,6 +9,7 @@ import Foundation
 
 protocol DropViewPresenterProtocol {
     init(view: DropView)
+    func applyTag(tag: String)
     
 }
 
@@ -23,12 +24,14 @@ class DropViewPresenter: DropViewPresenterProtocol {
     }
     
     func applyTag(tag: String) {
-        currentTags.append(tag)
-        // reload collection view
-    }
-    
-    func deleteTag(tag: String) {
-        currentTags = currentTags.filter {$0 != tag}
+        
+        if currentTags.contains(tag) {
+            currentTags = currentTags.filter {$0 != tag}
+            print("Tag: \(tag), deleted")
+        } else {
+            currentTags.append(tag)
+            print("Tag: \(tag), added")
+        }
         // reload collection view
     }
     
@@ -38,7 +41,6 @@ class DropViewPresenter: DropViewPresenterProtocol {
     
     func configureTagListCell(cell: DropOptionTableViewCell, indexPath: IndexPath) {
         let titles = getTags()
-        print(titles)
         cell.setupCell(title: titles[indexPath.row])
     }
 }

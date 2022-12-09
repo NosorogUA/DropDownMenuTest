@@ -18,7 +18,7 @@ class SearchBarCollectionViewCell: UICollectionViewCell {
 
     
     @IBAction func beginSearching(_ sender: UITextField) {
-        
+        // open dropdown windos and hide button
     }
     
     @IBAction func cangedSearching(_ sender: UITextField) {
@@ -26,6 +26,6 @@ class SearchBarCollectionViewCell: UICollectionViewCell {
     }
     
     @IBAction func Endsearching(_ sender: UITextField) {
-        
+        // close dropdown windos and show button
     }
 }
