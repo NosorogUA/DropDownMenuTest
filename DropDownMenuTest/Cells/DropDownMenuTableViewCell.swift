@@ -16,6 +16,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
     var endSearchHandler: (() -> Void)?
     
     var tags: [String] = []
+    var searchItemPath: [IndexPath]!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -40,9 +41,17 @@ class DropDownMenuTableViewCell: UITableViewCell {
         let searchCell = UINib(nibName: SearchBarCollectionViewCell.identifier, bundle: nil)
         tagFieldCollectionView.register(tagCell, forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
         tagFieldCollectionView.register(searchCell, forCellWithReuseIdentifier: SearchBarCollectionViewCell.identifier)
+        
         if let flowLayout = tagFieldCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-              flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-           }
+            flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+            
+            flowLayout.minimumLineSpacing = 5
+            flowLayout.minimumInteritemSpacing = 0
+            
+            tagFieldCollectionView.collectionViewLayout = flowLayout
+            
+        }
+        
     }
     
     private func showDropDownMenu() {
@@ -54,6 +63,16 @@ class DropDownMenuTableViewCell: UITableViewCell {
     private func hideDropDownMenu() {
         endSearchHandler?()
         updateDropButton(isHidden: false)
+    }
+    
+    func updateCollectionViewLayout() {
+        
+        tagFieldCollectionView.layoutIfNeeded()
+        tagFieldCollectionView.reconfigureItems(at: searchItemPath)
+    }
+    
+    func filterResults(enters: String) {
+        print(enters)
     }
     
     @IBAction func dropButtonAction(_ sender: UIButton) {
@@ -71,15 +90,20 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         // try to setup cell in view
-        print("=====Configurate collection view cells")
+        print("=====Configure collection view cells")
         if indexPath.row == tags.count{
             print("search")
             let cell = tagFieldCollectionView.dequeueReusableCell(withReuseIdentifier: SearchBarCollectionViewCell.identifier, for: indexPath) as! SearchBarCollectionViewCell
+            searchItemPath = [indexPath]
             cell.startSearch = { [weak self] in
                 self?.showDropDownMenu()
             }
             cell.endSearch = { [weak self] in
                 self?.hideDropDownMenu()
+            }
+            cell.filterResults = { [weak self] in
+                self?.updateCollectionViewLayout()
+                self?.filterResults(enters: cell.getEnters())
             }
             return cell
         } else {

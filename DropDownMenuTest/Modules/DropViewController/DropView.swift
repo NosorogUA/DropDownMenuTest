@@ -28,6 +28,7 @@ class DropView: UIView, NibLoadeble {
         let dropVariantCell = UINib(nibName: DropOptionTableViewCell.identifier, bundle: nil)
         dropDownTableView.register(dropVariantCell, forCellReuseIdentifier: DropOptionTableViewCell.identifier)
     }
+    
 }
 
 extension DropView: UITableViewDelegate, UITableViewDataSource {

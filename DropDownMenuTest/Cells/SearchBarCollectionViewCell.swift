@@ -11,6 +11,8 @@ class SearchBarCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet private weak var searchBarTextField: UITextField!
     
+    @IBOutlet weak var widhtConstraint: NSLayoutConstraint!
+    
     var startSearch: (() -> Void)?
     var endSearch: (() -> Void)?
     var filterResults: (() -> Void)?
@@ -20,6 +22,21 @@ class SearchBarCollectionViewCell: UICollectionViewCell {
         
         searchBarTextField.delegate = self
         
+    }
+    func stopResize() {
+        guard let text = searchBarTextField.text else {
+            widhtConstraint.constant = 80
+            return }
+        let font = searchBarTextField.font
+        var size = (text as NSString).size(withAttributes: [NSAttributedString.Key.font: font] )
+        print(size.width)
+        if size.width > 150 {
+            widhtConstraint.constant = size.width
+        }
+    }
+    
+    func getEnters() -> String {
+        return searchBarTextField.text ?? " "
     }
     
 //    private func setupTextField() {
@@ -34,7 +51,8 @@ class SearchBarCollectionViewCell: UICollectionViewCell {
     }
     
     @IBAction private func changedSearching(_ sender: UITextField) {
-        
+        filterResults?()
+        ()
     }
 //
     @IBAction private func endSearching(_ sender: UITextField) {

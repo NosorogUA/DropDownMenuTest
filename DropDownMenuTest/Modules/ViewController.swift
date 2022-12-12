@@ -13,7 +13,7 @@ class ViewController: UIViewController {
     
     var presenter: Presenter!
     
-    var transperentView: UIView!
+    var transparentView: UIView!
     var dropTableView: DropView!
     var currentFrames: CGRect!
     var tags: [String] = []
@@ -33,15 +33,15 @@ class ViewController: UIViewController {
     
     private func addDropDownView(frames: CGRect) {
         // setup background
-        transperentView = UIView()
-        transperentView.frame = UIApplication.shared.keyWindow?.frame ?? self.view.frame
-        transperentView.backgroundColor = UIColor.black.withAlphaComponent(0.9)
-        self.view.addSubview(transperentView)
+        transparentView = UIView()
+        transparentView.frame = UIApplication.shared.keyWindow?.frame ?? self.view.frame
+        transparentView.backgroundColor = UIColor.black.withAlphaComponent(0.9)
+        self.view.addSubview(transparentView)
         
         // setup gesture
-        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(removeTransperentView))
-        tapgesture.cancelsTouchesInView = false
-        transperentView.addGestureRecognizer(tapgesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(removeTransparentView))
+        tapGesture.cancelsTouchesInView = false
+        transparentView.addGestureRecognizer(tapGesture)
         
         //setup table view
         dropTableView = .fromNib()
@@ -50,22 +50,22 @@ class ViewController: UIViewController {
         dropTableView.layer.cornerRadius = 10
         
         //animate showing
-        transperentView.alpha = 0
+        transparentView.alpha = 0
         UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
-            self.transperentView.alpha = 0.5
+            self.transparentView.alpha = 0.5
             self.dropTableView.frame = CGRect(x: frames.origin.x + 10, y: frames.origin.y + frames.height, width: frames.width * 0.8, height: 400)
         }, completion: nil)
     }
     
-    @objc func removeTransperentView() {
+    @objc func removeTransparentView() {
         print("removeView")
         //animate hiding
         UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
-            self.transperentView.alpha = 0
+            self.transparentView.alpha = 0
             self.dropTableView.frame = CGRect(x: self.currentFrames.origin.x + 10, y: self.currentFrames.origin.y + self.currentFrames.height, width: self.currentFrames.width * 0.8, height: 0)
         }, completion: { _ in
             self.dropTableView.removeFromSuperview()
-            self.transperentView.removeFromSuperview()
+            self.transparentView.removeFromSuperview()
         })
     }
     
@@ -93,8 +93,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 self?.openDropMenu(frames: cell.frame)
             }
             cell.endSearchHandler = { [weak self] in
-                self?.removeTransperentView()
+                self?.removeTransparentView()
             }
+            cell.layoutIfNeeded()
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             return cell
         case .none:
@@ -106,7 +107,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
     
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
 }

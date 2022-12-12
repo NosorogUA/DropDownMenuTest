@@ -9,14 +9,18 @@ import UIKit
 
 class DynamicHeightCollectionView: UICollectionView {
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        if bounds.size != intrinsicContentSize {
-            self.invalidateIntrinsicContentSize()
+    override var contentSize: CGSize{
+        didSet {
+            if oldValue.height != self.contentSize.height {
+                invalidateIntrinsicContentSize()
+                print(self.contentSize.height)
+            }
         }
     }
     
     override var intrinsicContentSize: CGSize {
-        return collectionViewLayout.collectionViewContentSize
+        layoutIfNeeded()
+        return CGSize(width: UIView.noIntrinsicMetric,
+                      height: contentSize.height)
     }
 }

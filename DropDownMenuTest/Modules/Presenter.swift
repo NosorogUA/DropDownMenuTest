@@ -23,7 +23,7 @@ class Presenter: PresenterProtocol {
     }
     
     func getTags() -> [String] {
-        return ["tsdfag1", "tagfewrwert2", "tag3"]
+        return ["tsdfag1", "tagfewrwert2", "tag3", "kdhjfgkhd;gk", "xfghs;fj"]
     }
     
     func configureDetailCell(_ cell: DropDownMenuTableViewCell) {
