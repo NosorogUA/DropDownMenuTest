@@ -23,15 +23,19 @@ class DropView: UIView, NibLoadable {
         setupTableView()
     }
   
-    func applyTags(tags: [String]) {
+    func addToList(tags: [String]) {
         for tag in tags {
-            presenter.configureTag(tag: tag)
+            presenter.add(tag: tag)
         }
         dropDownTableView.reloadData()
     }
+    func addSingle(tag: String) {
+        presenter.add(tag: tag)
+        dropDownTableView.reloadData()
+    }
     
-    func addRemoveTag(tag: String) {
-        presenter.configureTag(tag: tag)
+    func removeFromList(tag: String) {
+        presenter.remove(tag: tag)
         dropDownTableView.reloadData()
     }
    
@@ -56,7 +60,6 @@ extension DropView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let tags = presenter.getTags()
         cellHandler?(tags[indexPath.row])
-        presenter.configureTag(tag: tags[indexPath.row])
-        dropDownTableView.reloadData()
+        removeFromList(tag: tags[indexPath.row])
     }
 }

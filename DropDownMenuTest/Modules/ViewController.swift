@@ -30,11 +30,12 @@ class ViewController: UIViewController {
         tableView.register(dropDownCell, forCellReuseIdentifier: DropDownMenuTableViewCell.identifier)
         tableView.estimatedRowHeight = 500
     }
+    
     private func setupDropDownMenu() {
         dropTableView = .fromNib()
-        dropTableView.applyTags(tags: presenter.getCurrentTags())
+        dropTableView.addToList(tags: presenter.getCurrentTags())
         dropTableView.cellHandler = { [weak self] tag in
-            self?.presenter.configureFilteredTag(tag: tag)
+            self?.presenter.add(tag: tag)
         }
     }
     
@@ -89,7 +90,8 @@ class ViewController: UIViewController {
         
     }
     func addTagToDropMenu(_ tag: String) {
-        dropTableView.addRemoveTag(tag: tag)
+        dropTableView.addSingle(tag: tag)
+        presenter.remove(tag: tag)
     }
 }
 

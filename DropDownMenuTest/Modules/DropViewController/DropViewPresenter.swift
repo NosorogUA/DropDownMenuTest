@@ -9,7 +9,9 @@ import Foundation
 
 protocol DropViewPresenterProtocol {
     init(view: DropView)
-    func configureTag(tag: String)
+    //func configureTag(tag: String)
+    func add(tag: String)
+    func remove(tag: String)
     func getTags() -> [String]
     func configureTagListCell(cell: DropOptionTableViewCell, indexPath: IndexPath)
 }
@@ -24,13 +26,31 @@ class DropViewPresenter: DropViewPresenterProtocol {
         self.view = view
     }
     
-    func configureTag(tag: String) {
+//    func configureTag(tag: String) {
+//        if let index = currentTags.firstIndex(where: { $0 == tag }) {
+//            currentTags.remove(at: index)
+//            print("Tag: \(tag), deleted")
+//        } else {
+//            currentTags.append(tag)
+//            print("Tag: \(tag), added")
+//        }
+//    }
+    
+    func add(tag: String) {
+        if let index = currentTags.firstIndex(where: { $0 == tag }) {
+            return
+        } else {
+            currentTags.append(tag)
+            print("Tag: \(tag), added")
+        }
+    }
+    
+    func remove(tag: String) {
         if let index = currentTags.firstIndex(where: { $0 == tag }) {
             currentTags.remove(at: index)
             print("Tag: \(tag), deleted")
         } else {
-            currentTags.append(tag)
-            print("Tag: \(tag), added")
+            return
         }
     }
     

@@ -85,6 +85,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
     
     func addCell(newTag: String) {
         if tags.contains(newTag) { return }
+        if newTag.count <= 2 { return }
         
         tags.append(newTag)
         tagFieldCollectionView.reloadData()
