@@ -9,24 +9,43 @@ import Foundation
 
 protocol PresenterProtocol {
     init(view: ViewController)
-    func getTags() -> [String]
+    func getCurrentTags() -> [String]
     func configureDetailCell(_ cell: DropDownMenuTableViewCell)
+    func configureFilteredTag(tag: String)
 }
 
 class Presenter: PresenterProtocol {
     private weak var view: ViewController?
     
-    var currentTags: [String] = []
+    var currentTags: [String] = ["tsdfag1", "tagfewrwert2", "tag3", "kdhjfgkhd;gk", "xfghs;fj"]
+    var filteredTags: [String] = []
     
     required init(view: ViewController) {
         self.view = view
+        // apply current tags here
     }
     
-    func getTags() -> [String] {
-        return ["tsdfag1", "tagfewrwert2", "tag3", "kdhjfgkhd;gk", "xfghs;fj"]
+    func configureFilteredTag(tag: String) {
+        if filteredTags.contains(tag) {
+            filteredTags = filteredTags.filter {$0 != tag}
+            print("Tag filtered: \(tag), deleted")
+        } else {
+            filteredTags.append(tag)
+            print("Tag filtered: \(tag), added")
+        }
+        view?.reloadData()
+    }
+    
+    func getCurrentTags() -> [String] {
+        return currentTags
+    }
+    
+    func getFilteredTags() -> [String] {
+        return filteredTags
     }
     
     func configureDetailCell(_ cell: DropDownMenuTableViewCell) {
-        cell.cellInit(tags: getTags())
+        print(getFilteredTags())
+        cell.cellInit(tags: getFilteredTags())
     }
 }

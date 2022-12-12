@@ -17,11 +17,11 @@
                 <rect key="frame" x="0.0" y="0.0" width="193" height="60"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <textField opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="248" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="6Is-wz-CWF">
+                    <textField opaque="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="248" layoutMarginsFollowReadableWidth="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Is-wz-CWF">
                         <rect key="frame" x="5" y="5" width="183" height="50"/>
                         <color key="backgroundColor" systemColor="systemPinkColor"/>
                         <constraints>
-                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="Pce-ys-pxM"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="Pce-ys-pxM"/>
                             <constraint firstAttribute="height" constant="50" id="zwE-GQ-qzz"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -44,7 +44,7 @@
             <size key="customSize" width="193" height="60"/>
             <connections>
                 <outlet property="searchBarTextField" destination="6Is-wz-CWF" id="kH0-O2-EFn"/>
-                <outlet property="widhtConstraint" destination="Pce-ys-pxM" id="Zge-uD-A3k"/>
+                <outlet property="widthConstraint" destination="Pce-ys-pxM" id="Zge-uD-A3k"/>
             </connections>
             <point key="canvasLocation" x="248.09160305343511" y="39.436619718309863"/>
         </collectionViewCell>

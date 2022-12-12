@@ -9,8 +9,9 @@ import Foundation
 
 protocol DropViewPresenterProtocol {
     init(view: DropView)
-    func applyTag(tag: String)
-    
+    func configureTag(tag: String)
+    func getTags() -> [String]
+    func configureTagListCell(cell: DropOptionTableViewCell, indexPath: IndexPath)
 }
 
 class DropViewPresenter: DropViewPresenterProtocol {
@@ -23,20 +24,18 @@ class DropViewPresenter: DropViewPresenterProtocol {
         self.view = view
     }
     
-    func applyTag(tag: String) {
-        
-        if currentTags.contains(tag) {
-            currentTags = currentTags.filter {$0 != tag}
+    func configureTag(tag: String) {
+        if let index = currentTags.firstIndex(where: { $0 == tag }) {
+            currentTags.remove(at: index)
             print("Tag: \(tag), deleted")
         } else {
             currentTags.append(tag)
             print("Tag: \(tag), added")
         }
-        // reload collection view
     }
     
     func getTags() -> [String] {
-        return ["tagsdfsdrgdegr1", "tsdfgag2", "tag3"]
+        return currentTags
     }
     
     func configureTagListCell(cell: DropOptionTableViewCell, indexPath: IndexPath) {

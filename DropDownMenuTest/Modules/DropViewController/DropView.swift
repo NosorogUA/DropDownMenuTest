@@ -7,12 +7,12 @@
 
 import UIKit
 
-class DropView: UIView, NibLoadeble {
+class DropView: UIView, NibLoadable {
 
     @IBOutlet weak var dropDownTableView: UITableView!
     
-    var presenter: DropViewPresenter!
-    var tags: [String] = []
+    var presenter: DropViewPresenterProtocol!
+    var cellHandler: ((_ tag: String) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -22,32 +22,41 @@ class DropView: UIView, NibLoadeble {
         presenter = DropViewPresenter(view: self)
         setupTableView()
     }
+  
+    func applyTags(tags: [String]) {
+        for tag in tags {
+            presenter.configureTag(tag: tag)
+        }
+        dropDownTableView.reloadData()
+    }
+    
+    func addRemoveTag(tag: String) {
+        presenter.configureTag(tag: tag)
+        dropDownTableView.reloadData()
+    }
    
-    func setupTableView() {
+    private func setupTableView() {
         //register options cell
         let dropVariantCell = UINib(nibName: DropOptionTableViewCell.identifier, bundle: nil)
         dropDownTableView.register(dropVariantCell, forCellReuseIdentifier: DropOptionTableViewCell.identifier)
     }
-    
 }
 
 extension DropView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        tags = presenter.getTags()
-        print("tags count: \(tags.count)")
-        return tags.count
+        return presenter.getTags().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("configure drop cell")
         let cell = tableView.dequeueReusableCell(withIdentifier: DropOptionTableViewCell.identifier, for: indexPath) as! DropOptionTableViewCell
         presenter.configureTagListCell(cell: cell, indexPath: indexPath)
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("tableView didSelectRowAt")
-        presenter.applyTag(tag: tags[indexPath.row])
-        
+        let tags = presenter.getTags()
+        cellHandler?(tags[indexPath.row])
+        presenter.configureTag(tag: tags[indexPath.row])
+        dropDownTableView.reloadData()
     }
 }

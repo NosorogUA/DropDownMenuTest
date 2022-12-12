@@ -31,10 +31,10 @@
                             <action selector="dropButtonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="7hL-HV-Gse"/>
                         </connections>
                     </button>
-                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="7vU-wr-GVi" customClass="DynamicHeightCollectionView" customModule="DropDownMenuTest" customModuleProvider="target">
+                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="7vU-wr-GVi" customClass="DynamicHeightCollectionView" customModule="DropDownMenuTest" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="0.0" width="260" height="85"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="5" minimumInteritemSpacing="5" id="PXM-cV-TOI">
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="PXM-cV-TOI">
                             <size key="itemSize" width="128" height="128"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>

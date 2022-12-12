@@ -3,7 +3,6 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,39 +15,37 @@
                 <rect key="frame" x="0.0" y="0.0" width="137" height="60"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QwL-Ve-7oM">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QyI-Db-KXI">
                         <rect key="frame" x="5" y="5" width="127" height="50"/>
-                        <color key="backgroundColor" systemColor="systemBrownColor"/>
+                        <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="50" id="T3c-yX-D4Z"/>
+                            <constraint firstAttribute="height" constant="50" id="bS8-ok-7vf"/>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="san-E6-OAL"/>
                         </constraints>
-                        <inset key="contentEdgeInsets" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
-                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                        <state key="normal" title="Buttonhgjhgjhgkjhggj">
-                            <color key="titleColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </state>
-                        <connections>
-                            <action selector="tagButtonAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="YjW-XL-RwU"/>
-                        </connections>
-                    </button>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3g1-2G-GJu">
+                        <rect key="frame" x="20" y="20" width="97" height="20.333333333333329"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="QwL-Ve-7oM" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="DMb-zX-8yx"/>
-                <constraint firstItem="QwL-Ve-7oM" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="T7u-jK-cRn"/>
-                <constraint firstAttribute="trailing" secondItem="QwL-Ve-7oM" secondAttribute="trailing" constant="5" id="vzn-AO-2JJ"/>
-                <constraint firstAttribute="bottom" secondItem="QwL-Ve-7oM" secondAttribute="bottom" constant="5" id="xHV-Bs-Z6n"/>
+                <constraint firstAttribute="trailing" secondItem="QyI-Db-KXI" secondAttribute="trailing" constant="5" id="25S-si-ANx"/>
+                <constraint firstItem="QyI-Db-KXI" firstAttribute="trailing" secondItem="3g1-2G-GJu" secondAttribute="trailing" constant="15" id="7q8-7Q-tjr"/>
+                <constraint firstItem="3g1-2G-GJu" firstAttribute="leading" secondItem="QyI-Db-KXI" secondAttribute="leading" constant="15" id="D1q-gD-uLc"/>
+                <constraint firstItem="QyI-Db-KXI" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="EL6-gM-vnm"/>
+                <constraint firstItem="QyI-Db-KXI" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="HI1-Sr-Nh1"/>
+                <constraint firstAttribute="bottom" secondItem="QyI-Db-KXI" secondAttribute="bottom" constant="5" id="iiO-2R-AGV"/>
+                <constraint firstItem="3g1-2G-GJu" firstAttribute="centerY" secondItem="QyI-Db-KXI" secondAttribute="centerY" id="n0F-CJ-4O9"/>
             </constraints>
             <size key="customSize" width="137" height="63"/>
             <connections>
-                <outlet property="tagButton" destination="QwL-Ve-7oM" id="pje-rc-uxs"/>
+                <outlet property="background" destination="QyI-Db-KXI" id="ydh-0m-DFL"/>
+                <outlet property="tagLabel" destination="3g1-2G-GJu" id="vVF-an-1p9"/>
             </connections>
             <point key="canvasLocation" x="66.412213740458014" y="82.394366197183103"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <systemColor name="systemBrownColor">
-            <color red="0.63529411764705879" green="0.51764705882352946" blue="0.36862745098039218" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-    </resources>
 </document>

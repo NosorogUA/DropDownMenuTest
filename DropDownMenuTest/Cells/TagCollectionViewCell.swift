@@ -9,18 +9,21 @@ import UIKit
 
 class TagCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var tagButton: UIButton!
+    @IBOutlet weak var background: UIImageView!
+    @IBOutlet weak var tagLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        setupLabel()
+    }
+    
+    func setupLabel() {
+        background.layer.cornerRadius = 10
+        background.clipsToBounds = true
     }
     
     func cellInit(title: String) {
-        tagButton.setTitle(title, for: .normal)
-    }
-
-    @IBAction func tagButtonAction(_ sender: UIButton) {
-        // batton handler to delete cell from collectionView
+        tagLabel.text = title
     }
 }

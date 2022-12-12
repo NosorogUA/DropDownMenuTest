@@ -14,19 +14,20 @@ class DropDownMenuTableViewCell: UITableViewCell {
     
     var variantsButtonHandler: (() -> Void)?
     var endSearchHandler: (() -> Void)?
+    var cellDeleteHandler: ((_ tag: String) -> Void)?
     
     var tags: [String] = []
     var searchItemPath: [IndexPath]!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        setupCollectionView()
     }
     
     func cellInit(tags: [String]) {
         self.tags = tags
-        print("apply tags \(self.tags)")
-        setupCollectionView()
+        //print("apply tags \(self.tags)")
+        tagFieldCollectionView.reloadData()
     }
     
     func updateDropButton(isHidden: Bool) {
@@ -49,10 +50,13 @@ class DropDownMenuTableViewCell: UITableViewCell {
             flowLayout.minimumInteritemSpacing = 0
             
             tagFieldCollectionView.collectionViewLayout = flowLayout
-            
         }
         
+        let tap = UITapGestureRecognizer(target: tagFieldCollectionView, action: #selector(UIView.endEditing))
+        tap.cancelsTouchesInView = false
+        tagFieldCollectionView.addGestureRecognizer(tap)
     }
+    
     
     private func showDropDownMenu() {
         // show menu and hide button
@@ -67,16 +71,37 @@ class DropDownMenuTableViewCell: UITableViewCell {
     
     func updateCollectionViewLayout() {
         
+        if (tagFieldCollectionView.cellForItem(at: searchItemPath[0])?.bounds.width)! >= tagFieldCollectionView.bounds.width * 0.85 {
+            return
+        }
         tagFieldCollectionView.layoutIfNeeded()
         tagFieldCollectionView.reconfigureItems(at: searchItemPath)
     }
     
     func filterResults(enters: String) {
         print(enters)
+        
+    }
+    
+    func addCell(newTag: String) {
+        if tags.contains(newTag) { return }
+        
+        tags.append(newTag)
+        tagFieldCollectionView.reloadData()
+    }
+    
+    func deleteCell(index: IndexPath) {
+        let tag = tags[index.row]
+        tags.remove(at: index.row)
+//        tags = tags.filter {$0 != tag}
+        tagFieldCollectionView.reloadData()
+        
+        cellDeleteHandler?(tag)
     }
     
     @IBAction func dropButtonAction(_ sender: UIButton) {
         showDropDownMenu()
+        
     }
 }
 
@@ -100,6 +125,7 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
             }
             cell.endSearch = { [weak self] in
                 self?.hideDropDownMenu()
+                self?.addCell(newTag: cell.getEnters())
             }
             cell.filterResults = { [weak self] in
                 self?.updateCollectionViewLayout()
@@ -113,6 +139,10 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
             cell.cellInit(title: tag)
             return cell
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        deleteCell(index: indexPath)
     }
     
 }

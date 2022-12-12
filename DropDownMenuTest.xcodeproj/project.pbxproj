@@ -25,7 +25,7 @@
 		046B6AB3294318E00037D98A /* DropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6AB1294318E00037D98A /* DropView.swift */; };
 		046B6AB4294318E00037D98A /* DropView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046B6AB2294318E00037D98A /* DropView.xib */; };
 		046B6AB6294318F80037D98A /* DropViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6AB5294318F80037D98A /* DropViewPresenter.swift */; };
-		046B6AB9294327240037D98A /* NibLoadeble.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6AB8294327240037D98A /* NibLoadeble.swift */; };
+		046B6AB9294327240037D98A /* NibLoadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6AB8294327240037D98A /* NibLoadable.swift */; };
 		046B6ABC294330260037D98A /* SearchBarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6ABA294330260037D98A /* SearchBarCollectionViewCell.swift */; };
 		046B6ABD294330260037D98A /* SearchBarCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046B6ABB294330260037D98A /* SearchBarCollectionViewCell.xib */; };
 		046B6AC029437AFF0037D98A /* DynamicHeightCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6ABF29437AFF0037D98A /* DynamicHeightCollectionView.swift */; };
@@ -52,7 +52,7 @@
 		046B6AB1294318E00037D98A /* DropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropView.swift; sourceTree = "<group>"; };
 		046B6AB2294318E00037D98A /* DropView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DropView.xib; sourceTree = "<group>"; };
 		046B6AB5294318F80037D98A /* DropViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropViewPresenter.swift; sourceTree = "<group>"; };
-		046B6AB8294327240037D98A /* NibLoadeble.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadeble.swift; sourceTree = "<group>"; };
+		046B6AB8294327240037D98A /* NibLoadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibLoadable.swift; sourceTree = "<group>"; };
 		046B6ABA294330260037D98A /* SearchBarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarCollectionViewCell.swift; sourceTree = "<group>"; };
 		046B6ABB294330260037D98A /* SearchBarCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchBarCollectionViewCell.xib; sourceTree = "<group>"; };
 		046B6ABF29437AFF0037D98A /* DynamicHeightCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightCollectionView.swift; sourceTree = "<group>"; };
@@ -140,7 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				046B6AAA2941F7B30037D98A /* Extention+TableView.swift */,
-				046B6AB8294327240037D98A /* NibLoadeble.swift */,
+				046B6AB8294327240037D98A /* NibLoadable.swift */,
 			);
 			path = extentions;
 			sourceTree = "<group>";
@@ -241,7 +241,7 @@
 			files = (
 				046B6ABC294330260037D98A /* SearchBarCollectionViewCell.swift in Sources */,
 				046B6AAB2941F7B30037D98A /* Extention+TableView.swift in Sources */,
-				046B6AB9294327240037D98A /* NibLoadeble.swift in Sources */,
+				046B6AB9294327240037D98A /* NibLoadable.swift in Sources */,
 				046B6AC029437AFF0037D98A /* DynamicHeightCollectionView.swift in Sources */,
 				046B6AA02941E50F0037D98A /* DropDownMenuTableViewCell.swift in Sources */,
 				046B6AA82941F5F40037D98A /* MainControllerCells.swift in Sources */,
