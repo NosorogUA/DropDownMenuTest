@@ -7,12 +7,15 @@
 
 import UIKit
 
+
 class DropDownMenuTableViewCell: UITableViewCell {
     
-    @IBOutlet private weak var tagFieldCollectionView: UICollectionView!
+    @IBOutlet weak var tagFieldCollectionView: UICollectionView!
     @IBOutlet private weak var dropButton: UIButton!
     
     var variantsButtonHandler: (() -> Void)?
+    var startSearchHandler: (() -> Void)?
+    var updateFramesHandler: (() -> Void)?
     var endSearchHandler: (() -> Void)?
     var cellDeleteHandler: ((_ tag: String) -> Void)?
     
@@ -57,13 +60,6 @@ class DropDownMenuTableViewCell: UITableViewCell {
         tagFieldCollectionView.addGestureRecognizer(tap)
     }
     
-    
-    private func showDropDownMenu() {
-        // show menu and hide button
-        variantsButtonHandler?()
-        updateDropButton(isHidden: true)
-    }
-    
     private func hideDropDownMenu() {
         endSearchHandler?()
         updateDropButton(isHidden: false)
@@ -76,33 +72,42 @@ class DropDownMenuTableViewCell: UITableViewCell {
         }
         tagFieldCollectionView.layoutIfNeeded()
         tagFieldCollectionView.reconfigureItems(at: searchItemPath)
+        updateFramesHandler?()
     }
     
     func filterResults(enters: String) {
         print(enters)
-        
+    }
+    
+    func updateCollectionView() {
+        updateFramesHandler?()
     }
     
     func addCell(newTag: String) {
         if tags.contains(newTag) { return }
         if newTag.count <= 2 { return }
-        
-        tags.append(newTag)
-        tagFieldCollectionView.reloadData()
+
+        tagFieldCollectionView.performBatchUpdates({
+            let indexPath = IndexPath(row: self.tags.count, section: 0)
+            tags.append(newTag) //add your object to data source first
+            tagFieldCollectionView.insertItems(at: [indexPath])
+        }, completion: nil)
     }
     
     func deleteCell(index: IndexPath) {
         let tag = tags[index.row]
-        tags.remove(at: index.row)
-//        tags = tags.filter {$0 != tag}
-        tagFieldCollectionView.reloadData()
-        
-        cellDeleteHandler?(tag)
+        tagFieldCollectionView.performBatchUpdates({
+            tags.remove(at: index.row) //add your object to data source first
+            tagFieldCollectionView.deleteItems(at: [index])
+        }, completion: { _ in
+            self.updateCollectionView()
+            self.cellDeleteHandler?(tag)
+        })
     }
     
     @IBAction func dropButtonAction(_ sender: UIButton) {
-        showDropDownMenu()
-        
+        variantsButtonHandler?()
+        updateDropButton(isHidden: true)
     }
 }
 
@@ -122,7 +127,7 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
             let cell = tagFieldCollectionView.dequeueReusableCell(withReuseIdentifier: SearchBarCollectionViewCell.identifier, for: indexPath) as! SearchBarCollectionViewCell
             searchItemPath = [indexPath]
             cell.startSearch = { [weak self] in
-                self?.showDropDownMenu()
+                self?.startSearchHandler?()
             }
             cell.endSearch = { [weak self] in
                 self?.hideDropDownMenu()
@@ -144,6 +149,7 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         deleteCell(index: indexPath)
+        
     }
     
 }

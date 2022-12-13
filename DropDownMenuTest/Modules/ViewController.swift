@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     var dropTableView: DropView!
     var currentFrames: CGRect!
     var tags: [String] = []
+    var index: IndexPath!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,26 +29,30 @@ class ViewController: UIViewController {
     private func setupTableView() {
         let dropDownCell = UINib(nibName: DropDownMenuTableViewCell.identifier, bundle: nil)
         tableView.register(dropDownCell, forCellReuseIdentifier: DropDownMenuTableViewCell.identifier)
-        tableView.estimatedRowHeight = 500
     }
     
     private func setupDropDownMenu() {
         dropTableView = .fromNib()
         dropTableView.addToList(tags: presenter.getCurrentTags())
+        dropTableView.layer.cornerRadius = 10
+        
         dropTableView.cellHandler = { [weak self] tag in
             self?.presenter.add(tag: tag)
+            // update collection in cell
+            self?.updateCollectionView(tag: tag)
         }
     }
     
     func reloadData() {
-        tableView.reloadData()
+         //tableView.reloadData()
+        tableView.updateConstraints()
     }
     
     private func addDropDownView(frames: CGRect) {
         // setup background
         transparentView = UIView()
         transparentView.frame = UIApplication.shared.keyWindow?.frame ?? self.view.frame
-        transparentView.backgroundColor = UIColor.black.withAlphaComponent(0.9)
+        transparentView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
         self.view.addSubview(transparentView)
         
         // setup gesture
@@ -55,15 +60,17 @@ class ViewController: UIViewController {
         tapGesture.cancelsTouchesInView = false
         transparentView.addGestureRecognizer(tapGesture)
         
-        dropTableView.frame = CGRect(x: frames.origin.x + 10, y: frames.origin.y + frames.height, width: frames.width * 0.8, height: 0)
+        calculateFramesDropView(frames: frames)
+    }
+    
+    private func calculateFramesDropView(frames: CGRect) {
+        dropTableView.frame = CGRect(x: frames.origin.x + 10, y: self.tableView.frame.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 0)
         self.view.addSubview(dropTableView)
-        dropTableView.layer.cornerRadius = 10
-        
         //animate showing
         transparentView.alpha = 0
         UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
             self.transparentView.alpha = 0.5
-            self.dropTableView.frame = CGRect(x: frames.origin.x + 10, y: frames.origin.y + frames.height, width: frames.width * 0.8, height: 400)
+            self.dropTableView.frame = CGRect(x: frames.origin.x + 10, y: self.tableView.frame.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 400)
         }, completion: nil)
     }
     
@@ -72,27 +79,28 @@ class ViewController: UIViewController {
         //animate hiding
         UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
             self.transparentView.alpha = 0
-            self.dropTableView.frame = CGRect(x: self.currentFrames.origin.x + 10, y: self.currentFrames.origin.y + self.currentFrames.height, width: self.currentFrames.width * 0.8, height: 0)
+            self.dropTableView.frame = CGRect(x: self.currentFrames.origin.x + 10, y: self.tableView.frame.origin.y + self.currentFrames.origin.y + self.currentFrames.height, width: self.currentFrames.width * 0.8, height: 0)
         }, completion: { _ in
             //self.dropTableView.removeFromSuperview()
             self.transparentView.removeFromSuperview()
         })
     }
     
+    func updateCollectionView(tag: String) {
+        let cell = tableView.visibleCells.first as! DropDownMenuTableViewCell
+        cell.addCell(newTag: tag)
+    }
+    
     func openDropMenu(frames: CGRect) {
-        //open table vie
-        print("Open drop menu")
         currentFrames = frames
         addDropDownView(frames: frames)
     }
     
-    func pushTag(tag: String) {
-        
-    }
     func addTagToDropMenu(_ tag: String) {
         dropTableView.addSingle(tag: tag)
         presenter.remove(tag: tag)
     }
+    
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -106,15 +114,22 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         case .tags:
             print("configure cell")
             let cell = tableView.dequeueReusableCell(withIdentifier: DropDownMenuTableViewCell.identifier, for: indexPath) as! DropDownMenuTableViewCell
+            index = indexPath
             presenter.configureDetailCell(cell)
             cell.variantsButtonHandler = { [weak self] in
                 self?.openDropMenu(frames: cell.frame)
+            }
+            cell.startSearchHandler = { [weak self] in
+                self?.openDropMenu(frames: cell.frame)
+            }
+            cell.updateFramesHandler = { [weak self] in
             }
             cell.endSearchHandler = { [weak self] in
                 self?.removeTransparentView()
             }
             cell.cellDeleteHandler = { [weak self] tag in
                 self?.addTagToDropMenu(tag)
+                
                 print("tag \(tag) added to drop-down menu")
             }
             cell.layoutIfNeeded()
@@ -125,11 +140,15 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.layoutIfNeeded()
+    }
 }

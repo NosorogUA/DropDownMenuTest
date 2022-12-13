@@ -22,13 +22,14 @@ class DropView: UIView, NibLoadable {
         presenter = DropViewPresenter(view: self)
         setupTableView()
     }
-  
+    
     func addToList(tags: [String]) {
         for tag in tags {
             presenter.add(tag: tag)
         }
         dropDownTableView.reloadData()
     }
+    
     func addSingle(tag: String) {
         presenter.add(tag: tag)
         dropDownTableView.reloadData()
