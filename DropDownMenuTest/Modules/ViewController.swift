@@ -132,7 +132,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 self?.updateTableViewLayouts()
             }
             cell.endSearchHandler = { [weak self] in
-                self?.removeTransparentView()
+                //self?.removeTransparentView()
             }
             cell.cellDeleteHandler = { [weak self] tag in
                 self?.addTagToDropMenu(tag)
