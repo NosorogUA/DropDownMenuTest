@@ -35,7 +35,7 @@ class Presenter: PresenterProtocol {
             filteredTags.append(tag)
             print("Tag filtered: \(tag), added")
         }
-        view?.reloadData()
+        view?.updateTableViewLayouts()
     }
     
     func add(tag: String) {
@@ -45,7 +45,7 @@ class Presenter: PresenterProtocol {
             filteredTags.append(tag)
             print("Tag filtered: \(tag), added")
         }
-        view?.reloadData()
+        view?.updateTableViewLayouts()
     }
      
     func remove(tag: String) {
@@ -55,7 +55,7 @@ class Presenter: PresenterProtocol {
         } else {
             return
         }
-        view?.reloadData()
+        view?.updateTableViewLayouts()
     }
     
     func getCurrentTags() -> [String] {

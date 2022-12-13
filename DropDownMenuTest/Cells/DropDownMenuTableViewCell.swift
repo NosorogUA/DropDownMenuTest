@@ -80,6 +80,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
     }
     
     func updateCollectionView() {
+        tagFieldCollectionView.layoutIfNeeded()
         updateFramesHandler?()
     }
     
@@ -92,6 +93,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
             tags.append(newTag) //add your object to data source first
             tagFieldCollectionView.insertItems(at: [indexPath])
         }, completion: nil)
+        updateCollectionView()
     }
     
     func deleteCell(index: IndexPath) {
@@ -103,6 +105,11 @@ class DropDownMenuTableViewCell: UITableViewCell {
             self.updateCollectionView()
             self.cellDeleteHandler?(tag)
         })
+    }
+    
+    func clearSearchBar() {
+        let cell = tagFieldCollectionView.visibleCells.first(where: ({ $0 is SearchBarCollectionViewCell })) as! SearchBarCollectionViewCell
+        cell.finishEditing()
     }
     
     @IBAction func dropButtonAction(_ sender: UIButton) {

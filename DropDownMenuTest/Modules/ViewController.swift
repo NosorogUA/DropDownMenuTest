@@ -43,9 +43,13 @@ class ViewController: UIViewController {
         }
     }
     
-    func reloadData() {
+    func updateTableViewLayouts() {
          //tableView.reloadData()
-        tableView.updateConstraints()
+        //tableView.updateConstraints()
+        tableView.beginUpdates()
+        tableView.setNeedsLayout()
+        tableView.layoutIfNeeded()
+        tableView.endUpdates()
     }
     
     private func addDropDownView(frames: CGRect) {
@@ -70,7 +74,7 @@ class ViewController: UIViewController {
         transparentView.alpha = 0
         UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
             self.transparentView.alpha = 0.5
-            self.dropTableView.frame = CGRect(x: frames.origin.x + 10, y: self.tableView.frame.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 400)
+            self.dropTableView.frame = CGRect(x: frames.origin.x + 10, y: self.tableView.frame.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 200)
         }, completion: nil)
     }
     
@@ -87,8 +91,10 @@ class ViewController: UIViewController {
     }
     
     func updateCollectionView(tag: String) {
-        let cell = tableView.visibleCells.first as! DropDownMenuTableViewCell
+        let cell = tableView.visibleCells.first(where: ({ $0 is DropDownMenuTableViewCell})) as! DropDownMenuTableViewCell
         cell.addCell(newTag: tag)
+        cell.clearSearchBar()
+        calculateFramesDropView(frames: cell.frame)
     }
     
     func openDropMenu(frames: CGRect) {
@@ -123,6 +129,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 self?.openDropMenu(frames: cell.frame)
             }
             cell.updateFramesHandler = { [weak self] in
+                self?.updateTableViewLayouts()
             }
             cell.endSearchHandler = { [weak self] in
                 self?.removeTransparentView()

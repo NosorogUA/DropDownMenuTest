@@ -26,6 +26,9 @@ class SearchBarCollectionViewCell: UICollectionViewCell {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         searchBarTextField.endEditing(true)
     }
+    func finishEditing() {
+        searchBarTextField.endEditing(true)
+    }
     
     func setBounds(bounds: CGRect){
         cellBounds = bounds
@@ -47,6 +50,7 @@ class SearchBarCollectionViewCell: UICollectionViewCell {
     @IBAction private func endSearching(_ sender: UITextField) {
         // close dropdown windows and show button
         endSearch?()
+        searchBarTextField.text = nil
     }
 }
 
