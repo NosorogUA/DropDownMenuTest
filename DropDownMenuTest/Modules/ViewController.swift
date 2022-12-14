@@ -81,6 +81,7 @@ class ViewController: UIViewController {
             self.dropTableView.frame = CGRect(x: self.currentFrames.origin.x + 10, y: self.tableView.frame.origin.y + self.currentFrames.origin.y + self.currentFrames.height, width: self.currentFrames.width * 0.8, height: 0)
         }, completion: { _ in
             //self.dropTableView.removeFromSuperview()
+            self.endFiltering()
             self.transparentView.removeFromSuperview()
         })
     }
@@ -95,10 +96,13 @@ class ViewController: UIViewController {
     func updateCollectionView(tag: String) {
         let cell = tableView.visibleCells.first(where: ({ $0 is DropDownMenuTableViewCell})) as! DropDownMenuTableViewCell
         cell.addCell(newTag: tag)
-        cell.clearSearchBar()
-        calculateFramesDropView(frames: cell.frame)
+        updateTableViewLayouts()
     }
     
+    func endFiltering() {
+        let cell = tableView.visibleCells.first(where: ({ $0 is DropDownMenuTableViewCell})) as! DropDownMenuTableViewCell
+        cell.clearSearchBar()
+    }
     
     func addTagToDropMenu(_ tag: String) {
         dropTableView.addSingle(tag: tag)
@@ -131,6 +135,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             }
             cell.cellDeleteHandler = { [weak self] tag in
                 self?.addTagToDropMenu(tag)
+                self?.removeTransparentView()
                 print("tag \(tag) added to drop-down menu")
             }
             cell.layoutIfNeeded()

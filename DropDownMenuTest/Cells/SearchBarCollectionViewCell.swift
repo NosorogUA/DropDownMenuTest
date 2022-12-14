@@ -23,9 +23,9 @@ class SearchBarCollectionViewCell: UICollectionViewCell {
         searchBarTextField.delegate = self
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        searchBarTextField.endEditing(true)
-    }
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        searchBarTextField.endEditing(true)
+//    }
     func finishEditing() {
         searchBarTextField.text = ""
         searchBarTextField.endEditing(true)

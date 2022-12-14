@@ -13,13 +13,6 @@ class DropDownMenuTableViewCell: UITableViewCell {
     @IBOutlet weak var tagFieldCollectionView: UICollectionView!
     @IBOutlet private weak var dropButton: UIButton!
     
-    private var collectionHeight: CGFloat? {
-        didSet {
-            print("UpdateFrameHeight")
-            updateFramesHandler?()
-        }
-    }
-    
     var variantsButtonHandler: (() -> Void)?
     var startSearchHandler: (() -> Void)?
     var updateFramesHandler: (() -> Void)?
@@ -60,9 +53,9 @@ class DropDownMenuTableViewCell: UITableViewCell {
             tagFieldCollectionView.collectionViewLayout = flowLayout
         }
         
-        let tap = UITapGestureRecognizer(target: tagFieldCollectionView, action: #selector(UIView.endEditing))
-        tap.cancelsTouchesInView = false
-        tagFieldCollectionView.addGestureRecognizer(tap)
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(UIView.endEditing))
+//        tap.cancelsTouchesInView = false
+//        tagFieldCollectionView.addGestureRecognizer(tap)
     }
     
     func updateCollectionViewLayout() {
@@ -72,7 +65,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
         }
         tagFieldCollectionView.layoutIfNeeded()
         tagFieldCollectionView.reconfigureItems(at: searchItemPath)
-        collectionHeight = tagFieldCollectionView.frame.height
+        updateFramesHandler?()
     }
     
     func addCell(newTag: String) {
@@ -84,7 +77,6 @@ class DropDownMenuTableViewCell: UITableViewCell {
             tags.append(newTag) //add your object to data source first
             tagFieldCollectionView.insertItems(at: [indexPath])
         }, completion: nil)
-        self.collectionHeight = self.tagFieldCollectionView.frame.height
     }
     
     func deleteCell(index: IndexPath) {
@@ -94,7 +86,6 @@ class DropDownMenuTableViewCell: UITableViewCell {
             tagFieldCollectionView.deleteItems(at: [index])
         }, completion: { _ in
             self.cellDeleteHandler?(tag)
-            self.collectionHeight = self.tagFieldCollectionView.frame.height
         })
     }
     
