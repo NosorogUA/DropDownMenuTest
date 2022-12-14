@@ -38,18 +38,23 @@ class ViewController: UIViewController {
         
         dropTableView.cellHandler = { [weak self] tag in
             self?.presenter.add(tag: tag)
-            // update collection in cell
             self?.updateCollectionView(tag: tag)
         }
     }
     
-    func updateTableViewLayouts() {
-         //tableView.reloadData()
-        //tableView.updateConstraints()
-        tableView.beginUpdates()
-        tableView.setNeedsLayout()
-        tableView.layoutIfNeeded()
-        tableView.endUpdates()
+    private func calculateFramesDropView(frames: CGRect) {
+        dropTableView.frame = CGRect(x: frames.origin.x + 10, y: self.tableView.frame.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 0)
+        self.view.addSubview(dropTableView)
+        //animate showing
+        UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
+            self.transparentView.alpha = 0.5
+            self.dropTableView.frame = CGRect(x: frames.origin.x + 10, y: self.tableView.frame.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 200)
+        }, completion: nil)
+    }
+    
+    func openDropMenu(frames: CGRect) {
+        currentFrames = frames
+        addDropDownView(frames: frames)
     }
     
     private func addDropDownView(frames: CGRect) {
@@ -57,6 +62,7 @@ class ViewController: UIViewController {
         transparentView = UIView()
         transparentView.frame = UIApplication.shared.keyWindow?.frame ?? self.view.frame
         transparentView.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        transparentView.alpha = 0
         self.view.addSubview(transparentView)
         
         // setup gesture
@@ -65,17 +71,6 @@ class ViewController: UIViewController {
         transparentView.addGestureRecognizer(tapGesture)
         
         calculateFramesDropView(frames: frames)
-    }
-    
-    private func calculateFramesDropView(frames: CGRect) {
-        dropTableView.frame = CGRect(x: frames.origin.x + 10, y: self.tableView.frame.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 0)
-        self.view.addSubview(dropTableView)
-        //animate showing
-        transparentView.alpha = 0
-        UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
-            self.transparentView.alpha = 0.5
-            self.dropTableView.frame = CGRect(x: frames.origin.x + 10, y: self.tableView.frame.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 200)
-        }, completion: nil)
     }
     
     @objc func removeTransparentView() {
@@ -90,6 +85,13 @@ class ViewController: UIViewController {
         })
     }
     
+    func updateTableViewLayouts() {
+        tableView.beginUpdates()
+        tableView.setNeedsLayout()
+        tableView.layoutIfNeeded()
+        tableView.endUpdates()
+    }
+    
     func updateCollectionView(tag: String) {
         let cell = tableView.visibleCells.first(where: ({ $0 is DropDownMenuTableViewCell})) as! DropDownMenuTableViewCell
         cell.addCell(newTag: tag)
@@ -97,16 +99,11 @@ class ViewController: UIViewController {
         calculateFramesDropView(frames: cell.frame)
     }
     
-    func openDropMenu(frames: CGRect) {
-        currentFrames = frames
-        addDropDownView(frames: frames)
-    }
     
     func addTagToDropMenu(_ tag: String) {
         dropTableView.addSingle(tag: tag)
         presenter.remove(tag: tag)
     }
-    
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
@@ -130,13 +127,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             }
             cell.updateFramesHandler = { [weak self] in
                 self?.updateTableViewLayouts()
-            }
-            cell.endSearchHandler = { [weak self] in
-                //self?.removeTransparentView()
+                self?.calculateFramesDropView(frames: cell.frame)
             }
             cell.cellDeleteHandler = { [weak self] tag in
                 self?.addTagToDropMenu(tag)
-                
                 print("tag \(tag) added to drop-down menu")
             }
             cell.layoutIfNeeded()

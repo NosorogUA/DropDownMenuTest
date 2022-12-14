@@ -27,6 +27,7 @@ class SearchBarCollectionViewCell: UICollectionViewCell {
         searchBarTextField.endEditing(true)
     }
     func finishEditing() {
+        searchBarTextField.text = ""
         searchBarTextField.endEditing(true)
     }
     

@@ -13,10 +13,16 @@ class DropDownMenuTableViewCell: UITableViewCell {
     @IBOutlet weak var tagFieldCollectionView: UICollectionView!
     @IBOutlet private weak var dropButton: UIButton!
     
+    private var collectionHeight: CGFloat? {
+        didSet {
+            print("UpdateFrameHeight")
+            updateFramesHandler?()
+        }
+    }
+    
     var variantsButtonHandler: (() -> Void)?
     var startSearchHandler: (() -> Void)?
     var updateFramesHandler: (() -> Void)?
-    var endSearchHandler: (() -> Void)?
     var cellDeleteHandler: ((_ tag: String) -> Void)?
     
     var tags: [String] = []
@@ -29,7 +35,6 @@ class DropDownMenuTableViewCell: UITableViewCell {
     
     func cellInit(tags: [String]) {
         self.tags = tags
-        //print("apply tags \(self.tags)")
         tagFieldCollectionView.reloadData()
     }
     
@@ -60,40 +65,26 @@ class DropDownMenuTableViewCell: UITableViewCell {
         tagFieldCollectionView.addGestureRecognizer(tap)
     }
     
-    private func hideDropDownMenu() {
-        endSearchHandler?()
-        updateDropButton(isHidden: false)
-    }
-    
     func updateCollectionViewLayout() {
-        
-        if (tagFieldCollectionView.cellForItem(at: searchItemPath[0])?.bounds.width)! >= tagFieldCollectionView.bounds.width * 0.85 {
+        let cell = tagFieldCollectionView.visibleCells.first(where: ({ $0 is SearchBarCollectionViewCell})) as! SearchBarCollectionViewCell
+        if cell.bounds.width >= tagFieldCollectionView.bounds.width * 0.85 {
             return
         }
         tagFieldCollectionView.layoutIfNeeded()
         tagFieldCollectionView.reconfigureItems(at: searchItemPath)
-        updateFramesHandler?()
-    }
-    
-    func filterResults(enters: String) {
-        print(enters)
-    }
-    
-    func updateCollectionView() {
-        tagFieldCollectionView.layoutIfNeeded()
-        updateFramesHandler?()
+        collectionHeight = tagFieldCollectionView.frame.height
     }
     
     func addCell(newTag: String) {
         if tags.contains(newTag) { return }
         if newTag.count <= 2 { return }
-
+        
         tagFieldCollectionView.performBatchUpdates({
             let indexPath = IndexPath(row: self.tags.count, section: 0)
             tags.append(newTag) //add your object to data source first
             tagFieldCollectionView.insertItems(at: [indexPath])
         }, completion: nil)
-        updateCollectionView()
+        self.collectionHeight = self.tagFieldCollectionView.frame.height
     }
     
     func deleteCell(index: IndexPath) {
@@ -102,9 +93,17 @@ class DropDownMenuTableViewCell: UITableViewCell {
             tags.remove(at: index.row) //add your object to data source first
             tagFieldCollectionView.deleteItems(at: [index])
         }, completion: { _ in
-            self.updateCollectionView()
             self.cellDeleteHandler?(tag)
+            self.collectionHeight = self.tagFieldCollectionView.frame.height
         })
+    }
+    
+    private func hideDropDownMenu() {
+        updateDropButton(isHidden: false)
+    }
+    
+    func filterResults(enters: String) {
+        print(enters)
     }
     
     func clearSearchBar() {
@@ -158,5 +157,11 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
         deleteCell(index: indexPath)
         
     }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0.0
+    }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0.0
+    }
 }
