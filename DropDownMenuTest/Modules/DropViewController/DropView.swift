@@ -13,6 +13,7 @@ class DropView: UIView, NibLoadable {
     
     var presenter: DropViewPresenterProtocol!
     var cellHandler: ((_ tag: String) -> Void)?
+    var closeHandler: (() -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -38,6 +39,9 @@ class DropView: UIView, NibLoadable {
     func removeFromList(tag: String) {
         presenter.remove(tag: tag)
         dropDownTableView.reloadData()
+        if presenter.getTags().count == 0 {
+            closeHandler?()
+        }
     }
    
     private func setupTableView() {

@@ -8,7 +8,7 @@
 import UIKit
 
 class SearchBarCollectionViewCell: UICollectionViewCell {
-
+    
     @IBOutlet private weak var searchBarTextField: UITextField!
     @IBOutlet weak var widthConstraint: NSLayoutConstraint!
     
@@ -23,16 +23,21 @@ class SearchBarCollectionViewCell: UICollectionViewCell {
         searchBarTextField.delegate = self
     }
     
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        searchBarTextField.endEditing(true)
-//    }
-    func finishEditing() {
+    func startFiltering() {
+        searchBarTextField.becomeFirstResponder()
+    }
+    
+    func finishFiltering() {
         searchBarTextField.text = ""
         searchBarTextField.endEditing(true)
     }
     
     func setBounds(bounds: CGRect){
         cellBounds = bounds
+    }
+    
+    func getStatus() -> Bool {
+        return searchBarTextField.isEditing
     }
     
     func getEnters() -> String {
@@ -47,7 +52,7 @@ class SearchBarCollectionViewCell: UICollectionViewCell {
     @IBAction private func changedSearching(_ sender: UITextField) {
         filterResults?()
     }
-//
+    //
     @IBAction private func endSearching(_ sender: UITextField) {
         // close dropdown windows and show button
         endSearch?()
@@ -56,5 +61,5 @@ class SearchBarCollectionViewCell: UICollectionViewCell {
 }
 
 extension SearchBarCollectionViewCell: UITextFieldDelegate {
-
+    
 }

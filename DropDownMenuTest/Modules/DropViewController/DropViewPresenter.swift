@@ -37,7 +37,7 @@ class DropViewPresenter: DropViewPresenterProtocol {
 //    }
     
     func add(tag: String) {
-        if let index = currentTags.firstIndex(where: { $0 == tag }) {
+        if currentTags.firstIndex(where: { $0 == tag }) != nil {
             return
         } else {
             currentTags.append(tag)
