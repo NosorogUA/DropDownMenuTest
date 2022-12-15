@@ -72,7 +72,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
             return
         }
         tagFieldCollectionView.layoutIfNeeded()
-        tagFieldCollectionView.reconfigureItems(at: searchItemPath)
+        tagFieldCollectionView.collectionViewLayout.invalidateLayout()
         updateFramesHandler?()
     }
     
