@@ -109,6 +109,11 @@ class DropDownMenuTableViewCell: UITableViewCell {
             }
         }
     }
+    
+    func getMask () -> String {
+        let cell = tagFieldCollectionView.visibleCells.first(where: ({ $0 is SearchBarCollectionViewCell })) as! SearchBarCollectionViewCell
+        return cell.getEnters()
+    }
 
     func clearSearchBar() {
         let cell = tagFieldCollectionView.visibleCells.first(where: ({ $0 is SearchBarCollectionViewCell })) as! SearchBarCollectionViewCell

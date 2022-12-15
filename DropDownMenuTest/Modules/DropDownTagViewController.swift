@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  DropDownTagViewController.swift
 //  DropDownMenuTest
 //
 //  Created by mac on 12/8/22.
@@ -7,11 +7,15 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+protocol DropDownTagViewControllerProtocol: AnyObject {
+    func updateTableViewLayouts()
+}
+
+class DropDownTagViewController: UIViewController, DropDownTagViewControllerProtocol {
     
     @IBOutlet private weak var tableView: UITableView!
     
-    var presenter: PresenterProtocol!
+    var presenter: DropDownTagPresenterProtocol!
     
     private var transparentView: UIView!
     private var dropTableView: DropView!
@@ -20,7 +24,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.presenter = Presenter(view: self)
+        self.presenter = DropDownTagPresenter(view: self)
         setupTableView()
         setupDropDownMenu()
     }
@@ -99,6 +103,7 @@ class ViewController: UIViewController {
     private func addToCollection(tag: String) {
         let cell = tableView.visibleCells.first(where: ({ $0 is DropDownMenuTableViewCell})) as! DropDownMenuTableViewCell
         cell.addCell(newTag: tag)
+        filterTags(mask: cell.getMask())
         updateTableViewLayouts()
     }
     
@@ -117,7 +122,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
+extension DropDownTagViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }

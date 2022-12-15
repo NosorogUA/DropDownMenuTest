@@ -8,7 +8,7 @@
 import Foundation
 
 protocol DropViewPresenterProtocol {
-    init(view: DropView)
+    init(view: DropViewProtocol)
     func add(tag: String)
     func remove(tag: String)
     func filterTags(mask: String)
@@ -18,12 +18,12 @@ protocol DropViewPresenterProtocol {
 
 class DropViewPresenter: DropViewPresenterProtocol {
     
-    private weak var view: DropView?
+    private weak var view: DropViewProtocol?
     
     var currentTags: [String] = []
     var filteredTags: [String] = []
     
-    required init(view: DropView) {
+    required init(view: DropViewProtocol) {
         self.view = view
     }
     
@@ -33,7 +33,13 @@ class DropViewPresenter: DropViewPresenterProtocol {
         } else {
             currentTags.append(tag)
             //print("Tag: \(tag), added")
-            filterTags(mask: "")
+        }
+        
+        if filteredTags.firstIndex(where: { $0 == tag }) != nil {
+            return
+        } else {
+            filteredTags.append(tag)
+            //print("Tag: \(tag), added")
         }
     }
     
@@ -48,7 +54,12 @@ class DropViewPresenter: DropViewPresenterProtocol {
     func remove(tag: String) {
         if let index = currentTags.firstIndex(where: { $0 == tag }) {
             currentTags.remove(at: index)
-            filterTags(mask: "")
+        } else {
+            return
+        }
+        
+        if let filterIndex = filteredTags.firstIndex(where: { $0 == tag }) {
+            filteredTags.remove(at: filterIndex)
             //print("Tag: \(tag), deleted")
         } else {
             return

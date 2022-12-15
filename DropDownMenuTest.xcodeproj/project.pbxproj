@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		046B6A872941E3CF0037D98A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6A862941E3CF0037D98A /* AppDelegate.swift */; };
 		046B6A892941E3CF0037D98A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6A882941E3CF0037D98A /* SceneDelegate.swift */; };
-		046B6A8B2941E3CF0037D98A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6A8A2941E3CF0037D98A /* ViewController.swift */; };
+		046B6A8B2941E3CF0037D98A /* DropDownTagViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6A8A2941E3CF0037D98A /* DropDownTagViewController.swift */; };
 		046B6A8E2941E3CF0037D98A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 046B6A8C2941E3CF0037D98A /* Main.storyboard */; };
 		046B6A902941E3D10037D98A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 046B6A8F2941E3D10037D98A /* Assets.xcassets */; };
 		046B6A932941E3D10037D98A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 046B6A912941E3D10037D98A /* LaunchScreen.storyboard */; };
-		046B6A9B2941E4210037D98A /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6A9A2941E4210037D98A /* Presenter.swift */; };
+		046B6A9B2941E4210037D98A /* DropDownTagPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6A9A2941E4210037D98A /* DropDownTagPresenter.swift */; };
 		046B6AA02941E50F0037D98A /* DropDownMenuTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6A9E2941E50F0037D98A /* DropDownMenuTableViewCell.swift */; };
 		046B6AA12941E50F0037D98A /* DropDownMenuTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046B6A9F2941E50F0037D98A /* DropDownMenuTableViewCell.xib */; };
 		046B6AA42941E7520037D98A /* TagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6AA22941E7520037D98A /* TagCollectionViewCell.swift */; };
@@ -35,12 +35,12 @@
 		046B6A832941E3CF0037D98A /* DropDownMenuTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DropDownMenuTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		046B6A862941E3CF0037D98A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		046B6A882941E3CF0037D98A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		046B6A8A2941E3CF0037D98A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		046B6A8A2941E3CF0037D98A /* DropDownTagViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownTagViewController.swift; sourceTree = "<group>"; };
 		046B6A8D2941E3CF0037D98A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		046B6A8F2941E3D10037D98A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		046B6A922941E3D10037D98A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		046B6A942941E3D10037D98A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		046B6A9A2941E4210037D98A /* Presenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
+		046B6A9A2941E4210037D98A /* DropDownTagPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownTagPresenter.swift; sourceTree = "<group>"; };
 		046B6A9E2941E50F0037D98A /* DropDownMenuTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownMenuTableViewCell.swift; sourceTree = "<group>"; };
 		046B6A9F2941E50F0037D98A /* DropDownMenuTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DropDownMenuTableViewCell.xib; sourceTree = "<group>"; };
 		046B6AA22941E7520037D98A /* TagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -105,8 +105,8 @@
 			isa = PBXGroup;
 			children = (
 				046B6AB0294318AE0037D98A /* DropViewController */,
-				046B6A9A2941E4210037D98A /* Presenter.swift */,
-				046B6A8A2941E3CF0037D98A /* ViewController.swift */,
+				046B6A9A2941E4210037D98A /* DropDownTagPresenter.swift */,
+				046B6A8A2941E3CF0037D98A /* DropDownTagViewController.swift */,
 				046B6A8C2941E3CF0037D98A /* Main.storyboard */,
 			);
 			path = Modules;
@@ -245,12 +245,12 @@
 				046B6AC029437AFF0037D98A /* DynamicHeightCollectionView.swift in Sources */,
 				046B6AA02941E50F0037D98A /* DropDownMenuTableViewCell.swift in Sources */,
 				046B6AA82941F5F40037D98A /* MainControllerCells.swift in Sources */,
-				046B6A8B2941E3CF0037D98A /* ViewController.swift in Sources */,
+				046B6A8B2941E3CF0037D98A /* DropDownTagViewController.swift in Sources */,
 				046B6A872941E3CF0037D98A /* AppDelegate.swift in Sources */,
 				046B6AB3294318E00037D98A /* DropView.swift in Sources */,
 				046B6AB6294318F80037D98A /* DropViewPresenter.swift in Sources */,
 				046B6AA42941E7520037D98A /* TagCollectionViewCell.swift in Sources */,
-				046B6A9B2941E4210037D98A /* Presenter.swift in Sources */,
+				046B6A9B2941E4210037D98A /* DropDownTagPresenter.swift in Sources */,
 				046B6A892941E3CF0037D98A /* SceneDelegate.swift in Sources */,
 				046B6AAE294221DB0037D98A /* DropOptionTableViewCell.swift in Sources */,
 			);

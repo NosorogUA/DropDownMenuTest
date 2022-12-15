@@ -1,5 +1,5 @@
 //
-//  Presenter.swift
+//  DropDownTagPresenter.swift
 //  DropDownMenuTest
 //
 //  Created by mac on 12/8/22.
@@ -7,21 +7,21 @@
 
 import Foundation
 
-protocol PresenterProtocol {
-    init(view: ViewController)
+protocol DropDownTagPresenterProtocol {
+    init(view: DropDownTagViewControllerProtocol)
     func getCurrentTags() -> [String]
     func configureDetailCell(_ cell: DropDownMenuTableViewCell)
     func add(tag: String)
     func remove(tag: String)
 }
 
-class Presenter: PresenterProtocol {
-    private weak var view: ViewController?
+class DropDownTagPresenter: DropDownTagPresenterProtocol {
+    private weak var view: DropDownTagViewControllerProtocol?
     
     var currentTags: [String] = ["tag1", "tag2", "tag3", "apple", "google", "facebook"]
     var filteredTags: [String] = []
     
-    required init(view: ViewController) {
+    required init(view: DropDownTagViewControllerProtocol) {
         self.view = view
         // apply current tags here
     }

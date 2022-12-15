@@ -7,7 +7,11 @@
 
 import UIKit
 
-class DropView: UIView, NibLoadable {
+protocol DropViewProtocol: AnyObject {
+    
+}
+
+class DropView: UIView, DropViewProtocol, NibLoadable {
 
     @IBOutlet private weak var dropDownTableView: UITableView!
     
@@ -30,6 +34,7 @@ class DropView: UIView, NibLoadable {
     }
     
     func filterTags(mask: String) {
+        
         presenter.filterTags(mask: mask)
         dropDownTableView.reloadData()
     }
@@ -38,7 +43,6 @@ class DropView: UIView, NibLoadable {
         for tag in tags {
             presenter.add(tag: tag)
         }
-        presenter.filterTags(mask: "")
         dropDownTableView.reloadData()
     }
     
