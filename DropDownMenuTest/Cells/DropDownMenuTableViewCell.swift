@@ -93,7 +93,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
     private func deleteCell(index: IndexPath) {
         let tag = tags[index.row]
         tagFieldCollectionView.performBatchUpdates({
-            tags.remove(at: index.row) //add your object to data source first
+            tags.remove(at: index.row) //delete your object to data source first
             tagFieldCollectionView.deleteItems(at: [index])
         }, completion: { _ in
             self.cellDeleteHandler?(tag)
