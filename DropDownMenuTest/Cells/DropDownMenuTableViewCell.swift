@@ -59,20 +59,14 @@ class DropDownMenuTableViewCell: UITableViewCell {
         }
     }
     
-    private func updateCollectionViewLayout(isFill: Bool) {
+    private func updateCollectionViewLayout() {
         let cell = tagFieldCollectionView.visibleCells.first(where: ({ $0 is SearchBarCollectionViewCell})) as! SearchBarCollectionViewCell
-        
-        if isFill {
-            let leftPoint = cell.frame.minX
-            let rightPoint = tagFieldCollectionView.bounds.maxX - 30// collection view right content offset
-            let delta = rightPoint - leftPoint
-            cell.frame = CGRect(x: cell.frame.origin.x, y: cell.frame.origin.y, width: delta, height: cell.frame.height)
-        }
         
         if cell.bounds.width >= tagFieldCollectionView.bounds.width * 0.9 {
             return
         }
         tagFieldCollectionView.layoutIfNeeded()
+        tagFieldCollectionView.collectionViewLayout.invalidateLayout()
         updateFramesHandler?()
     }
     
@@ -117,7 +111,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
     func clearSearchBar() {
         let cell = tagFieldCollectionView.visibleCells.first(where: ({ $0 is SearchBarCollectionViewCell })) as! SearchBarCollectionViewCell
         cell.finishFiltering()
-        updateCollectionViewLayout(isFill: true)
+        updateCollectionViewLayout()
     }
     
     private func updateRightIcon(isHidden: Bool) {
@@ -154,12 +148,11 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
             cell.endSearch = { [weak self] in
                 self?.updateRightIcon(isHidden: false)
                 self?.addCell(newTag: cell.getEnters())
-                self?.updateCollectionViewLayout(isFill: true)
+                self?.updateCollectionViewLayout()
             }
             cell.filterResults = { [weak self] in
-                self?.updateCollectionViewLayout(isFill: false)
+                self?.updateCollectionViewLayout()
                 self?.filteringHandler?(cell.getEnters())
-                self?.tagFieldCollectionView.collectionViewLayout.invalidateLayout()
             }
             return cell
         } else {
@@ -174,8 +167,6 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
         if let cell = self.tagFieldCollectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
             deleteCell(index: indexPath)
         }
-        
-        
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 0.0

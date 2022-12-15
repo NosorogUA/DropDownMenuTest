@@ -66,7 +66,6 @@ class DropDownTagPresenter: DropDownTagPresenterProtocol {
     }
     
     func configureDetailCell(_ cell: DropDownMenuTableViewCell) {
-        print(getFilteredTags())
         cell.cellInit(tags: getFilteredTags())
     }
 }

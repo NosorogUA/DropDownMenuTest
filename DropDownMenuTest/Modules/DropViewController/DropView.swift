@@ -8,8 +8,9 @@
 import UIKit
 
 protocol DropViewProtocol: AnyObject {
-    
+    func reloadData()
 }
+
 
 class DropView: UIView, DropViewProtocol, NibLoadable {
 
@@ -27,33 +28,30 @@ class DropView: UIView, DropViewProtocol, NibLoadable {
         setupTableView()
     }
     
+    func reloadData() {
+        dropDownTableView.reloadData()
+    }
+    
     private func setupTableView() {
-        //register options cell
         let dropVariantCell = UINib(nibName: DropOptionTableViewCell.identifier, bundle: nil)
         dropDownTableView.register(dropVariantCell, forCellReuseIdentifier: DropOptionTableViewCell.identifier)
     }
     
     func filterTags(mask: String) {
         presenter.filterTags(mask: mask)
-        dropDownTableView.reloadData()
     }
     
     func addToList(tags: [String]) {
-        for tag in tags {
-            presenter.add(tag: tag)
-        }
-        dropDownTableView.reloadData()
+        presenter.setupStartTagList(tags: tags)
     }
     
     func addSingle(tag: String) {
         presenter.add(tag: tag)
-        dropDownTableView.reloadData()
     }
     
     private func removeFromList(tag: String) {
         presenter.remove(tag: tag)
-        dropDownTableView.reloadData()
-        if presenter.getTags().count == 0 {
+        if presenter.getFilteredTags().count == 0 {
             closeHandler?()
         }
     }
@@ -61,7 +59,7 @@ class DropView: UIView, DropViewProtocol, NibLoadable {
 
 extension DropView: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.getTags().count
+        return presenter.getFilteredTags().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -71,7 +69,7 @@ extension DropView: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let tags = presenter.getTags()
+        let tags = presenter.getFilteredTags()
         cellHandler?(tags[indexPath.row])
         removeFromList(tag: tags[indexPath.row])
     }

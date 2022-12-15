@@ -55,9 +55,8 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
     
     private func calculateFramesDropView(frames: CGRect) {
         currentFrames = frames
-        
         //animate showing
-        if dropTableView.presenter.getTags().count > 0 {
+        if dropTableView.presenter.getFilteredTags().count > 0 {
             UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
                 self.transparentView.alpha = 0.5
                 self.dropTableView.frame = CGRect(x: frames.origin.x + 10, y: self.tableView.frame.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 200)
@@ -89,7 +88,6 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
         }, completion: { _ in
             self.endFiltering()
             //self.filtering()
-            print("<<<<<<<<<<<remove transparent>>>>>>>>>>")
             self.transparentView.removeFromSuperview()
         })
     }
