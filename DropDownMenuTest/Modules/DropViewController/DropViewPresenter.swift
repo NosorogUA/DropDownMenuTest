@@ -26,29 +26,19 @@ class DropViewPresenter: DropViewPresenterProtocol {
         self.view = view
     }
     
-//    func configureTag(tag: String) {
-//        if let index = currentTags.firstIndex(where: { $0 == tag }) {
-//            currentTags.remove(at: index)
-//            print("Tag: \(tag), deleted")
-//        } else {
-//            currentTags.append(tag)
-//            print("Tag: \(tag), added")
-//        }
-//    }
-    
     func add(tag: String) {
         if currentTags.firstIndex(where: { $0 == tag }) != nil {
             return
         } else {
             currentTags.append(tag)
-            print("Tag: \(tag), added")
+            //print("Tag: \(tag), added")
         }
     }
     
     func remove(tag: String) {
         if let index = currentTags.firstIndex(where: { $0 == tag }) {
             currentTags.remove(at: index)
-            print("Tag: \(tag), deleted")
+            //print("Tag: \(tag), deleted")
         } else {
             return
         }

@@ -9,7 +9,7 @@ import UIKit
 
 class DropView: UIView, NibLoadable {
 
-    @IBOutlet weak var dropDownTableView: UITableView!
+    @IBOutlet private weak var dropDownTableView: UITableView!
     
     var presenter: DropViewPresenterProtocol!
     var cellHandler: ((_ tag: String) -> Void)?
@@ -17,7 +17,6 @@ class DropView: UIView, NibLoadable {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        print("Init drop window")
         dropDownTableView.delegate = self
         dropDownTableView.dataSource = self
         presenter = DropViewPresenter(view: self)
@@ -36,7 +35,7 @@ class DropView: UIView, NibLoadable {
         dropDownTableView.reloadData()
     }
     
-    func removeFromList(tag: String) {
+    private func removeFromList(tag: String) {
         presenter.remove(tag: tag)
         dropDownTableView.reloadData()
         if presenter.getTags().count == 0 {

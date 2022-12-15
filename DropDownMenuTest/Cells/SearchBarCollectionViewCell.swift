@@ -10,9 +10,9 @@ import UIKit
 class SearchBarCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet private weak var searchBarTextField: UITextField!
-    @IBOutlet weak var widthConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var widthConstraint: NSLayoutConstraint!
     
-    var cellBounds: CGRect!
+    private var cellBounds: CGRect!
     
     var startSearch: (() -> Void)?
     var endSearch: (() -> Void)?
@@ -32,7 +32,7 @@ class SearchBarCollectionViewCell: UICollectionViewCell {
         searchBarTextField.endEditing(true)
     }
     
-    func setBounds(bounds: CGRect){
+    private func setBounds(bounds: CGRect){
         cellBounds = bounds
     }
     

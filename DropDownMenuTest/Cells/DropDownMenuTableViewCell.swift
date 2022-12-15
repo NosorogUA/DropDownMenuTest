@@ -10,20 +10,19 @@ import UIKit
 
 class DropDownMenuTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var tagFieldCollectionView: DynamicHeightCollectionView!
-        //@IBOutlet private weak var dropButton: UIButton!
-    @IBOutlet weak var errorTextLabel: UILabel!
-    @IBOutlet weak var RightImageView: UIImageView!
+    @IBOutlet private weak var tagFieldCollectionView: DynamicHeightCollectionView!
+    @IBOutlet private weak var errorTextLabel: UILabel!
+    @IBOutlet private weak var RightImageView: UIImageView!
     
     var variantsButtonHandler: (() -> Void)?
     var startSearchHandler: (() -> Void)?
     var updateFramesHandler: (() -> Void)?
     var cellDeleteHandler: ((_ tag: String) -> Void)?
     
-    var tags: [String] = []
-    var cellsWidth: [CGFloat] = []
-    var searchItemPath: [IndexPath]!
-    
+    private var tags: [String] = []
+    private var cellsWidth: [CGFloat] = []
+    private var searchItemPath: [IndexPath]!
+     
     override func awakeFromNib() {
         super.awakeFromNib()
         setupCollectionView()
@@ -59,7 +58,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
         }
     }
     
-    func updateCollectionViewLayout(isFill: Bool) {
+    private func updateCollectionViewLayout(isFill: Bool) {
         let cell = tagFieldCollectionView.visibleCells.first(where: ({ $0 is SearchBarCollectionViewCell})) as! SearchBarCollectionViewCell
         
         if isFill {
@@ -90,7 +89,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
         })
     }
     
-    func deleteCell(index: IndexPath) {
+    private func deleteCell(index: IndexPath) {
         let tag = tags[index.row]
         tagFieldCollectionView.performBatchUpdates({
             tags.remove(at: index.row) //add your object to data source first
@@ -104,7 +103,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
         //print(enters)
     }
     
-    func gestureConfigure() {
+    private func gestureConfigure() {
         let cell = tagFieldCollectionView.visibleCells.first(where: ({ $0 is SearchBarCollectionViewCell })) as! SearchBarCollectionViewCell
         if cell.getStatus() {
             cell.finishFiltering()
@@ -127,9 +126,10 @@ class DropDownMenuTableViewCell: UITableViewCell {
         updateCollectionViewLayout(isFill: true)
     }
     
-    func updateDropButton(isHidden: Bool) {
+    private func updateDropButton(isHidden: Bool) {
         RightImageView.isHidden = isHidden
     }
+    
     //MARK: check field before next step
     func isPassed() -> Bool {
         if tags.count > 0 {

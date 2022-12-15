@@ -13,11 +13,10 @@ class ViewController: UIViewController {
     
     var presenter: PresenterProtocol!
     
-    var transparentView: UIView!
-    var dropTableView: DropView!
-    var currentFrames: CGRect!
-    var tags: [String] = []
-    var index: IndexPath!
+    private var transparentView: UIView!
+    private var dropTableView: DropView!
+    private var currentFrames: CGRect!
+    private var tags: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,22 +34,24 @@ class ViewController: UIViewController {
         dropTableView = .fromNib()
         dropTableView.addToList(tags: presenter.getCurrentTags())
         dropTableView.layer.cornerRadius = 10
-        
+        dropTableView.clipsToBounds = true
         dropTableView.cellHandler = { [weak self] tag in
             self?.presenter.add(tag: tag)
             self?.addToCollection(tag: tag)
         }
         dropTableView.closeHandler = { [weak self] in
             self?.removeTransparentView()
-            //self?.endFiltering()
         }
     }
     
-    private func calculateFramesDropView(frames: CGRect) {
-        print("<<<<<<<<Animate dropView>>>>>>>>")
-        currentFrames = frames
+    private func setupDropViewFrames(frames: CGRect) {
         dropTableView.frame = CGRect(x: frames.origin.x + 10, y: self.tableView.frame.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 0)
         self.view.addSubview(dropTableView)
+    }
+    
+    private func calculateFramesDropView(frames: CGRect) {
+        currentFrames = frames
+        
         //animate showing
         if dropTableView.presenter.getTags().count > 0 {
             UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
@@ -58,7 +59,6 @@ class ViewController: UIViewController {
                 self.dropTableView.frame = CGRect(x: frames.origin.x + 10, y: self.tableView.frame.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 200)
             }, completion: nil)
         }
-        
     }
     
     private func addDropDownView(frames: CGRect) {
@@ -73,12 +73,11 @@ class ViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(removeTransparentView))
         tapGesture.cancelsTouchesInView = false
         transparentView.addGestureRecognizer(tapGesture)
-        
+        setupDropViewFrames(frames: frames)
         calculateFramesDropView(frames: frames)
     }
     
     @objc func removeTransparentView() {
-        print("removeView")
         //animate hiding
         UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
             self.transparentView.alpha = 0
@@ -97,24 +96,18 @@ class ViewController: UIViewController {
         tableView.endUpdates()
     }
     
-    func addToCollection(tag: String) {
+    private func addToCollection(tag: String) {
         let cell = tableView.visibleCells.first(where: ({ $0 is DropDownMenuTableViewCell})) as! DropDownMenuTableViewCell
         cell.addCell(newTag: tag)
         updateTableViewLayouts()
     }
     
-    func endFiltering() {
+    private func endFiltering() {
         let cell = tableView.visibleCells.first(where: ({ $0 is DropDownMenuTableViewCell})) as! DropDownMenuTableViewCell
         cell.clearSearchBar()
     }
     
-    //    func startFiltering() {
-    //        let cell = tableView.visibleCells.first(where: ({ $0 is DropDownMenuTableViewCell})) as! DropDownMenuTableViewCell
-    //        cell.startFiltering()
-    //    }
-    
-    
-    func addTagToDropMenu(_ tag: String) {
+    private func addTagToDropMenu(_ tag: String) {
         dropTableView.addSingle(tag: tag)
         presenter.remove(tag: tag)
     }
@@ -129,9 +122,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch MainControllerCells(rawValue: indexPath.row) {
         case .tags:
-            print("configure cell")
             let cell = tableView.dequeueReusableCell(withIdentifier: DropDownMenuTableViewCell.identifier, for: indexPath) as! DropDownMenuTableViewCell
-            index = indexPath
             presenter.configureDetailCell(cell)
             cell.variantsButtonHandler = { [weak self] in
                 self?.addDropDownView(frames: cell.frame)
@@ -148,7 +139,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             cell.cellDeleteHandler = { [weak self] tag in
                 self?.addTagToDropMenu(tag)
                 self?.removeTransparentView()
-                print("tag \(tag) added to drop-down menu")
             }
             cell.layoutIfNeeded()
             cell.selectionStyle = UITableViewCell.SelectionStyle.none

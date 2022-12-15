@@ -11,7 +11,6 @@ protocol PresenterProtocol {
     init(view: ViewController)
     func getCurrentTags() -> [String]
     func configureDetailCell(_ cell: DropDownMenuTableViewCell)
-    //func configureFilteredTag(tag: String)
     func add(tag: String)
     func remove(tag: String)
 }
@@ -19,7 +18,7 @@ protocol PresenterProtocol {
 class Presenter: PresenterProtocol {
     private weak var view: ViewController?
     
-    var currentTags: [String] = ["tsdfag1", "tagfewrwert2", "tag3", "kdhjfgkhd;gk", "xfghs;fj"]
+    var currentTags: [String] = ["tag1", "tag2", "tag3", "apple", "google", "facebook"]
     var filteredTags: [String] = []
     
     required init(view: ViewController) {
@@ -30,10 +29,10 @@ class Presenter: PresenterProtocol {
     func configureFilteredTag(tag: String) {
         if filteredTags.contains(tag) {
             filteredTags = filteredTags.filter {$0 != tag}
-            print("Tag filtered: \(tag), deleted")
+            //print("Tag filtered: \(tag), deleted")
         } else {
             filteredTags.append(tag)
-            print("Tag filtered: \(tag), added")
+            //print("Tag filtered: \(tag), added")
         }
         view?.updateTableViewLayouts()
     }
@@ -43,7 +42,7 @@ class Presenter: PresenterProtocol {
             return
         } else {
             filteredTags.append(tag)
-            print("Tag filtered: \(tag), added")
+            //print("Tag filtered: \(tag), added")
         }
         view?.updateTableViewLayouts()
     }
@@ -51,7 +50,7 @@ class Presenter: PresenterProtocol {
     func remove(tag: String) {
         if filteredTags.contains(tag) {
             filteredTags = filteredTags.filter {$0 != tag}
-            print("Tag filtered: \(tag), deleted")
+            //print("Tag filtered: \(tag), deleted")
         } else {
             return
         }

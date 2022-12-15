@@ -45,7 +45,6 @@
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
-                <color key="backgroundColor" systemColor="tintColor"/>
                 <constraints>
                     <constraint firstItem="VQf-1R-a6v" firstAttribute="left" secondItem="7vU-wr-GVi" secondAttribute="left" id="Fbs-Mi-Vtl"/>
                     <constraint firstItem="VQf-1R-a6v" firstAttribute="top" secondItem="7vU-wr-GVi" secondAttribute="bottom" constant="4" id="Fvo-z6-9nj"/>
@@ -71,9 +70,6 @@
         <image name="square.and.arrow.down" catalog="system" width="121" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
