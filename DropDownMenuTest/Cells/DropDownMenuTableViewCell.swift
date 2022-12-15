@@ -7,7 +7,6 @@
 
 import UIKit
 
-
 class DropDownMenuTableViewCell: UITableViewCell {
     
     @IBOutlet private weak var tagFieldCollectionView: DynamicHeightCollectionView!
@@ -73,7 +72,6 @@ class DropDownMenuTableViewCell: UITableViewCell {
             return
         }
         tagFieldCollectionView.layoutIfNeeded()
-        //tagFieldCollectionView.collectionViewLayout.invalidateLayout()
         updateFramesHandler?()
     }
     
@@ -98,10 +96,6 @@ class DropDownMenuTableViewCell: UITableViewCell {
         }, completion: { _ in
             self.cellDeleteHandler?(tag)
         })
-    }
-    
-    func filterResults(enters: String) {
-        filteringHandler?(enters)
     }
     
     private func gestureConfigure() {
@@ -160,7 +154,7 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
             }
             cell.filterResults = { [weak self] in
                 self?.updateCollectionViewLayout(isFill: false)
-                self?.filterResults(enters: cell.getEnters())
+                self?.filteringHandler?(cell.getEnters())
                 self?.tagFieldCollectionView.collectionViewLayout.invalidateLayout()
             }
             return cell
