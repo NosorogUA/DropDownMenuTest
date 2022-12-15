@@ -32,10 +32,6 @@ class SearchBarCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
         searchBarTextField.endEditing(true)
     }
     
-    private func setBounds(bounds: CGRect){
-        cellBounds = bounds
-    }
-    
     func getStatus() -> Bool {
         return searchBarTextField.isEditing
     }
