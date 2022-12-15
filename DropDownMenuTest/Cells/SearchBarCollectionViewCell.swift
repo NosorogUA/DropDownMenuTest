@@ -24,11 +24,13 @@ class SearchBarCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     }
     
     func startFiltering() {
+        print("startFiltering")
         searchBarTextField.becomeFirstResponder()
     }
     
     func finishFiltering() {
         searchBarTextField.text = ""
+        searchBarTextField.resignFirstResponder()
         searchBarTextField.endEditing(true)
     }
     

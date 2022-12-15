@@ -13,7 +13,11 @@ class DynamicHeightCollectionView: UICollectionView {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        print("<<<<TOUCH>>>>")
+        
+        let touch = touches.first! as UITouch
+        let object = touch.view
+        guard object === self else { return }
+        //print(object)
         touchHandler?()
     }
     

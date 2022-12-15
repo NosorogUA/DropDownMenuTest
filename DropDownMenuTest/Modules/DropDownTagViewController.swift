@@ -89,6 +89,7 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
         }, completion: { _ in
             self.endFiltering()
             //self.filtering()
+            print("<<<<<<<<<<<remove transparent>>>>>>>>>>")
             self.transparentView.removeFromSuperview()
         })
     }

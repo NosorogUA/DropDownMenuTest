@@ -34,7 +34,6 @@ class DropView: UIView, DropViewProtocol, NibLoadable {
     }
     
     func filterTags(mask: String) {
-        
         presenter.filterTags(mask: mask)
         dropDownTableView.reloadData()
     }

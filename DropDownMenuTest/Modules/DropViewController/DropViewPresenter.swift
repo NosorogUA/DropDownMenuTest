@@ -47,7 +47,7 @@ class DropViewPresenter: DropViewPresenterProtocol {
         if mask == "" {
             filteredTags = currentTags
         } else {
-            filteredTags = currentTags.filter { $0.contains(mask) }
+            filteredTags = currentTags.filter { $0.starts(with:mask) }
         }
     }
     
