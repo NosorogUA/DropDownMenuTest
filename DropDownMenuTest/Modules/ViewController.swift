@@ -151,7 +151,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
                 print("tag \(tag) added to drop-down menu")
             }
             cell.layoutIfNeeded()
-            //cell.selectionStyle = UITableViewCell.SelectionStyle.none
+            cell.selectionStyle = UITableViewCell.SelectionStyle.none
             return cell
         case .none:
             return UITableViewCell()

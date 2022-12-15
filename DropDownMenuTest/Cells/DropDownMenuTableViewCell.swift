@@ -11,7 +11,8 @@ import UIKit
 class DropDownMenuTableViewCell: UITableViewCell {
     
     @IBOutlet weak var tagFieldCollectionView: DynamicHeightCollectionView!
-    @IBOutlet private weak var dropButton: UIButton!
+        //@IBOutlet private weak var dropButton: UIButton!
+    @IBOutlet weak var RightImageView: UIImageView!
     
     var variantsButtonHandler: (() -> Void)?
     var startSearchHandler: (() -> Void)?
@@ -33,12 +34,15 @@ class DropDownMenuTableViewCell: UITableViewCell {
     }
     
     func updateDropButton(isHidden: Bool) {
-        dropButton.isHidden = isHidden
+        //dropButton.isHidden = isHidden
+        RightImageView.isHidden = isHidden
     }
     
     private func setupCollectionView() {
         tagFieldCollectionView.dataSource = self
         tagFieldCollectionView.delegate = self
+        tagFieldCollectionView.layer.cornerRadius = 16
+        tagFieldCollectionView.clipsToBounds = true
         tagFieldCollectionView.touchHandler = {[weak self] in
             self?.gestureConfigure()
         }
@@ -63,9 +67,8 @@ class DropDownMenuTableViewCell: UITableViewCell {
         
         if isFill {
             let leftPoint = cell.frame.minX
-            let rightPoint = tagFieldCollectionView.frame.maxX
+            let rightPoint = tagFieldCollectionView.bounds.maxX - 30// collection view right content offset
             let delta = rightPoint - leftPoint
-            print("<<<<<<DELTA \(delta)>>>>>>>>")
             cell.frame = CGRect(x: cell.frame.origin.x, y: cell.frame.origin.y, width: delta, height: cell.frame.height)
         }
        
