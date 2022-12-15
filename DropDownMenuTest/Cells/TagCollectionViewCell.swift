@@ -9,8 +9,8 @@ import UIKit
 
 class TagCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var background: UIImageView!
-    @IBOutlet weak var tagLabel: UILabel!
+    @IBOutlet private weak var background: UIImageView!
+    @IBOutlet private weak var tagLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -18,7 +18,7 @@ class TagCollectionViewCell: UICollectionViewCell {
         setupLabel()
     }
     
-    func setupLabel() {
+    private func setupLabel() {
         background.layer.cornerRadius = 10
         background.clipsToBounds = true
     }

@@ -9,13 +9,7 @@ import UIKit
 
 class DropOptionTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var titleLabel: UILabel!
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        print("====Drop option cell init")
-        // Initialization code
-    }
+    @IBOutlet private weak var titleLabel: UILabel!
     
     func setupCell(title: String){
         titleLabel.text = title
