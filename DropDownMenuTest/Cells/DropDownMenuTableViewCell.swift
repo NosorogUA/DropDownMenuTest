@@ -12,6 +12,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
     
     @IBOutlet weak var tagFieldCollectionView: DynamicHeightCollectionView!
         //@IBOutlet private weak var dropButton: UIButton!
+    @IBOutlet weak var errorTextLabel: UILabel!
     @IBOutlet weak var RightImageView: UIImageView!
     
     var variantsButtonHandler: (() -> Void)?
@@ -29,15 +30,11 @@ class DropDownMenuTableViewCell: UITableViewCell {
     }
     
     func cellInit(tags: [String]) {
+        errorTextLabel.isHidden = true
         self.tags = tags
         tagFieldCollectionView.reloadData()
     }
-    
-    func updateDropButton(isHidden: Bool) {
-        //dropButton.isHidden = isHidden
-        RightImageView.isHidden = isHidden
-    }
-    
+   
     private func setupCollectionView() {
         tagFieldCollectionView.dataSource = self
         tagFieldCollectionView.delegate = self
@@ -103,10 +100,6 @@ class DropDownMenuTableViewCell: UITableViewCell {
         })
     }
     
-//    private func hideDropDownMenu() {
-//        updateDropButton(isHidden: false)
-//    }
-    
     func filterResults(enters: String) {
         //print(enters)
     }
@@ -134,9 +127,19 @@ class DropDownMenuTableViewCell: UITableViewCell {
         updateCollectionViewLayout(isFill: true)
     }
     
-    @IBAction func dropButtonAction(_ sender: UIButton) {
-        variantsButtonHandler?()
-        updateDropButton(isHidden: true)
+    func updateDropButton(isHidden: Bool) {
+        RightImageView.isHidden = isHidden
+    }
+    //MARK: check field before next step
+    func isPassed() -> Bool {
+        if tags.count > 0 {
+            return true
+        } else {
+            errorTextLabel.isHidden = false
+            //apply text here
+            errorTextLabel.text = "NEED TO SETUP"
+            return false
+        }
     }
 }
 
