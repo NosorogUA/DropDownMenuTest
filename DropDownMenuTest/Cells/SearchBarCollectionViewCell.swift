@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchBarCollectionViewCell: UICollectionViewCell {
+class SearchBarCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     
     @IBOutlet private weak var searchBarTextField: UITextField!
     @IBOutlet private weak var widthConstraint: NSLayoutConstraint!
@@ -52,14 +52,10 @@ class SearchBarCollectionViewCell: UICollectionViewCell {
     @IBAction private func changedSearching(_ sender: UITextField) {
         filterResults?()
     }
-    //
+    
     @IBAction private func endSearching(_ sender: UITextField) {
-        // close dropdown windows and show button
         endSearch?()
         searchBarTextField.text = nil
     }
 }
 
-extension SearchBarCollectionViewCell: UITextFieldDelegate {
-    
-}

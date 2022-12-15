@@ -23,10 +23,22 @@ class DropView: UIView, NibLoadable {
         setupTableView()
     }
     
+    private func setupTableView() {
+        //register options cell
+        let dropVariantCell = UINib(nibName: DropOptionTableViewCell.identifier, bundle: nil)
+        dropDownTableView.register(dropVariantCell, forCellReuseIdentifier: DropOptionTableViewCell.identifier)
+    }
+    
+    func filterTags(mask: String) {
+        presenter.filterTags(mask: mask)
+        dropDownTableView.reloadData()
+    }
+    
     func addToList(tags: [String]) {
         for tag in tags {
             presenter.add(tag: tag)
         }
+        presenter.filterTags(mask: "")
         dropDownTableView.reloadData()
     }
     
@@ -41,12 +53,6 @@ class DropView: UIView, NibLoadable {
         if presenter.getTags().count == 0 {
             closeHandler?()
         }
-    }
-   
-    private func setupTableView() {
-        //register options cell
-        let dropVariantCell = UINib(nibName: DropOptionTableViewCell.identifier, bundle: nil)
-        dropDownTableView.register(dropVariantCell, forCellReuseIdentifier: DropOptionTableViewCell.identifier)
     }
 }
 

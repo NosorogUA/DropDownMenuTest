@@ -12,11 +12,12 @@ class DropDownMenuTableViewCell: UITableViewCell {
     
     @IBOutlet private weak var tagFieldCollectionView: DynamicHeightCollectionView!
     @IBOutlet private weak var errorTextLabel: UILabel!
-    @IBOutlet private weak var RightImageView: UIImageView!
+    @IBOutlet private weak var rightImageView: UIImageView!
     
     var variantsButtonHandler: (() -> Void)?
     var startSearchHandler: (() -> Void)?
     var updateFramesHandler: (() -> Void)?
+    var filteringHandler: ((_ mask: String) -> Void)?
     var cellDeleteHandler: ((_ tag: String) -> Void)?
     
     private var tags: [String] = []
@@ -72,7 +73,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
             return
         }
         tagFieldCollectionView.layoutIfNeeded()
-        tagFieldCollectionView.collectionViewLayout.invalidateLayout()
+        //tagFieldCollectionView.collectionViewLayout.invalidateLayout()
         updateFramesHandler?()
     }
     
@@ -100,7 +101,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
     }
     
     func filterResults(enters: String) {
-        //print(enters)
+        filteringHandler?(enters)
     }
     
     private func gestureConfigure() {
@@ -114,11 +115,6 @@ class DropDownMenuTableViewCell: UITableViewCell {
             }
         }
     }
-    
-//    func startFiltering() {
-//        let cell = tagFieldCollectionView.visibleCells.first(where: ({ $0 is SearchBarCollectionViewCell })) as! SearchBarCollectionViewCell
-//        cell.startFiltering()
-//    }
 
     func clearSearchBar() {
         let cell = tagFieldCollectionView.visibleCells.first(where: ({ $0 is SearchBarCollectionViewCell })) as! SearchBarCollectionViewCell
@@ -126,8 +122,8 @@ class DropDownMenuTableViewCell: UITableViewCell {
         updateCollectionViewLayout(isFill: true)
     }
     
-    private func updateDropButton(isHidden: Bool) {
-        RightImageView.isHidden = isHidden
+    private func updateRightIcon(isHidden: Bool) {
+        rightImageView.isHidden = isHidden
     }
     
     //MARK: check field before next step
@@ -155,15 +151,17 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
             searchItemPath = [indexPath]
             cell.startSearch = { [weak self] in
                 self?.startSearchHandler?()
+                self?.updateRightIcon(isHidden: true)
             }
             cell.endSearch = { [weak self] in
-                //self?.hideDropDownMenu()
+                self?.updateRightIcon(isHidden: false)
                 self?.addCell(newTag: cell.getEnters())
                 self?.updateCollectionViewLayout(isFill: true)
             }
             cell.filterResults = { [weak self] in
                 self?.updateCollectionViewLayout(isFill: false)
                 self?.filterResults(enters: cell.getEnters())
+                self?.tagFieldCollectionView.collectionViewLayout.invalidateLayout()
             }
             return cell
         } else {

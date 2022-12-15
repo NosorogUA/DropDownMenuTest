@@ -106,10 +106,14 @@ class ViewController: UIViewController {
         let cell = tableView.visibleCells.first(where: ({ $0 is DropDownMenuTableViewCell})) as! DropDownMenuTableViewCell
         cell.clearSearchBar()
     }
-    
+    //MARK: Drop-down menu actions
     private func addTagToDropMenu(_ tag: String) {
         dropTableView.addSingle(tag: tag)
         presenter.remove(tag: tag)
+    }
+    
+    private func filterTags(mask: String) {
+        dropTableView.filterTags(mask: mask)
     }
 }
 
@@ -129,6 +133,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             }
             cell.startSearchHandler = { [weak self] in
                 self?.addDropDownView(frames: cell.frame)
+            }
+            cell.filteringHandler = { [weak self] mask in
+                self?.filterTags(mask: mask)
             }
             cell.updateFramesHandler = { [weak self] in
                 self?.updateTableViewLayouts()
