@@ -9,6 +9,7 @@ import Foundation
 
 protocol DropViewPresenterProtocol {
     init(view: DropViewProtocol)
+    func setupAlreadySelectedTagList(tags: [String])
     func setupStartTagList(tags: [String])
     func add(tag: String)
     func remove(tag: String)
@@ -32,6 +33,12 @@ class DropViewPresenter: DropViewPresenterProtocol {
     
     required init(view: DropViewProtocol) {
         self.view = view
+    }
+    
+    func setupAlreadySelectedTagList(tags: [String]) {
+        for tag in tags {
+            deletedTags.append(tag)
+        }
     }
     
     func setupStartTagList(tags: [String]) {
@@ -78,7 +85,6 @@ class DropViewPresenter: DropViewPresenterProtocol {
             view?.reloadData()
         }
     }
-    
     func getCurrentTags() -> [String] {
         return currentTags
     }

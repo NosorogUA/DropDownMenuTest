@@ -36,7 +36,7 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
     
     private func setupDropDownMenu() {
         dropTableView = .fromNib()
-        dropTableView.addToList(tags: presenter.getCurrentTags())
+        dropTableView.addToList(allTagsList: presenter.getCurrentTags(), alreadySelectedTags: [])
         dropTableView.layer.cornerRadius = 10
         dropTableView.clipsToBounds = true
         dropTableView.cellHandler = { [weak self] tag in

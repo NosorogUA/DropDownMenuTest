@@ -41,10 +41,11 @@ class DropView: UIView, DropViewProtocol, NibLoadable {
         presenter.filterTags(mask: mask)
     }
     
-    func addToList(tags: [String]) {
-        presenter.setupStartTagList(tags: tags)
+    func addToList(allTagsList: [String], alreadySelectedTags: [String]) {
+        presenter.setupAlreadySelectedTagList(tags: alreadySelectedTags)
+        presenter.setupStartTagList(tags: allTagsList)
     }
-    
+   
     func addSingle(tag: String) {
         presenter.add(tag: tag)
     }
