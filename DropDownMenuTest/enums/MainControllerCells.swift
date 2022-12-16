@@ -9,4 +9,5 @@ import Foundation
 
 enum MainControllerCells: Int, CaseIterable {
     case tags
+    case list
 }

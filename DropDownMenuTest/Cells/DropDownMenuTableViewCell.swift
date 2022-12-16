@@ -84,8 +84,6 @@ class DropDownMenuTableViewCell: UITableViewCell {
             let indexPath = IndexPath(row: self.tags.count, section: 0)
             tags.append(newTag) //add your object to data source first
             tagFieldCollectionView.insertItems(at: [indexPath])
-        }, completion: {_ in
-            self.updateFramesHandler?()
         })
     }
     
@@ -101,6 +99,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
     
     private func gestureConfigure() {
         let cell = tagFieldCollectionView.visibleCells.first(where: ({ $0 is SearchBarCollectionViewCell })) as! SearchBarCollectionViewCell
+        
         print(cell.getStatus())
         if cell.getStatus() {
             cell.finishFiltering()

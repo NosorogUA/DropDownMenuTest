@@ -9,12 +9,11 @@ import Foundation
 
 protocol DropDownTagPresenterProtocol {
     init(view: DropDownTagViewControllerProtocol)
-    func getCurrentTags() -> [String]
-    func configureDetailCell(_ cell: DropDownMenuTableViewCell)
-    func add(tag: String)
-    func remove(tag: String)
-    func addCustomTag(tag: String) 
-    func removeCustomTag(tag: String)
+    func getCurrentTags(index: Int) -> [String]
+    func configureDetailCell(_ cell: DropDownMenuTableViewCell, index: Int)
+    func add(tag: String, index: Int)
+    func remove(tag: String, index: Int)
+    
 }
 
 class DropDownTagPresenter: DropDownTagPresenterProtocol {
@@ -25,80 +24,184 @@ class DropDownTagPresenter: DropDownTagPresenterProtocol {
         didSet {
             print(customUserTags)
         }
+        
+    }
+    var currentTags2: [String] = ["tag12", "tag22", "tag32", "apple2", "google2", "facebook2"]
+    var customUserTags2: [String] = ["custom12"] {
+        didSet {
+            print(customUserTags2)
+        }
     }
     var filteredTags: [String] = []
+    var filteredTags2: [String] = []
     
     private let isCustomTagsEnabled = true //tags customization option change here
+    private let isCustomTagsEnabled2 = true
     
     required init(view: DropDownTagViewControllerProtocol) {
         self.view = view
         // apply current tags here
     }
     
-    func configureFilteredTag(tag: String) {
-        if filteredTags.contains(tag) {
-            filteredTags = filteredTags.filter {$0 != tag}
-        } else {
-            filteredTags.append(tag)
+    func configureFilteredTag(tag: String, index: Int) {
+        switch MainControllerCells(rawValue: index) {
+        case .tags:
+            if filteredTags.contains(tag) {
+                filteredTags = filteredTags.filter {$0 != tag}
+            } else {
+                filteredTags.append(tag)
+            }
+        case .list:
+            if filteredTags2.contains(tag) {
+                filteredTags2 = filteredTags2.filter {$0 != tag}
+            } else {
+                filteredTags2.append(tag)
+            }
+        case .none:
+            print("NoCell")
+        }
+        
+        view?.updateTableViewLayouts()
+    }
+    
+    func add(tag: String, index: Int) {
+        
+        switch MainControllerCells(rawValue: index) {
+        case .tags:
+            if currentTags.contains(tag) {
+                if filteredTags.contains(tag) {
+                    return
+                } else {
+                    filteredTags.append(tag)
+                }
+            } else {
+                addCustomTag(tag: tag, index: index)
+            }
+        case .list:
+            if currentTags2.contains(tag) {
+                if filteredTags2.contains(tag) {
+                    return
+                } else {
+                    filteredTags2.append(tag)
+                }
+            } else {
+                addCustomTag(tag: tag, index:  index)
+            }
+        case .none:
+            print("NoCell")
         }
         view?.updateTableViewLayouts()
     }
     
-    func add(tag: String) {
-        if currentTags.contains(tag) {
-            if filteredTags.contains(tag) {
+    func remove(tag: String, index: Int) {
+        switch MainControllerCells(rawValue: index) {
+        case .tags:
+            if currentTags.contains(tag) {
+                if filteredTags.contains(tag) {
+                    filteredTags = filteredTags.filter {$0 != tag}
+                } else {
+                    return
+                }
+            } else {
+                removeCustomTag(tag: tag, index: index)
+            }
+        case .list:
+            if currentTags2.contains(tag) {
+                if filteredTags2.contains(tag) {
+                    filteredTags2 = filteredTags2.filter {$0 != tag}
+                } else {
+                    return
+                }
+            } else {
+                removeCustomTag(tag: tag, index: index)
+            }
+        case .none:
+            print("NoCell")
+        }
+        view?.updateTableViewLayouts()
+    }
+    
+    func addCustomTag(tag: String, index: Int) {
+        switch MainControllerCells(rawValue: index) {
+        case .tags:
+            if customUserTags.contains(tag) {
                 return
             } else {
-                filteredTags.append(tag)
+                customUserTags.append(tag)
             }
-            view?.updateTableViewLayouts()
-        } else {
-            addCustomTag(tag: tag)
+        case .list:
+            if customUserTags2.contains(tag) {
+                return
+            } else {
+                customUserTags2.append(tag)
+            }
+        case .none:
+            print("NoCell")
         }
     }
     
-    func remove(tag: String) {
-        if currentTags.contains(tag) {
-            if filteredTags.contains(tag) {
-                filteredTags = filteredTags.filter {$0 != tag}
+    func removeCustomTag(tag: String, index: Int) {
+        switch MainControllerCells(rawValue: index) {
+        case .tags:
+            if customUserTags.contains(tag) {
+                customUserTags = customUserTags.filter {$0 != tag}
             } else {
                 return
             }
-            view?.updateTableViewLayouts()
-        } else {
-            removeCustomTag(tag: tag)
+        case .list:
+            if customUserTags2.contains(tag) {
+                customUserTags2 = customUserTags2.filter {$0 != tag}
+            } else {
+                return
+            }
+        case .none:
+            print("NoCell")
+        }
+        
+    }
+    
+    func getCurrentTags(index: Int) -> [String] {
+        switch MainControllerCells(rawValue: index) {
+        case .tags:
+            return currentTags
+        case .list:
+            return currentTags2
+        case .none:
+            print("NoCell")
+            return []
         }
     }
     
-    func addCustomTag(tag: String) {
-        if customUserTags.contains(tag) {
-            return
-        } else {
-            customUserTags.append(tag)
+    func getFilteredTags(index: Int) -> [String] {
+        switch MainControllerCells(rawValue: index) {
+        case .tags:
+            if isCustomTagsEnabled {
+                return filteredTags + customUserTags
+            } else {
+                return filteredTags
+            }
+        case .list:
+            if isCustomTagsEnabled2 {
+                return filteredTags2 + customUserTags2
+            } else {
+                return filteredTags2
+            }
+        case .none:
+            print("NoCell")
+            return []
         }
     }
     
-    func removeCustomTag(tag: String) {
-        if customUserTags.contains(tag) {
-            customUserTags = customUserTags.filter {$0 != tag}
-        } else {
-            return
+    func configureDetailCell(_ cell: DropDownMenuTableViewCell, index: Int) {
+        let customization: Bool
+        switch MainControllerCells(rawValue: index) {
+        case .tags:
+            customization = isCustomTagsEnabled
+        case .list:
+           customization = isCustomTagsEnabled2
+        case .none:
+            customization = false
         }
-    }
-    
-    func getCurrentTags() -> [String] {
-        return currentTags
-    }
-    
-    func getFilteredTags() -> [String] {
-        if isCustomTagsEnabled {
-            return filteredTags + customUserTags
-        } else {
-            return filteredTags
-        }
-    }
-    
-    func configureDetailCell(_ cell: DropDownMenuTableViewCell) {
-        cell.cellInit(tags: getFilteredTags(), enableCustomTags: isCustomTagsEnabled)
+        cell.cellInit(tags: getFilteredTags(index: index), enableCustomTags: customization)
     }
 }
