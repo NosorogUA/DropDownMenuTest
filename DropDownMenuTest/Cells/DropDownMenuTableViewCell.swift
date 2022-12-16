@@ -24,13 +24,16 @@ class DropDownMenuTableViewCell: UITableViewCell {
     private var cellsWidth: [CGFloat] = []
     private var searchItemPath: [IndexPath]!
     
+    var isEnableCustomTags: Bool = false// change option for enable/disable customization
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         setupCollectionView()
     }
     
-    func cellInit(tags: [String]) {
+    func cellInit(tags: [String], enableCustomTags: Bool) {
         errorTextLabel.isHidden = true
+        isEnableCustomTags = enableCustomTags
         self.tags = tags
         tagFieldCollectionView.reloadData()
     }
@@ -43,7 +46,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
         tagFieldCollectionView.touchHandler = {[weak self] in
             self?.gestureConfigure()
         }
-       
+        
         //register cell
         let tagCell = UINib(nibName: TagCollectionViewCell.identifier, bundle: nil)
         let searchCell = UINib(nibName: SearchBarCollectionViewCell.identifier, bundle: nil)
@@ -72,9 +75,11 @@ class DropDownMenuTableViewCell: UITableViewCell {
     }
     
     func addCell(newTag: String) {
-        if tags.contains(newTag) { return }
+        if !isEnableCustomTags {
+            if tags.contains(newTag) { return }
+        }
         if newTag.count <= 2 { return }
-        
+        print("add tag cell \(newTag)")
         tagFieldCollectionView.performBatchUpdates({
             let indexPath = IndexPath(row: self.tags.count, section: 0)
             tags.append(newTag) //add your object to data source first

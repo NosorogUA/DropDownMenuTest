@@ -26,6 +26,7 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
         super.viewDidLoad()
         self.presenter = DropDownTagPresenter(view: self)
         setupTableView()
+        setupTransparentView()
         setupDropDownMenu()
     }
     
@@ -64,14 +65,16 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
         }
     }
     
-    private func addDropDownView(frames: CGRect) {
+    private func setupTransparentView() {
         // setup background
         transparentView = UIView()
         transparentView.frame = UIApplication.shared.keyWindow?.frame ?? self.view.frame
         transparentView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         transparentView.alpha = 0
         self.view.addSubview(transparentView)
-        
+    }
+    
+    private func addDropDownView(frames: CGRect) {
         // setup gesture
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(removeTransparentView))
         tapGesture.cancelsTouchesInView = false
@@ -87,8 +90,7 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
             self.dropTableView.frame = CGRect(x: self.currentFrames.origin.x + 10, y: self.tableView.frame.origin.y + self.currentFrames.origin.y + self.currentFrames.height, width: self.currentFrames.width * 0.8, height: 0)
         }, completion: { _ in
             self.endFiltering()
-            //self.filtering()
-            self.transparentView.removeFromSuperview()
+           // self.transparentView.removeFromSuperview()
         })
     }
     
@@ -108,7 +110,16 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
     
     private func endFiltering() {
         let cell = tableView.visibleCells.first(where: ({ $0 is DropDownMenuTableViewCell})) as! DropDownMenuTableViewCell
-        cell.clearSearchBar()
+        if cell.isEnableCustomTags {
+            let newCustomTag = cell.getMask()
+            if newCustomTag.count > 3 {
+                cell.addCell(newTag: newCustomTag)
+                presenter.add(tag: newCustomTag)
+            } 
+            cell.clearSearchBar()
+        } else {
+            cell.clearSearchBar()
+        }
     }
     //MARK: Drop-down menu actions
     private func addTagToDropMenu(_ tag: String) {
@@ -132,6 +143,7 @@ extension DropDownTagViewController: UITableViewDelegate, UITableViewDataSource 
         case .tags:
             let cell = tableView.dequeueReusableCell(withIdentifier: DropDownMenuTableViewCell.identifier, for: indexPath) as! DropDownMenuTableViewCell
             presenter.configureDetailCell(cell)
+            currentFrames = cell.frame
             cell.variantsButtonHandler = { [weak self] in
                 self?.addDropDownView(frames: cell.frame)
             }
