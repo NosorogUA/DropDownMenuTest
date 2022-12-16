@@ -36,7 +36,7 @@ class DropDownTagPresenter: DropDownTagPresenterProtocol {
     var filteredTags2: [String] = []
     
     private let isCustomTagsEnabled = true //tags customization option change here
-    private let isCustomTagsEnabled2 = true
+    private let isCustomTagsEnabled2 = false
     
     required init(view: DropDownTagViewControllerProtocol) {
         self.view = view

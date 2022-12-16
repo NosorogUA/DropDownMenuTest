@@ -106,14 +106,14 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
         transparentView.frame = UIApplication.shared.keyWindow?.frame ?? self.view.frame
         transparentView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         transparentView.alpha = 0
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(removeTransparentView))
+        tapGesture.cancelsTouchesInView = false
+        transparentView.addGestureRecognizer(tapGesture)
         self.view.addSubview(transparentView)
     }
     
     private func addDropDownView(frames: CGRect, index: Int) {
         // setup gesture
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(removeTransparentView))
-        tapGesture.cancelsTouchesInView = false
-        transparentView.addGestureRecognizer(tapGesture)
         switch MainControllerCells(rawValue: index) {
         case .tags:
             setupDropViewFrames(frames: frames, index: index)
@@ -150,7 +150,6 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
     }
     
     private func addToCollection(tag: String, indexPath: IndexPath) {
-        //let cell = tableView.visibleCells.first(where: ({ $0 is DropDownMenuTableViewCell})) as! DropDownMenuTableViewCell
         let cell = tableView.cellForRow(at: indexPath) as! DropDownMenuTableViewCell
         cell.addCell(newTag: tag)
         filterTags(mask: cell.getMask(), index: indexPath.row)
@@ -159,7 +158,6 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
     
     private func endFiltering(indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! DropDownMenuTableViewCell
-        //let cell = tableView.visibleCells.first(where: ({ $0 is DropDownMenuTableViewCell})) as! DropDownMenuTableViewCell
         if cell.isEnableCustomTags {
             let newCustomTag = cell.getMask()
             if newCustomTag.count > 3 {
@@ -170,6 +168,15 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
         } else {
             cell.clearSearchBar()
         }
+        switch MainControllerCells(rawValue: indexPath.row) {
+        case .tags:
+            dropTableView.clearFilterMask()
+        case .list:
+            dropTableView2.clearFilterMask()
+        case .none:
+            print("no cell")
+        }
+        
     }
     //MARK: Drop-down menu actions
     private func addTagToDropMenu(_ tag: String, index: Int) {

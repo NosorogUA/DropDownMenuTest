@@ -57,6 +57,7 @@ class DropViewPresenter: DropViewPresenterProtocol {
     }
     
     func filterTags(mask: String) {
+        print("current mask: \(currentMask)/filter with mask: \(mask)")
         if mask == "" {
             filteredTags = currentTags
         } else {
@@ -70,6 +71,7 @@ class DropViewPresenter: DropViewPresenterProtocol {
     }
     
     func clearFilterMask() {
+        print("clear mask")
         currentMask = ""
         filterTags(mask: "")
     }
