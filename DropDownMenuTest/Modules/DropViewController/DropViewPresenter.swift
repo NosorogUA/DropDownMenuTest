@@ -11,6 +11,7 @@ protocol DropViewPresenterProtocol {
     init(view: DropViewProtocol)
     func setupAlreadySelectedTagList(tags: [String])
     func setupStartTagList(tags: [String])
+    func clearFilterMask()
     func add(tag: String)
     func remove(tag: String)
     func filterTags(mask: String)
@@ -62,7 +63,15 @@ class DropViewPresenter: DropViewPresenterProtocol {
             currentMask = mask
             filteredTags = currentTags.filter { $0.starts(with:mask) }
         }
+        if filteredTags.count == 0 {
+            currentMask = ""
+        }
         view?.reloadData()
+    }
+    
+    func clearFilterMask() {
+        currentMask = ""
+        filterTags(mask: "")
     }
     
     func add(tag: String) {

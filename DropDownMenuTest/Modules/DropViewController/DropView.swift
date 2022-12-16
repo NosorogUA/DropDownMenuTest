@@ -37,6 +37,10 @@ class DropView: UIView, DropViewProtocol, NibLoadable {
         dropDownTableView.register(dropVariantCell, forCellReuseIdentifier: DropOptionTableViewCell.identifier)
     }
     
+    func clearFilterMask() {
+        presenter.clearFilterMask()
+    }
+    
     func filterTags(mask: String) {
         presenter.filterTags(mask: mask)
     }
@@ -52,7 +56,7 @@ class DropView: UIView, DropViewProtocol, NibLoadable {
     
     private func removeFromList(tag: String) {
         presenter.remove(tag: tag)
-        if presenter.getFilteredTags().count == 0 {
+        if presenter.getCurrentTags().count == 0 {
             closeHandler?()
         }
     }

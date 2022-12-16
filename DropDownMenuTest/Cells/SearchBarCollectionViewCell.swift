@@ -24,7 +24,6 @@ class SearchBarCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     }
     
     func startFiltering() {
-        print("startFiltering")
         searchBarTextField.becomeFirstResponder()
     }
     

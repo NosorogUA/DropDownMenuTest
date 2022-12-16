@@ -36,7 +36,7 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
     
     private func setupDropDownMenu() {
         dropTableView = .fromNib()
-        dropTableView.addToList(allTagsList: presenter.getCurrentTags(), alreadySelectedTags: [])
+        dropTableView.addToList(allTagsList: presenter.getCurrentTags(), alreadySelectedTags: [])//current mask on start changing
         dropTableView.layer.cornerRadius = 10
         dropTableView.clipsToBounds = true
         dropTableView.cellHandler = { [weak self] tag in
@@ -56,7 +56,7 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
     private func calculateFramesDropView(frames: CGRect) {
         currentFrames = frames
         //animate showing
-        if dropTableView.presenter.getFilteredTags().count > 0 {
+        if dropTableView.presenter.getCurrentTags().count > 0 {
             UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
                 self.transparentView.alpha = 0.5
                 self.dropTableView.frame = CGRect(x: frames.origin.x + 10, y: self.tableView.frame.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 200)
@@ -147,6 +147,9 @@ extension DropDownTagViewController: UITableViewDelegate, UITableViewDataSource 
                     self?.calculateFramesDropView(frames: cell.frame)
                 }
             }
+            cell.endSearchHandler = { [weak self] in
+                self?.dropTableView.clearFilterMask()
+            }
             cell.cellDeleteHandler = { [weak self] tag in
                 self?.addTagToDropMenu(tag)
                 self?.removeTransparentView()
@@ -170,5 +173,4 @@ extension DropDownTagViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         cell.layoutIfNeeded()
     }
-    
 }

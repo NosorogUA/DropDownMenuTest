@@ -24,21 +24,31 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3g1-2G-GJu">
-                        <rect key="frame" x="20" y="20" width="97" height="20.333333333333329"/>
+                        <rect key="frame" x="20" y="20" width="79" height="20.333333333333329"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="trash.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="APe-W0-C6j">
+                        <rect key="frame" x="109" y="26" width="10" height="8.6666666666666714"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="10" id="5LX-sA-4dd"/>
+                            <constraint firstAttribute="height" constant="10" id="o22-RU-fY1"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
             </view>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="QyI-Db-KXI" secondAttribute="trailing" constant="5" id="25S-si-ANx"/>
-                <constraint firstItem="QyI-Db-KXI" firstAttribute="trailing" secondItem="3g1-2G-GJu" secondAttribute="trailing" constant="15" id="7q8-7Q-tjr"/>
+                <constraint firstItem="APe-W0-C6j" firstAttribute="leading" secondItem="3g1-2G-GJu" secondAttribute="trailing" constant="10" id="7q8-7Q-tjr"/>
                 <constraint firstItem="3g1-2G-GJu" firstAttribute="leading" secondItem="QyI-Db-KXI" secondAttribute="leading" constant="15" id="D1q-gD-uLc"/>
                 <constraint firstItem="QyI-Db-KXI" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="EL6-gM-vnm"/>
                 <constraint firstItem="QyI-Db-KXI" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="HI1-Sr-Nh1"/>
                 <constraint firstAttribute="bottom" secondItem="QyI-Db-KXI" secondAttribute="bottom" constant="5" id="iiO-2R-AGV"/>
                 <constraint firstItem="3g1-2G-GJu" firstAttribute="centerY" secondItem="QyI-Db-KXI" secondAttribute="centerY" id="n0F-CJ-4O9"/>
+                <constraint firstItem="APe-W0-C6j" firstAttribute="trailing" secondItem="QyI-Db-KXI" secondAttribute="trailing" constant="-13" id="pgG-ht-0yw"/>
+                <constraint firstItem="APe-W0-C6j" firstAttribute="centerY" secondItem="QyI-Db-KXI" secondAttribute="centerY" id="toS-cW-XlV"/>
             </constraints>
             <size key="customSize" width="137" height="63"/>
             <connections>
@@ -48,4 +58,7 @@
             <point key="canvasLocation" x="66.412213740458014" y="82.394366197183103"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="trash.circle" catalog="system" width="128" height="123"/>
+    </resources>
 </document>

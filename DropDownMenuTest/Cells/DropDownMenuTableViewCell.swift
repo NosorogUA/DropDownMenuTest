@@ -16,6 +16,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
     var variantsButtonHandler: (() -> Void)?
     var startSearchHandler: (() -> Void)?
     var updateFramesHandler: (() -> Void)?
+    var endSearchHandler: (() -> Void)?
     var filteringHandler: ((_ mask: String) -> Void)?
     var cellDeleteHandler: ((_ tag: String) -> Void)?
     
@@ -149,6 +150,7 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
                 self?.updateRightIcon(isHidden: false)
                 self?.addCell(newTag: cell.getEnters())
                 self?.updateCollectionViewLayout()
+                self?.endSearchHandler?()
             }
             cell.filterResults = { [weak self] in
                 self?.updateCollectionViewLayout()
