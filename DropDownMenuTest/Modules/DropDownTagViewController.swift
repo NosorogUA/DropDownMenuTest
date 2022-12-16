@@ -90,7 +90,6 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
             self.dropTableView.frame = CGRect(x: self.currentFrames.origin.x + 10, y: self.tableView.frame.origin.y + self.currentFrames.origin.y + self.currentFrames.height, width: self.currentFrames.width * 0.8, height: 0)
         }, completion: { _ in
             self.endFiltering()
-           // self.transparentView.removeFromSuperview()
         })
     }
     
