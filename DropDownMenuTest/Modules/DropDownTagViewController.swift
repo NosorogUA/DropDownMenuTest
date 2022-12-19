@@ -67,7 +67,6 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
     }
     
     func updateTableViewLayouts() {
-        print("update main table view")
         tableView.beginUpdates()
         tableView.setNeedsLayout()
         tableView.layoutIfNeeded()
@@ -134,7 +133,6 @@ extension DropDownTagViewController: UITableViewDelegate, UITableViewDataSource 
                 }
             }
             cell.endSearchHandler = { [weak self] in
-                print("Cell1 end search")
                 self?.configurator1.endFiltering()
                 
             }
@@ -147,7 +145,6 @@ extension DropDownTagViewController: UITableViewDelegate, UITableViewDataSource 
             return cell
         case .list:
             let cell = tableView.dequeueReusableCell(withIdentifier: DropDownMenuTableViewCell.identifier, for: indexPath) as! DropDownMenuTableViewCell
-            print(indexPath)
             //presenter.configureDetailCell(cell, index: indexPath.row)
             currentFrames = cell.frame
             configurator2 = DropDownTagConfigurator(view: self, cell: cell, isCustomTagsEnabled: false, currentTags: presenter.getCurrentTags2(), customUserTags: presenter.getCustomTags2(), alreadyChosenTags: presenter.getUsedTags2())
@@ -170,7 +167,6 @@ extension DropDownTagViewController: UITableViewDelegate, UITableViewDataSource 
                 }
             }
             cell.endSearchHandler = { [weak self] in
-                print("Cell2 end search")
                 self?.configurator2.endFiltering()
             }
             cell.cellDeleteHandler = { [weak self] tag in

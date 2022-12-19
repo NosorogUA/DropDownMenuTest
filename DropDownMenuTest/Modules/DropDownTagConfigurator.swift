@@ -34,11 +34,7 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
     var cell: DropDownMenuTableViewCell
     
     var isCustomTagsEnabled = true
-    var customUserTags: [String] = ["custom1"] {
-        didSet {
-            print(customUserTags)
-        }
-    }
+    var customUserTags: [String] = ["custom1"] 
     var startTags: [String] = []
     var currentTags: [String] = []
     var customerTags: [String] = []
@@ -64,7 +60,7 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
     
     //MARK: Drop-down menu
     func setupDropDownMenu() {
-        dropTableView.addToList(allTagsList: getStartTags(), alreadySelectedTags: [])//current mask on start changing
+        dropTableView.addToList(allTagsList: getStartTags(), alreadySelectedTags: getAlreadySelectedTags())//current mask on start changing
         dropTableView.layer.cornerRadius = 10
         dropTableView.clipsToBounds = true
         dropTableView.cellHandler = { [weak self] tag in
@@ -186,6 +182,10 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
     }
     func getStartTags() -> [String] {
         return startTags
+    }
+    
+    func getAlreadySelectedTags() -> [String] {
+        return alreadyChosenTags
     }
     
     func getFilteredTags() -> [String] {

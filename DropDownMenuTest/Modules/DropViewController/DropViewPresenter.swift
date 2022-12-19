@@ -79,7 +79,6 @@ class DropViewPresenter: DropViewPresenterProtocol {
             return
         } else {
             alreadySelectedTags =  alreadySelectedTags.filter {$0 != tag}
-            print(alreadySelectedTags)
                 checkCurrentTags()
                 view?.reloadData()
         }

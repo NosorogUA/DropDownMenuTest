@@ -79,7 +79,6 @@ class DropDownMenuTableViewCell: UITableViewCell {
             if tags.contains(newTag) { return }
         }
         if newTag.count <= 2 { return }
-        print("add tag cell \(newTag)")
         tagFieldCollectionView.performBatchUpdates({
             let indexPath = IndexPath(row: self.tags.count, section: 0)
             tags.append(newTag) //add your object to data source first
@@ -100,7 +99,6 @@ class DropDownMenuTableViewCell: UITableViewCell {
     private func gestureConfigure() {
         let cell = tagFieldCollectionView.visibleCells.first(where: ({ $0 is SearchBarCollectionViewCell })) as! SearchBarCollectionViewCell
         
-        print(cell.getStatus())
         if cell.getStatus() {
             cell.finishFiltering()
         } else {

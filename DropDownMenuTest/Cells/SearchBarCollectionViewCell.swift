@@ -28,7 +28,6 @@ class SearchBarCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
     }
     
     func finishFiltering() {
-        print("finish editing")
         searchBarTextField.text = ""
         searchBarTextField.resignFirstResponder()
         searchBarTextField.endEditing(true)

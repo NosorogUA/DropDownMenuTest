@@ -17,7 +17,6 @@ class DynamicHeightCollectionView: UICollectionView {
         let touch = touches.first! as UITouch
         let object = touch.view
         guard object === self else { return }
-        //print(object)
         touchHandler?()
     }
     
@@ -25,7 +24,6 @@ class DynamicHeightCollectionView: UICollectionView {
         didSet {
             if oldValue.height != self.contentSize.height {
                 invalidateIntrinsicContentSize()
-                print(self.contentSize.height)
             }
         }
     }
