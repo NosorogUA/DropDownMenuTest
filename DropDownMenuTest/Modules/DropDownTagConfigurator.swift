@@ -64,7 +64,7 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
     
     //MARK: Drop-down menu
     func setupDropDownMenu() {
-        dropTableView.addToList(allTagsList: getCurrentTags(), alreadySelectedTags: [])//current mask on start changing
+        dropTableView.addToList(allTagsList: getStartTags(), alreadySelectedTags: [])//current mask on start changing
         dropTableView.layer.cornerRadius = 10
         dropTableView.clipsToBounds = true
         dropTableView.cellHandler = { [weak self] tag in
@@ -117,7 +117,6 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
     
     func addTagToDropMenu(_ tag: String) {
         dropTableView.addSingle(tag: tag)
-        dropTableView.addSingle(tag: tag)
         remove(tag: tag)
     }
     
@@ -144,6 +143,7 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
                 return
             } else {
                 filteredTags.append(tag)
+                alreadyChosenTags.append(tag)
             }
         } else {
             addCustomTag(tag: tag)
@@ -155,6 +155,7 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
         if currentTags.contains(tag) {
             if filteredTags.contains(tag) {
                 filteredTags = filteredTags.filter {$0 != tag}
+                alreadyChosenTags = alreadyChosenTags.filter {$0 != tag}
             } else {
                 return
             }
@@ -182,6 +183,9 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
     
     func getCurrentTags() -> [String] {
         return currentTags
+    }
+    func getStartTags() -> [String] {
+        return startTags
     }
     
     func getFilteredTags() -> [String] {

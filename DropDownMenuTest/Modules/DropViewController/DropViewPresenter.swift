@@ -27,7 +27,7 @@ class DropViewPresenter: DropViewPresenterProtocol {
     
     var startTags: [String] = []
     var currentTags: [String] = []
-    var deletedTags: [String] = []
+    var alreadySelectedTags: [String] = []
     var filteredTags: [String] = []
     
     private var currentMask: String?
@@ -38,7 +38,7 @@ class DropViewPresenter: DropViewPresenterProtocol {
     
     func setupAlreadySelectedTagList(tags: [String]) {
         for tag in tags {
-            deletedTags.append(tag)
+            alreadySelectedTags.append(tag)
         }
     }
     
@@ -46,13 +46,15 @@ class DropViewPresenter: DropViewPresenterProtocol {
         for tag in tags {
             startTags.append(tag)
         }
+        print("setupStartTagList \(startTags)")
         checkCurrentTags()
         filterTags(mask: "")
         view?.reloadData()
     }
     
     func checkCurrentTags() {
-        currentTags = startTags.filter { !deletedTags.contains($0) }
+        currentTags = startTags.filter { !alreadySelectedTags.contains($0) }
+        print("start tags: \(startTags), current tags: \(currentTags)")
         filterTags(mask: currentMask ?? "")
     }
     
@@ -77,21 +79,24 @@ class DropViewPresenter: DropViewPresenterProtocol {
     }
     
     func add(tag: String) {
+        print("DropView Add tag \(tag)")
         if currentTags.contains(tag){
+            print("return")
             return
         } else {
-            if let index = deletedTags.firstIndex(where: { $0 == tag }) {
-                deletedTags.remove(at: index)
+            print("add")
+            alreadySelectedTags =  alreadySelectedTags.filter {$0 != tag}
+            print(alreadySelectedTags)
                 checkCurrentTags()
                 view?.reloadData()
-            }
+            
             
         }
     }
     
     func remove(tag: String) {
         if currentTags.contains(tag) {
-            deletedTags.append(tag)
+            alreadySelectedTags.append(tag)
             checkCurrentTags()
             view?.reloadData()
         }
