@@ -29,6 +29,7 @@
 		046B6ABC294330260037D98A /* SearchBarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6ABA294330260037D98A /* SearchBarCollectionViewCell.swift */; };
 		046B6ABD294330260037D98A /* SearchBarCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046B6ABB294330260037D98A /* SearchBarCollectionViewCell.xib */; };
 		046B6AC029437AFF0037D98A /* DynamicHeightCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6ABF29437AFF0037D98A /* DynamicHeightCollectionView.swift */; };
+		047452F0294CC87300D94963 /* DropDownTagConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047452EF294CC87300D94963 /* DropDownTagConfigurator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		046B6ABA294330260037D98A /* SearchBarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarCollectionViewCell.swift; sourceTree = "<group>"; };
 		046B6ABB294330260037D98A /* SearchBarCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchBarCollectionViewCell.xib; sourceTree = "<group>"; };
 		046B6ABF29437AFF0037D98A /* DynamicHeightCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightCollectionView.swift; sourceTree = "<group>"; };
+		047452EF294CC87300D94963 /* DropDownTagConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownTagConfigurator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +110,7 @@
 				046B6A9A2941E4210037D98A /* DropDownTagPresenter.swift */,
 				046B6A8A2941E3CF0037D98A /* DropDownTagViewController.swift */,
 				046B6A8C2941E3CF0037D98A /* Main.storyboard */,
+				047452EF294CC87300D94963 /* DropDownTagConfigurator.swift */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 			files = (
 				046B6ABC294330260037D98A /* SearchBarCollectionViewCell.swift in Sources */,
 				046B6AAB2941F7B30037D98A /* Extention+TableView.swift in Sources */,
+				047452F0294CC87300D94963 /* DropDownTagConfigurator.swift in Sources */,
 				046B6AB9294327240037D98A /* NibLoadable.swift in Sources */,
 				046B6AC029437AFF0037D98A /* DynamicHeightCollectionView.swift in Sources */,
 				046B6AA02941E50F0037D98A /* DropDownMenuTableViewCell.swift in Sources */,
