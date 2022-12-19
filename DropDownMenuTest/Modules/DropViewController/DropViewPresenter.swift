@@ -46,7 +46,6 @@ class DropViewPresenter: DropViewPresenterProtocol {
         for tag in tags {
             startTags.append(tag)
         }
-        print("setupStartTagList \(startTags)")
         checkCurrentTags()
         filterTags(mask: "")
         view?.reloadData()
@@ -54,12 +53,10 @@ class DropViewPresenter: DropViewPresenterProtocol {
     
     func checkCurrentTags() {
         currentTags = startTags.filter { !alreadySelectedTags.contains($0) }
-        print("start tags: \(startTags), current tags: \(currentTags)")
         filterTags(mask: currentMask ?? "")
     }
     
     func filterTags(mask: String) {
-        print("current mask: \(currentMask)/filter with mask: \(mask)")
         if mask == "" {
             filteredTags = currentTags
         } else {
@@ -73,24 +70,18 @@ class DropViewPresenter: DropViewPresenterProtocol {
     }
     
     func clearFilterMask() {
-        print("clear mask")
         currentMask = ""
         filterTags(mask: "")
     }
     
     func add(tag: String) {
-        print("DropView Add tag \(tag)")
         if currentTags.contains(tag){
-            print("return")
             return
         } else {
-            print("add")
             alreadySelectedTags =  alreadySelectedTags.filter {$0 != tag}
             print(alreadySelectedTags)
                 checkCurrentTags()
                 view?.reloadData()
-            
-            
         }
     }
     

@@ -48,7 +48,6 @@ class DropDownTagPresenter: DropDownTagPresenterProtocol {
     }
 
     func getCurrentTags() -> [String] {
-        print("get current tags: \(currentTags)")
             return currentTags
     }
     
