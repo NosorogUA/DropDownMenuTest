@@ -8,7 +8,6 @@
 import UIKit
 
 protocol DropDownNeedsProtocol: AnyObject {
-   // var selectedCellConfigurator: DropDownTagConfiguratorProtocol { get set }
     func addSubView(subView: DropView)
     func getViewFrames() -> CGRect
     func animateViewsOpen(frames: CGRect)
@@ -18,7 +17,6 @@ protocol DropDownNeedsProtocol: AnyObject {
 }
 
 protocol DropDownTagViewControllerProtocol: AnyObject {
-    
     
 }
 
@@ -31,7 +29,6 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
     var configurator2: DropDownTagConfiguratorProtocol!
     
     private var transparentView: UIView!
-    private var currentFrames: CGRect!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +40,7 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
         let dropDownCell = UINib(nibName: DropDownMenuTableViewCell.identifier, bundle: nil)
         tableView.register(dropDownCell, forCellReuseIdentifier: DropDownMenuTableViewCell.identifier)
     }
-
+    
     func calculateFramesDropView(frames: CGRect, configurator: DropDownTagConfiguratorProtocol) {
         if configurator1.getCurrentTags().count > 0 {
             UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
@@ -90,7 +87,7 @@ extension DropDownTagViewController: DropDownNeedsProtocol {
         transparentView.addGestureRecognizer(tapGesture)
         self.view.addSubview(transparentView)
     }
-
+    
     func animateViewsOpen(frames: CGRect) {
         UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
             self.transparentView.alpha = 0.5
@@ -108,17 +105,14 @@ extension DropDownTagViewController: UITableViewDelegate, UITableViewDataSource 
         switch MainControllerCells(rawValue: indexPath.row) {
         case .tags:
             let cell = tableView.dequeueReusableCell(withIdentifier: DropDownMenuTableViewCell.identifier, for: indexPath) as! DropDownMenuTableViewCell
-            
-            currentFrames = cell.frame
-            configurator1 = DropDownTagConfigurator(view: self, cell: cell, isCustomTagsEnabled: true, currentTags: presenter.getCurrentTags(), customUserTags: presenter.getCustomTags(), alreadyChosenTags: presenter.getUsedTags())
+            configurator1 = DropDownTagConfigurator(view: self, isCustomTagsEnabled: true, currentTags: presenter.getCurrentTags(), customUserTags: presenter.getCustomTags(), alreadyChosenTags: presenter.getUsedTags())
             configurator1.configureCell(cell: cell, indexPath: indexPath)
             cell.layoutIfNeeded()
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             return cell
         case .list:
             let cell = tableView.dequeueReusableCell(withIdentifier: DropDownMenuTableViewCell.identifier, for: indexPath) as! DropDownMenuTableViewCell
-            currentFrames = cell.frame
-            configurator2 = DropDownTagConfigurator(view: self, cell: cell, isCustomTagsEnabled: false, currentTags: presenter.getCurrentTags2(), customUserTags: presenter.getCustomTags2(), alreadyChosenTags: presenter.getUsedTags2())
+            configurator2 = DropDownTagConfigurator(view: self, isCustomTagsEnabled: false, currentTags: presenter.getCurrentTags2(), customUserTags: presenter.getCustomTags2(), alreadyChosenTags: presenter.getUsedTags2())
             configurator2.configureCell(cell: cell, indexPath: indexPath)
             cell.layoutIfNeeded()
             cell.selectionStyle = UITableViewCell.SelectionStyle.none

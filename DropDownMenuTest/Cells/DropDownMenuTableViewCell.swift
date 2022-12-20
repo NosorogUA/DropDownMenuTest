@@ -7,18 +7,33 @@
 
 import UIKit
 
+protocol DropDownMenuTableViewCellDelegate: AnyObject {
+    func addToCollection(tag: String)
+    func endSearch()
+    func getFrame() -> CGRect
+}
+
+extension DropDownMenuTableViewCell: DropDownMenuTableViewCellDelegate {
+    func addToCollection(tag: String) {
+        addCell(newTag: tag)
+        delegate?.filteringInCell(mask: getMask())
+    }
+    func endSearch()
+    {
+        delegate?.endSearchInCell(self)
+    }
+    func getFrame() -> CGRect {
+        return self.frame
+    }
+}
+
 class DropDownMenuTableViewCell: UITableViewCell {
     
     @IBOutlet private weak var tagFieldCollectionView: DynamicHeightCollectionView!
     @IBOutlet private weak var errorTextLabel: UILabel!
     @IBOutlet private weak var rightImageView: UIImageView!
     
-    var variantsButtonHandler: (() -> Void)?
-    var startSearchHandler: (() -> Void)?
-    var updateFramesHandler: (() -> Void)?
-    var endSearchHandler: (() -> Void)?
-    var filteringHandler: ((_ mask: String) -> Void)?
-    var cellDeleteHandler: ((_ tag: String) -> Void)?
+    weak var delegate: DropDownTagConfiguratorDelegate?
     
     private var tags: [String] = []
     private var cellsWidth: [CGFloat] = []
@@ -46,7 +61,6 @@ class DropDownMenuTableViewCell: UITableViewCell {
         tagFieldCollectionView.touchHandler = {[weak self] in
             self?.gestureConfigure()
         }
-        
         //register cell
         let tagCell = UINib(nibName: TagCollectionViewCell.identifier, bundle: nil)
         let searchCell = UINib(nibName: SearchBarCollectionViewCell.identifier, bundle: nil)
@@ -71,7 +85,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
         }
         tagFieldCollectionView.layoutIfNeeded()
         tagFieldCollectionView.collectionViewLayout.invalidateLayout()
-        updateFramesHandler?()
+        delegate?.updateFramesInCell(self)
     }
     
     func addCell(newTag: String) {
@@ -84,7 +98,8 @@ class DropDownMenuTableViewCell: UITableViewCell {
             tags.append(newTag) //add your object to data source first
             tagFieldCollectionView.insertItems(at: [indexPath])
         })
-        updateFramesHandler?()
+        updateCollectionViewLayout()
+        delegate?.updateFramesInCell(self)
     }
     
     private func deleteCell(index: IndexPath) {
@@ -93,9 +108,10 @@ class DropDownMenuTableViewCell: UITableViewCell {
             tags.remove(at: index.row) //delete your object to data source first
             tagFieldCollectionView.deleteItems(at: [index])
         }, completion: { _ in
-            self.cellDeleteHandler?(tag)
+            //self.cellDeleteHandler?(tag)
+            self.delegate?.cellDelete(tag: tag, self)
         })
-        updateFramesHandler?()
+        delegate?.updateFramesInCell(self)
     }
     
     private func gestureConfigure() {
@@ -147,18 +163,20 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
             let cell = tagFieldCollectionView.dequeueReusableCell(withReuseIdentifier: SearchBarCollectionViewCell.identifier, for: indexPath) as! SearchBarCollectionViewCell
             searchItemPath = [indexPath]
             cell.startSearch = { [weak self] in
-                self?.startSearchHandler?()
-                self?.updateRightIcon(isHidden: true)
+                guard let self else { return }
+                self.delegate!.startSearchInCell(self)
+                self.updateRightIcon(isHidden: true)
             }
             cell.endSearch = { [weak self] in
-                self?.updateRightIcon(isHidden: false)
-                self?.addCell(newTag: cell.getEnters())
-                self?.updateCollectionViewLayout()
-                self?.endSearchHandler?()
+                guard let self else { return }
+                self.updateRightIcon(isHidden: false)
+                self.addCell(newTag: cell.getEnters())
+                self.updateCollectionViewLayout()
+                self.delegate?.endSearchInCell(self)
             }
             cell.filterResults = { [weak self] in
                 self?.updateCollectionViewLayout()
-                self?.filteringHandler?(cell.getEnters())
+                self?.delegate?.filteringInCell(mask: cell.getEnters())
             }
             return cell
         } else {

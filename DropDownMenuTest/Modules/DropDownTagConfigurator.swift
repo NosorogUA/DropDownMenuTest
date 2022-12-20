@@ -7,11 +7,51 @@
 
 import Foundation
 
+protocol DropDownTagConfiguratorDelegate: AnyObject {
+    func updateFramesInCell(_ cell: DropDownMenuTableViewCell)
+    func variantsButtonInCell(_ cell: DropDownMenuTableViewCell)
+    func filteringInCell(mask: String)
+    func startSearchInCell(_ cell: DropDownMenuTableViewCell)
+    func endSearchInCell(_ cell: DropDownMenuTableViewCell)
+    func cellDelete(tag: String,_ cell: DropDownMenuTableViewCell)
+}
+
+extension DropDownTagConfigurator: DropDownTagConfiguratorDelegate {
+    
+    func updateFramesInCell(_ cell: DropDownMenuTableViewCell) {
+        view?.updateTableViewLayouts()
+        if getCurrentDropMenuHeight() > 0 {
+            calculateFramesDropView(frames: cell.frame)
+        }
+    }
+    
+    func variantsButtonInCell(_ cell: DropDownMenuTableViewCell) {
+        addDropDownView(frames: cell.frame)
+    }
+    
+    func filteringInCell(mask: String)  {
+        filterTags(mask: mask)
+    }
+    
+    func startSearchInCell(_ cell: DropDownMenuTableViewCell) {
+        print("start on configurator")
+        addDropDownView(frames: cell.frame)
+    }
+    
+    func endSearchInCell(_ cell: DropDownMenuTableViewCell) {
+        endFiltering(cell)
+    }
+    
+    func cellDelete(tag: String,_ cell: DropDownMenuTableViewCell) {
+        addTagToDropMenu(tag)
+        hideDropView(frames: cell.frame)
+    }
+}
+
 protocol DropDownTagConfiguratorProtocol {
-    init(view: DropDownNeedsProtocol, cell: DropDownMenuTableViewCell, isCustomTagsEnabled: Bool, currentTags: [String], customUserTags: [String]?, alreadyChosenTags: [String]?)
+    init(view: DropDownNeedsProtocol, isCustomTagsEnabled: Bool, currentTags: [String], customUserTags: [String]?, alreadyChosenTags: [String]?)
     func getFilteredTags() -> [String]
     var dropTableView: DropView { get set }
-    var cell: DropDownMenuTableViewCell { get set }
     var isCustomTagsEnabled: Bool { get set }
     func addDropDownView(frames: CGRect)
     func hideDropView(frames: CGRect)
@@ -21,7 +61,6 @@ protocol DropDownTagConfiguratorProtocol {
     func remove(tag: String)
     func filterTags(mask: String)
     func getCurrentTags() -> [String]
-    func endFiltering()
     func getCurrentDropMenuHeight() -> CGFloat
     func calculateFramesDropView(frames: CGRect)
     func setupDropDownMenu()
@@ -32,22 +71,24 @@ protocol DropDownTagConfiguratorProtocol {
 class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
     
     private weak var view: DropDownNeedsProtocol?
+    weak var cellDelegate: DropDownMenuTableViewCellDelegate?
+    
     var dropTableView: DropView
-    var cell: DropDownMenuTableViewCell
     
     var isCustomTagsEnabled = true
-    var customUserTags: [String] = ["custom1"] 
+    var customUserTags: [String] = ["custom1"]
     var startTags: [String] = []
     var currentTags: [String] = []
     var customerTags: [String] = []
     var alreadyChosenTags: [String] = []
     var filteredTags: [String] = []
     
-    required init(view: DropDownNeedsProtocol, cell: DropDownMenuTableViewCell, isCustomTagsEnabled: Bool, currentTags: [String], customUserTags: [String]?, alreadyChosenTags: [String]?) {
+    let leftOffset: CGFloat = 20
+    
+    required init(view: DropDownNeedsProtocol, isCustomTagsEnabled: Bool, currentTags: [String], customUserTags: [String]?, alreadyChosenTags: [String]?) {
         self.view = view
         self.isCustomTagsEnabled = isCustomTagsEnabled
         self.startTags = currentTags
-        self.cell = cell
         self.customUserTags = customUserTags ?? []
         self.alreadyChosenTags = alreadyChosenTags ?? []
         if alreadyChosenTags!.count > 0 {
@@ -58,7 +99,6 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
         dropTableView = .fromNib()
         self.setupDropDownMenu()
     }
-    
     
     //MARK: Drop-down menu
     func setupDropDownMenu() {
@@ -71,19 +111,18 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
         }
         dropTableView.closeHandler = { [weak self] in
             self?.view?.removeTransparentView()
-            self?.endFiltering()
         }
     }
     
     func setupDropViewFrames(frames: CGRect) {
         guard let viewFrames = view?.getViewFrames() else { return }
-        dropTableView.frame = CGRect(x: frames.origin.x + 10, y: viewFrames.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 0)
+        dropTableView.frame = CGRect(x: frames.origin.x + leftOffset, y: viewFrames.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 0)
         self.view?.addSubView(subView: dropTableView)
     }
     
     func hideDropView(frames: CGRect) {
         guard let viewFrames = view?.getViewFrames() else { return }
-        dropTableView.frame = CGRect(x: frames.origin.x + 10, y: viewFrames.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 0)
+        dropTableView.frame = CGRect(x: frames.origin.x + leftOffset, y: viewFrames.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 0)
     }
     
     func addDropDownView(frames: CGRect) {
@@ -97,26 +136,26 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
     func calculateFramesDropView(frames: CGRect) {
         //animate showing
         guard let viewFrames = view?.getViewFrames() else { return }
-        dropTableView.frame = CGRect(x: frames.origin.x + 10, y: viewFrames.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 200)
+        dropTableView.frame = CGRect(x: frames.origin.x + leftOffset, y: viewFrames.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 200)
         if getCurrentTags().count > 0 {
             view?.animateViewsOpen(frames: frames)
         }
     }
     
     func close() {
-        endFiltering()
+        //endFiltering(cell)
+        guard let cellDelegate else { return }
+        cellDelegate.endSearch()
         dropTableView.clearFilterMask()
-        hideDropView(frames: cell.frame)
+        hideDropView(frames: cellDelegate.getFrame())
     }
     
     func getCurrentDropMenuHeight() -> CGFloat {
         return dropTableView.frame.height
     }
     
-    private func addToCollection(tag: String) {
-        cell.addCell(newTag: tag)
-        filterTags(mask: cell.getMask())
-       // view?.updateTableViewLayouts()
+    func addToCollection(tag: String) {
+        cellDelegate?.addToCollection(tag: tag)
     }
     
     func addTagToDropMenu(_ tag: String) {
@@ -128,7 +167,7 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
         dropTableView.filterTags(mask: mask)
     }
     
-    func endFiltering() {
+    func endFiltering(_ cell: DropDownMenuTableViewCell) {
         if cell.isEnableCustomTags {
             let newCustomTag = cell.getMask()
             if newCustomTag.count > 3 {
@@ -152,7 +191,6 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
         } else {
             addCustomTag(tag: tag)
         }
-        //view?.updateTableViewLayouts()
     }
     
     func remove(tag: String) {
@@ -166,7 +204,6 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
         } else {
             removeCustomTag(tag: tag)
         }
-        //view?.updateTableViewLayouts()
     }
     
     func addCustomTag(tag: String) {
@@ -206,30 +243,7 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
     
     func configureCell(cell: DropDownMenuTableViewCell, indexPath: IndexPath) {
         cell.cellInit(tags: getFilteredTags(), enableCustomTags: isCustomTagsEnabled)
-        cell.variantsButtonHandler = { [weak self] in
-            self?.addDropDownView(frames: cell.frame)
-            //self?.view?.selectedCellConfigurator = self!
-        }
-        cell.startSearchHandler = { [weak self] in
-            self?.addDropDownView(frames: cell.frame)
-            //self?.view?.selectedCellConfigurator = self!
-        }
-        cell.filteringHandler = { [weak self] mask in
-            self?.filterTags(mask: mask)
-        }
-        cell.updateFramesHandler = { [weak self] in
-            self?.view?.updateTableViewLayouts()
-            if (self?.getCurrentDropMenuHeight())! > 0 {
-                self?.calculateFramesDropView(frames: cell.frame)
-            }
-        }
-        cell.endSearchHandler = { [weak self] in
-            self?.endFiltering()
-            
-        }
-        cell.cellDeleteHandler = { [weak self] tag in
-            self?.addTagToDropMenu(tag)
-            self?.hideDropView(frames: cell.frame)
-        }
+        cell.delegate = self
+        cellDelegate = cell
     }
 }
