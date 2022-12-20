@@ -27,7 +27,9 @@ extension DropDownMenuTableViewCell: DropDownMenuTableViewCellDelegate {
         return self.frame
     }
     func deleteCell() {
-        deleteCell(index: [0,0])
+        if tags.count > 0 {
+            deleteCell(index: [0, 0])
+        }
     }
 }
 
