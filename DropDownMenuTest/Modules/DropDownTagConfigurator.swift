@@ -15,6 +15,7 @@ protocol DropDownTagConfiguratorProtocol {
     var isCustomTagsEnabled: Bool { get set }
     func addDropDownView(frames: CGRect)
     func hideDropView(frames: CGRect)
+    func close()
     func add(tag: String)
     func addTagToDropMenu(_ tag: String)
     func remove(tag: String)
@@ -25,6 +26,7 @@ protocol DropDownTagConfiguratorProtocol {
     func calculateFramesDropView(frames: CGRect)
     func setupDropDownMenu()
     func setupDropViewFrames(frames: CGRect)
+    func configureCell(cell: DropDownMenuTableViewCell, indexPath: IndexPath)
 }
 
 class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
@@ -101,6 +103,12 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
         }
     }
     
+    func close() {
+        endFiltering()
+        dropTableView.clearFilterMask()
+        hideDropView(frames: cell.frame)
+    }
+    
     func getCurrentDropMenuHeight() -> CGFloat {
         return dropTableView.frame.height
     }
@@ -108,7 +116,7 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
     private func addToCollection(tag: String) {
         cell.addCell(newTag: tag)
         filterTags(mask: cell.getMask())
-        view?.updateTableViewLayouts()
+       // view?.updateTableViewLayouts()
     }
     
     func addTagToDropMenu(_ tag: String) {
@@ -144,7 +152,7 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
         } else {
             addCustomTag(tag: tag)
         }
-        view?.updateTableViewLayouts()
+        //view?.updateTableViewLayouts()
     }
     
     func remove(tag: String) {
@@ -158,7 +166,7 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
         } else {
             removeCustomTag(tag: tag)
         }
-        view?.updateTableViewLayouts()
+        //view?.updateTableViewLayouts()
     }
     
     func addCustomTag(tag: String) {
@@ -193,6 +201,35 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
             return filteredTags + customUserTags + alreadyChosenTags
         } else {
             return filteredTags + alreadyChosenTags
+        }
+    }
+    
+    func configureCell(cell: DropDownMenuTableViewCell, indexPath: IndexPath) {
+        cell.cellInit(tags: getFilteredTags(), enableCustomTags: isCustomTagsEnabled)
+        cell.variantsButtonHandler = { [weak self] in
+            self?.addDropDownView(frames: cell.frame)
+            //self?.view?.selectedCellConfigurator = self!
+        }
+        cell.startSearchHandler = { [weak self] in
+            self?.addDropDownView(frames: cell.frame)
+            //self?.view?.selectedCellConfigurator = self!
+        }
+        cell.filteringHandler = { [weak self] mask in
+            self?.filterTags(mask: mask)
+        }
+        cell.updateFramesHandler = { [weak self] in
+            self?.view?.updateTableViewLayouts()
+            if (self?.getCurrentDropMenuHeight())! > 0 {
+                self?.calculateFramesDropView(frames: cell.frame)
+            }
+        }
+        cell.endSearchHandler = { [weak self] in
+            self?.endFiltering()
+            
+        }
+        cell.cellDeleteHandler = { [weak self] tag in
+            self?.addTagToDropMenu(tag)
+            self?.hideDropView(frames: cell.frame)
         }
     }
 }

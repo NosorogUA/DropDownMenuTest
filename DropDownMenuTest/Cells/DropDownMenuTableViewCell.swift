@@ -84,6 +84,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
             tags.append(newTag) //add your object to data source first
             tagFieldCollectionView.insertItems(at: [indexPath])
         })
+        updateFramesHandler?()
     }
     
     private func deleteCell(index: IndexPath) {
@@ -94,6 +95,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
         }, completion: { _ in
             self.cellDeleteHandler?(tag)
         })
+        updateFramesHandler?()
     }
     
     private func gestureConfigure() {
