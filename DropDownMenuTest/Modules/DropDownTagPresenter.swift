@@ -9,6 +9,7 @@ import Foundation
 
 protocol DropDownTagPresenterProtocol {
     init(view: DropDownTagViewControllerProtocol)
+    func getTitle(index: Int) -> String
     func getCurrentTags() -> [String]
     func getCustomTags() -> [String]
     func getUsedTags() -> [String]
@@ -35,12 +36,18 @@ class DropDownTagPresenter: DropDownTagPresenterProtocol {
     var finishCustomTags: [String] = []
     var finishAlreadySelectedTags: [String] = []
     
+    var title: [String] = ["title", "title2", "title3"]
+    
 //    private let isCustomTagsEnabled = true //tags customization option change here
 //    private let isCustomTagsEnabled2 = false
 //
     required init(view: DropDownTagViewControllerProtocol) {
         self.view = view
         // apply current tags here
+    }
+    
+    func getTitle(index: Int) -> String  {
+        return title[index]
     }
 
     func getCurrentTags() -> [String] {

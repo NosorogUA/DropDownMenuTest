@@ -36,6 +36,8 @@ extension DropDownMenuTableViewCell: DropDownMenuTableViewCellDelegate {
 class DropDownMenuTableViewCell: UITableViewCell {
     
     @IBOutlet private weak var tagFieldCollectionView: DynamicHeightCollectionView!
+    
+    @IBOutlet private weak var titleTextLabel: UILabel!
     @IBOutlet private weak var errorTextLabel: UILabel!
     @IBOutlet private weak var rightImageView: UIImageView!
     
@@ -52,7 +54,8 @@ class DropDownMenuTableViewCell: UITableViewCell {
         setupCollectionView()
     }
     
-    func cellInit(tags: [String], enableCustomTags: Bool) {
+    func cellInit(title: String, tags: [String], enableCustomTags: Bool) {
+        titleTextLabel.text = title
         errorTextLabel.isHidden = true
         isEnableCustomTags = enableCustomTags
         self.tags = tags

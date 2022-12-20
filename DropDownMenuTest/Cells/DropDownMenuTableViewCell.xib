@@ -10,15 +10,15 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DropDownMenuTableViewCell" rowHeight="85" id="KGk-i7-Jjw" customClass="DropDownMenuTableViewCell" customModule="DropDownMenuTest" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DropDownMenuTableViewCell" rowHeight="99" id="KGk-i7-Jjw" customClass="DropDownMenuTableViewCell" customModule="DropDownMenuTest" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="99"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="85"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="99"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" contentInsetAdjustmentBehavior="never" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="7vU-wr-GVi" customClass="DynamicHeightCollectionView" customModule="DropDownMenuTest" customModuleProvider="target">
-                        <rect key="frame" x="16" y="10" width="288" height="54"/>
+                        <rect key="frame" x="16" y="25.333333333333332" width="288" height="52.666666666666671"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="5" minimumInteritemSpacing="5" id="PXM-cV-TOI">
                             <size key="itemSize" width="128" height="128"/>
@@ -28,7 +28,7 @@
                         </collectionViewFlowLayout>
                     </collectionView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="square.and.arrow.down" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="bZK-ft-Qge">
-                        <rect key="frame" x="278" y="33.666666666666657" width="11" height="6.6666666666666714"/>
+                        <rect key="frame" x="278" y="48.333333333333329" width="11" height="6.6666666666666714"/>
                         <color key="tintColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="11" id="8td-Tw-qWL"/>
@@ -36,7 +36,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Labelifgfggou" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VQf-1R-a6v">
-                        <rect key="frame" x="16" y="68" width="288" height="13"/>
+                        <rect key="frame" x="16" y="82" width="288" height="13"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="13" id="h9j-PJ-EET"/>
                         </constraints>
@@ -44,26 +44,37 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TOh-b8-Crq">
+                        <rect key="frame" x="16" y="5.0000000000000009" width="31" height="14.333333333333336"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
+                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
+                    <constraint firstItem="TOh-b8-Crq" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="9Ed-NV-n6q"/>
                     <constraint firstItem="VQf-1R-a6v" firstAttribute="left" secondItem="7vU-wr-GVi" secondAttribute="left" id="Fbs-Mi-Vtl"/>
                     <constraint firstItem="VQf-1R-a6v" firstAttribute="top" secondItem="7vU-wr-GVi" secondAttribute="bottom" constant="4" id="Fvo-z6-9nj"/>
                     <constraint firstItem="7vU-wr-GVi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="JCU-sl-9Ic"/>
                     <constraint firstItem="7vU-wr-GVi" firstAttribute="trailing" secondItem="bZK-ft-Qge" secondAttribute="trailing" constant="15" id="QCq-Ox-2UI"/>
                     <constraint firstItem="VQf-1R-a6v" firstAttribute="trailing" secondItem="7vU-wr-GVi" secondAttribute="trailing" id="Zgw-1r-81W"/>
-                    <constraint firstItem="7vU-wr-GVi" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="m1w-3e-2Zx"/>
+                    <constraint firstItem="7vU-wr-GVi" firstAttribute="top" secondItem="TOh-b8-Crq" secondAttribute="bottom" constant="6" id="m1w-3e-2Zx"/>
                     <constraint firstAttribute="trailing" secondItem="7vU-wr-GVi" secondAttribute="trailing" constant="16" id="mF4-9K-8ki"/>
+                    <constraint firstItem="TOh-b8-Crq" firstAttribute="leading" secondItem="7vU-wr-GVi" secondAttribute="leading" id="o8f-pa-7f4"/>
                     <constraint firstAttribute="bottom" secondItem="VQf-1R-a6v" secondAttribute="bottom" constant="4" id="sv3-f5-xT8"/>
                     <constraint firstItem="bZK-ft-Qge" firstAttribute="centerY" secondItem="7vU-wr-GVi" secondAttribute="centerY" id="vSo-EA-BvV"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" red="0.44557504555613725" green="0.0043184618181538416" blue="0.010546499416492494" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
             <connections>
                 <outlet property="errorTextLabel" destination="VQf-1R-a6v" id="Un0-SI-9Vs"/>
                 <outlet property="rightImageView" destination="bZK-ft-Qge" id="xi0-K0-1Ie"/>
                 <outlet property="tagFieldCollectionView" destination="7vU-wr-GVi" id="8Zy-Yv-yvN"/>
+                <outlet property="titleTextLabel" destination="TOh-b8-Crq" id="D64-ya-pOk"/>
             </connections>
-            <point key="canvasLocation" x="83.969465648854964" y="34.154929577464792"/>
+            <point key="canvasLocation" x="83.969465648854964" y="-24.295774647887324"/>
         </tableViewCell>
     </objects>
     <resources>

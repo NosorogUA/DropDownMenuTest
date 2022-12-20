@@ -115,21 +115,21 @@ extension DropDownTagViewController: UITableViewDelegate, UITableViewDataSource 
         case .tags:
             let cell = tableView.dequeueReusableCell(withIdentifier: DropDownMenuTableViewCell.identifier, for: indexPath) as! DropDownMenuTableViewCell
             configurator1 = DropDownTagConfigurator(view: self, isCustomTagsEnabled: true, isSingleOption: false, currentTags: presenter.getCurrentTags(), customUserTags: presenter.getCustomTags(), alreadyChosenTags: presenter.getUsedTags())
-            configurator1.configureCell(cell: cell, indexPath: indexPath)
+            configurator1.configureCell(title: presenter.getTitle(index: indexPath.row), cell: cell, indexPath: indexPath)
             cell.layoutIfNeeded()
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             return cell
         case .list:
             let cell = tableView.dequeueReusableCell(withIdentifier: DropDownMenuTableViewCell.identifier, for: indexPath) as! DropDownMenuTableViewCell
             configurator2 = DropDownTagConfigurator(view: self, isCustomTagsEnabled: false, isSingleOption: false, currentTags: presenter.getCurrentTags2(), customUserTags: presenter.getCustomTags2(), alreadyChosenTags: presenter.getUsedTags2())
-            configurator2.configureCell(cell: cell, indexPath: indexPath)
+            configurator2.configureCell(title: presenter.getTitle(index: indexPath.row), cell: cell, indexPath: indexPath)
             cell.layoutIfNeeded()
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             return cell
         case .single:
             let cell = tableView.dequeueReusableCell(withIdentifier: DropDownMenuTableViewCell.identifier, for: indexPath) as! DropDownMenuTableViewCell
             configurator3 = DropDownTagConfigurator(view: self, isCustomTagsEnabled: false, isSingleOption: true, currentTags: presenter.getCurrentTags2(), customUserTags: presenter.getCustomTags2(), alreadyChosenTags: presenter.getUsedTags2())
-            configurator3.configureCell(cell: cell, indexPath: indexPath)
+            configurator3.configureCell(title: presenter.getTitle(index: indexPath.row), cell: cell, indexPath: indexPath)
             cell.layoutIfNeeded()
             cell.selectionStyle = UITableViewCell.SelectionStyle.none
             return cell

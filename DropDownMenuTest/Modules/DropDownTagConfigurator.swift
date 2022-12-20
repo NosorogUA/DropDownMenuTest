@@ -65,7 +65,7 @@ protocol DropDownTagConfiguratorProtocol {
     func calculateFramesDropView(frames: CGRect)
     func setupDropDownMenu()
     func setupDropViewFrames(frames: CGRect)
-    func configureCell(cell: DropDownMenuTableViewCell, indexPath: IndexPath)
+    func configureCell(title: String, cell: DropDownMenuTableViewCell, indexPath: IndexPath)
     func saveTags()
 }
 
@@ -257,8 +257,8 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
         }
     }
     
-    func configureCell(cell: DropDownMenuTableViewCell, indexPath: IndexPath) {
-        cell.cellInit(tags: getFilteredTags(), enableCustomTags: isCustomTagsEnabled)
+    func configureCell(title: String, cell: DropDownMenuTableViewCell, indexPath: IndexPath) {
+        cell.cellInit(title: title, tags: getFilteredTags(), enableCustomTags: isCustomTagsEnabled)
         cell.delegate = self
         cellDelegate = cell
     }
