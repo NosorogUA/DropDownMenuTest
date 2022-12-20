@@ -15,6 +15,7 @@ protocol DropDownTagPresenterProtocol {
     func getCurrentTags2() -> [String]
     func getCustomTags2() -> [String]
     func getUsedTags2() -> [String]
+    func saveTags(custom: [String], selected: [String])
     
 }
 
@@ -30,6 +31,9 @@ class DropDownTagPresenter: DropDownTagPresenterProtocol {
     
     var filteredTags: [String] = []
     var filteredTags2: [String] = []
+    
+    var finishCustomTags: [String] = []
+    var finishAlreadySelectedTags: [String] = []
     
 //    private let isCustomTagsEnabled = true //tags customization option change here
 //    private let isCustomTagsEnabled2 = false
@@ -61,6 +65,11 @@ class DropDownTagPresenter: DropDownTagPresenterProtocol {
     
     func getUsedTags2() -> [String] {
             return alreadyUsedTags2
+    }
+    
+    func saveTags(custom: [String], selected: [String]) {
+        finishCustomTags = custom
+        finishAlreadySelectedTags = selected
     }
 
 }

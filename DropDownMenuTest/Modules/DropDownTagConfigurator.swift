@@ -66,6 +66,7 @@ protocol DropDownTagConfiguratorProtocol {
     func setupDropDownMenu()
     func setupDropViewFrames(frames: CGRect)
     func configureCell(cell: DropDownMenuTableViewCell, indexPath: IndexPath)
+    func saveTags()
 }
 
 class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
@@ -113,6 +114,7 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
             if self.isSingleOption {
                 //remove first tag
                 self.view?.removeTransparentView()
+                //self.close()
                 self.cellDelegate?.deleteCell()
                 self.add(tag: tag)
                 self.addToCollection(tag: tag)
@@ -124,6 +126,7 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
         }
         dropTableView.closeHandler = { [weak self] in
             self?.view?.removeTransparentView()
+            //self?.close()
         }
     }
     
@@ -258,5 +261,10 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
         cell.cellInit(tags: getFilteredTags(), enableCustomTags: isCustomTagsEnabled)
         cell.delegate = self
         cellDelegate = cell
+    }
+    
+    func saveTags() {
+        // push tags to presenter
+        view?.saveTags(custom: customUserTags, selected: alreadyChosenTags)
     }
 }

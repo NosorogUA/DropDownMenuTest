@@ -14,6 +14,7 @@ protocol DropDownNeedsProtocol: AnyObject {
     func setupTransparentView()
     func removeTransparentView()
     func updateTableViewLayouts()
+    func saveTags(custom: [String], selected: [String])
 }
 
 protocol DropDownTagViewControllerProtocol: AnyObject {
@@ -67,6 +68,10 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
         tableView.layoutIfNeeded()
         tableView.endUpdates()
     }
+    
+    func saveTags(custom: [String], selected: [String]) {
+        presenter.saveTags(custom: custom, selected: selected)
+    }
 }
 
 extension DropDownTagViewController: DropDownNeedsProtocol {
@@ -95,6 +100,8 @@ extension DropDownTagViewController: DropDownNeedsProtocol {
             self.transparentView.alpha = 0.5
         }, completion: nil)
     }
+    
+    
 }
 
 extension DropDownTagViewController: UITableViewDelegate, UITableViewDataSource {
