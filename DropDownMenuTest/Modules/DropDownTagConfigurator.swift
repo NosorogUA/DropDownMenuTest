@@ -49,7 +49,7 @@ extension DropDownTagConfigurator: DropDownTagConfiguratorDelegate {
 }
 
 protocol DropDownTagConfiguratorProtocol {
-    init(view: DropDownNeedsProtocol, isCustomTagsEnabled: Bool, currentTags: [String], customUserTags: [String]?, alreadyChosenTags: [String]?)
+    init(view: DropDownNeedsProtocol, isCustomTagsEnabled: Bool, isSingleOption: Bool, currentTags: [String], customUserTags: [String]?, alreadyChosenTags: [String]?)
     func getFilteredTags() -> [String]
     var dropTableView: DropView { get set }
     var isCustomTagsEnabled: Bool { get set }
@@ -76,6 +76,8 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
     var dropTableView: DropView
     
     var isCustomTagsEnabled = true
+    var isSingleOption = false
+    
     var customUserTags: [String] = ["custom1"]
     var startTags: [String] = []
     var currentTags: [String] = []
@@ -85,9 +87,10 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
     
     let leftOffset: CGFloat = 20
     
-    required init(view: DropDownNeedsProtocol, isCustomTagsEnabled: Bool, currentTags: [String], customUserTags: [String]?, alreadyChosenTags: [String]?) {
+    required init(view: DropDownNeedsProtocol, isCustomTagsEnabled: Bool, isSingleOption: Bool, currentTags: [String], customUserTags: [String]?, alreadyChosenTags: [String]?) {
         self.view = view
         self.isCustomTagsEnabled = isCustomTagsEnabled
+        self.isSingleOption = isSingleOption
         self.startTags = currentTags
         self.customUserTags = customUserTags ?? []
         self.alreadyChosenTags = alreadyChosenTags ?? []
@@ -106,8 +109,18 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
         dropTableView.layer.cornerRadius = 10
         dropTableView.clipsToBounds = true
         dropTableView.cellHandler = { [weak self] tag in
-            self?.add(tag: tag)
-            self?.addToCollection(tag: tag)
+            guard let self else { return }
+            if self.isSingleOption {
+                //remove first tag
+                self.view?.removeTransparentView()
+                self.cellDelegate?.deleteCell()
+                self.add(tag: tag)
+                self.addToCollection(tag: tag)
+            } else {
+                self.add(tag: tag)
+                self.addToCollection(tag: tag)
+            }
+            
         }
         dropTableView.closeHandler = { [weak self] in
             self?.view?.removeTransparentView()

@@ -11,6 +11,7 @@ protocol DropDownMenuTableViewCellDelegate: AnyObject {
     func addToCollection(tag: String)
     func endSearch()
     func getFrame() -> CGRect
+    func deleteCell()
 }
 
 extension DropDownMenuTableViewCell: DropDownMenuTableViewCellDelegate {
@@ -24,6 +25,9 @@ extension DropDownMenuTableViewCell: DropDownMenuTableViewCellDelegate {
     }
     func getFrame() -> CGRect {
         return self.frame
+    }
+    func deleteCell() {
+        deleteCell(index: [0,0])
     }
 }
 
@@ -102,7 +106,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
         delegate?.updateFramesInCell(self)
     }
     
-    private func deleteCell(index: IndexPath) {
+    func deleteCell(index: IndexPath) {
         let tag = tags[index.row]
         tagFieldCollectionView.performBatchUpdates({
             tags.remove(at: index.row) //delete your object to data source first
@@ -188,7 +192,7 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let cell = self.tagFieldCollectionView.cellForItem(at: indexPath) as? TagCollectionViewCell {
+        if self.tagFieldCollectionView.cellForItem(at: indexPath) is TagCollectionViewCell {
             deleteCell(index: indexPath)
         }
     }
