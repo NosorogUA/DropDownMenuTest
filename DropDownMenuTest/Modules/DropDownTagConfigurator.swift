@@ -58,7 +58,6 @@ protocol DropDownTagConfiguratorProtocol {
     func getFilteredTags() -> [String]
     var dropTableView: DropView { get set }
     var isCustomTagsEnabled: Bool { get set }
-   // func addDropDownView(frames: CGRect)
     func hideDropView(frames: CGRect)
     func close()
     func add(tag: String)
@@ -92,6 +91,7 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
     var filteredTags: [String] = []
     
     let leftOffset: CGFloat = 20
+    let dropDownMenuHeight: CGFloat = 200
     
     required init(view: DropDownNeedsProtocol, isCustomTagsEnabled: Bool, isSingleOption: Bool, currentTags: [String], customUserTags: [String]?, alreadyChosenTags: [String]?) {
         self.view = view
@@ -173,7 +173,14 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
     func calculateFramesDropView(frames: CGRect) {
         //animate showing
         guard let viewFrames = view?.getViewFrames() else { return }
-        dropTableView.frame = CGRect(x: frames.origin.x + leftOffset, y: viewFrames.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 200)
+        var y: CGFloat = 0
+        if frames.maxY < viewFrames.height / 2 {
+            y = viewFrames.origin.y + frames.origin.y + frames.height
+        } else {
+            y = viewFrames.origin.y + frames.origin.y - dropDownMenuHeight
+        }
+        
+        dropTableView.frame = CGRect(x: frames.origin.x + leftOffset, y: y, width: frames.width * 0.8, height: dropDownMenuHeight)
         if getCurrentTags().count > 0 {
             view?.animateViewsOpen(frames: frames)
         }

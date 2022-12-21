@@ -114,7 +114,7 @@ extension DropDownTagViewController: DropDownNeedsProtocol {
 
 extension DropDownTagViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return 50
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
