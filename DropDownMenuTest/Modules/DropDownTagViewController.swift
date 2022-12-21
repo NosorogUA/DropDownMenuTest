@@ -8,10 +8,11 @@
 import UIKit
 
 protocol DropDownNeedsProtocol: AnyObject {
+    var verticalContentOffset: CGFloat { get }
     func addSubView(subView: DropView)
     func getViewFrames() -> CGRect
     func animateViewsOpen(frames: CGRect)
-    func setupTransparentView()
+    func setupTransparentView(configurator: DropDownTagConfiguratorProtocol)
     func removeTransparentView()
     func updateTableViewLayouts()
     func saveTags(custom: [String], selected: [String])
@@ -26,6 +27,7 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
     @IBOutlet private weak var tableView: UITableView!
     
     var presenter: DropDownTagPresenterProtocol!
+    var currentConfigurator: DropDownTagConfiguratorProtocol?
     var configurator1: DropDownTagConfiguratorProtocol!
     var configurator2: DropDownTagConfiguratorProtocol!
     var configurator3: DropDownTagConfiguratorProtocol!
@@ -36,6 +38,11 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
         super.viewDidLoad()
         self.presenter = DropDownTagPresenter(view: self)
         setupTableView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        updateTableViewLayouts()
     }
     
     private func setupTableView() {
@@ -55,9 +62,7 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
     @objc func removeTransparentView() {
         UIView.animate(withDuration: 0.4, delay: 0.0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseOut, animations: {
             self.transparentView.alpha = 0
-            self.configurator1.close()
-            self.configurator2.close()
-            self.configurator3.close()
+            self.currentConfigurator?.close()
             self.transparentView.removeFromSuperview()
         })
     }
@@ -76,6 +81,10 @@ class DropDownTagViewController: UIViewController, DropDownTagViewControllerProt
 
 extension DropDownTagViewController: DropDownNeedsProtocol {
     
+    var verticalContentOffset: CGFloat {
+        return tableView.contentOffset.y
+    }
+    
     func addSubView(subView: DropView) {
         self.view.addSubview(subView)
     }
@@ -83,9 +92,10 @@ extension DropDownTagViewController: DropDownNeedsProtocol {
         return self.tableView.frame
     }
     
-    func setupTransparentView() {
+    func setupTransparentView(configurator: DropDownTagConfiguratorProtocol) {
         // setup background
         transparentView = UIView()
+        currentConfigurator = configurator
         transparentView.frame = UIApplication.shared.keyWindow?.frame ?? self.view.frame
         transparentView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
         transparentView.alpha = 0
@@ -100,13 +110,11 @@ extension DropDownTagViewController: DropDownNeedsProtocol {
             self.transparentView.alpha = 0.5
         }, completion: nil)
     }
-    
-    
 }
 
 extension DropDownTagViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 8
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

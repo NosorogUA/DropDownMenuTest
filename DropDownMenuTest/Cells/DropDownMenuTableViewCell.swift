@@ -76,26 +76,24 @@ class DropDownMenuTableViewCell: UITableViewCell {
         tagFieldCollectionView.register(tagCell, forCellWithReuseIdentifier: TagCollectionViewCell.identifier)
         tagFieldCollectionView.register(searchCell, forCellWithReuseIdentifier: SearchBarCollectionViewCell.identifier)
         
-        if let flowLayout = tagFieldCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout {
-            flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
-            
+        let flowLayout = AlignedCollectionViewFlowLayout(horizontalAlignment: .left, verticalAlignment: .top)
+        flowLayout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
             flowLayout.minimumLineSpacing = 5
             flowLayout.minimumInteritemSpacing = 0
-            
             tagFieldCollectionView.collectionViewLayout = flowLayout
-        }
     }
     
     private func updateCollectionViewLayout() {
         let cell = tagFieldCollectionView.visibleCells.first(where: ({ $0 is SearchBarCollectionViewCell})) as! SearchBarCollectionViewCell
         
-        if cell.bounds.width >= tagFieldCollectionView.bounds.width * 0.9 {
+        if cell.bounds.width >= tagFieldCollectionView.bounds.width * 0.8 {
             return
         }
         tagFieldCollectionView.layoutIfNeeded()
         tagFieldCollectionView.collectionViewLayout.invalidateLayout()
         delegate?.updateFramesInCell(self)
     }
+
     
     func addCell(newTag: String) {
         if !isEnableCustomTags {
@@ -128,6 +126,7 @@ class DropDownMenuTableViewCell: UITableViewCell {
         
         if cell.getStatus() {
             cell.finishFiltering()
+            
         } else {
             cell.startFiltering()
         }
@@ -173,6 +172,7 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
             searchItemPath = [indexPath]
             cell.startSearch = { [weak self] in
                 guard let self else { return }
+//                self.convert(self.frame, to: <#T##UICoordinateSpace#>)
                 self.delegate!.startSearchInCell(self)
                 self.updateRightIcon(isHidden: true)
             }
@@ -180,7 +180,7 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
                 guard let self else { return }
                 self.updateRightIcon(isHidden: false)
                 self.addCell(newTag: cell.getEnters())
-                self.updateCollectionViewLayout()
+//                self.updateCollectionViewLayout()
                 self.delegate?.endSearchInCell(self)
             }
             cell.filterResults = { [weak self] in
@@ -189,9 +189,12 @@ extension DropDownMenuTableViewCell: UICollectionViewDataSource, UICollectionVie
             }
             return cell
         } else {
+            print("<<<<<<<<<<<<ADD CeLL>>>>>>>>>>>>>>")
             let cell = tagFieldCollectionView.dequeueReusableCell(withReuseIdentifier: TagCollectionViewCell.identifier, for: indexPath) as! TagCollectionViewCell
             let tag = tags[indexPath.row]
             cell.cellInit(title: tag)
+            //cell.setMaxWidth(width: tagFieldCollectionView.bounds.width-90)
+            //updateTagCell(cell: cell, indexPath: indexPath)
             return cell
         }
     }

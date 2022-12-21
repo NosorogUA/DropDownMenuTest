@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol DropDownTagConfiguratorDelegate: AnyObject {
     func updateFramesInCell(_ cell: DropDownMenuTableViewCell)
@@ -21,12 +22,15 @@ extension DropDownTagConfigurator: DropDownTagConfiguratorDelegate {
     func updateFramesInCell(_ cell: DropDownMenuTableViewCell) {
         view?.updateTableViewLayouts()
         if getCurrentDropMenuHeight() > 0 {
-            calculateFramesDropView(frames: cell.frame)
+            var frame = cell.frame
+            frame.origin.y -= view?.verticalContentOffset ?? 0
+            calculateFramesDropView(frames: frame)
         }
     }
     
     func variantsButtonInCell(_ cell: DropDownMenuTableViewCell) {
-        addDropDownView(frames: cell.frame)
+       // addDropDownView(frames: cell.frame)
+        addDropDownViewFor(target: cell)
     }
     
     func filteringInCell(mask: String)  {
@@ -35,7 +39,8 @@ extension DropDownTagConfigurator: DropDownTagConfiguratorDelegate {
     
     func startSearchInCell(_ cell: DropDownMenuTableViewCell) {
         print("start on configurator")
-        addDropDownView(frames: cell.frame)
+        //addDropDownView(frames: cell.frame)
+        addDropDownViewFor(target: cell)
     }
     
     func endSearchInCell(_ cell: DropDownMenuTableViewCell) {
@@ -53,7 +58,7 @@ protocol DropDownTagConfiguratorProtocol {
     func getFilteredTags() -> [String]
     var dropTableView: DropView { get set }
     var isCustomTagsEnabled: Bool { get set }
-    func addDropDownView(frames: CGRect)
+   // func addDropDownView(frames: CGRect)
     func hideDropView(frames: CGRect)
     func close()
     func add(tag: String)
@@ -132,20 +137,36 @@ class DropDownTagConfigurator: DropDownTagConfiguratorProtocol {
     
     func setupDropViewFrames(frames: CGRect) {
         guard let viewFrames = view?.getViewFrames() else { return }
+        dropTableView.isHidden = false
         dropTableView.frame = CGRect(x: frames.origin.x + leftOffset, y: viewFrames.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 0)
         self.view?.addSubView(subView: dropTableView)
     }
     
     func hideDropView(frames: CGRect) {
         guard let viewFrames = view?.getViewFrames() else { return }
+        dropTableView.isHidden = true
         dropTableView.frame = CGRect(x: frames.origin.x + leftOffset, y: viewFrames.origin.y + frames.origin.y + frames.height, width: frames.width * 0.8, height: 0)
     }
     
-    func addDropDownView(frames: CGRect) {
+//    func addDropDownView(frames: CGRect) {
+//        // setup gesture
+//        view?.setupTransparentView(configurator: self)///
+//        setupDropViewFrames(frames: frames)
+//        calculateFramesDropView(frames: frames)
+//
+//    }
+    
+    func addDropDownViewFor(target: UIView) {
         // setup gesture
-        view?.setupTransparentView()
-        setupDropViewFrames(frames: frames)
-        calculateFramesDropView(frames: frames)
+        //let frame = target.convert(target.frame, to: dropTableView)
+        var frame = target.frame
+        frame.origin.y -= view?.verticalContentOffset ?? 0
+        print(target.frame)
+        print(frame)
+        print(dropTableView.frame)
+        view?.setupTransparentView(configurator: self)///
+        setupDropViewFrames(frames: frame)
+        calculateFramesDropView(frames: frame)
         
     }
     

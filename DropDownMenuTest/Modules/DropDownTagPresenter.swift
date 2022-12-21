@@ -23,7 +23,7 @@ protocol DropDownTagPresenterProtocol {
 class DropDownTagPresenter: DropDownTagPresenterProtocol {
     private weak var view: DropDownTagViewControllerProtocol?
     
-    var currentTags: [String] = ["tag1", "tag2", "tag3", "apple", "google", "facebook"]
+    var currentTags: [String] = ["tag1", "tag2", "taлдодоодоло дододл рлрло  лорл лор орл лодо g ллоролролрлр лрл3", "apple", "google", "facebook"]
     var customUserTags: [String] = ["custom1"]
     var currentTags2: [String] = ["tag12", "tag22", "tag32", "apple2", "google2", "facebook2"]
     var customUserTags2: [String] = ["custom12"] 

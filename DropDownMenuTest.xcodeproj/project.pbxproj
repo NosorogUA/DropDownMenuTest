@@ -30,6 +30,7 @@
 		046B6ABD294330260037D98A /* SearchBarCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 046B6ABB294330260037D98A /* SearchBarCollectionViewCell.xib */; };
 		046B6AC029437AFF0037D98A /* DynamicHeightCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 046B6ABF29437AFF0037D98A /* DynamicHeightCollectionView.swift */; };
 		047452F0294CC87300D94963 /* DropDownTagConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047452EF294CC87300D94963 /* DropDownTagConfigurator.swift */; };
+		0474531929523B0600D94963 /* UICollectionViewLayoutAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0474531829523B0600D94963 /* UICollectionViewLayoutAttributes.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +59,7 @@
 		046B6ABB294330260037D98A /* SearchBarCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchBarCollectionViewCell.xib; sourceTree = "<group>"; };
 		046B6ABF29437AFF0037D98A /* DynamicHeightCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicHeightCollectionView.swift; sourceTree = "<group>"; };
 		047452EF294CC87300D94963 /* DropDownTagConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownTagConfigurator.swift; sourceTree = "<group>"; };
+		0474531829523B0600D94963 /* UICollectionViewLayoutAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionViewLayoutAttributes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 		046B6A852941E3CF0037D98A /* DropDownMenuTest */ = {
 			isa = PBXGroup;
 			children = (
+				0474531729523AD900D94963 /* helpers */,
 				046B6AA92941F7930037D98A /* extentions */,
 				046B6AA62941F59B0037D98A /* enums */,
 				046B6A9D2941E4ED0037D98A /* Cells */,
@@ -164,6 +167,14 @@
 				046B6ABF29437AFF0037D98A /* DynamicHeightCollectionView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		0474531729523AD900D94963 /* helpers */ = {
+			isa = PBXGroup;
+			children = (
+				0474531829523B0600D94963 /* UICollectionViewLayoutAttributes.swift */,
+			);
+			path = helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,6 +268,7 @@
 				046B6A9B2941E4210037D98A /* DropDownTagPresenter.swift in Sources */,
 				046B6A892941E3CF0037D98A /* SceneDelegate.swift in Sources */,
 				046B6AAE294221DB0037D98A /* DropOptionTableViewCell.swift in Sources */,
+				0474531929523B0600D94963 /* UICollectionViewLayoutAttributes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

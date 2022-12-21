@@ -24,5 +24,11 @@ class TagCollectionViewCell: UICollectionViewCell {
     
     func cellInit(title: String) {
         tagLabel.text = title
+//        if title.count > 30 {
+//            tagLabel.numberOfLines = 2
+//        } else {
+//            tagLabel.numberOfLines = 1
+//        }
     }
+    
 }
